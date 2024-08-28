@@ -12,7 +12,7 @@ pip install -r requirements.txt
 python manage.py migrate
 
 # Build the static assets folder
-python manage.py collectstatic
+python manage.py collectstatic --noinput
 
 # Only use this for the first time (When the database is empty)
 # python manage.py createsuperuser --noinput
