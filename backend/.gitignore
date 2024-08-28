@@ -163,7 +163,7 @@ cython_debug/
 
 #Vercel files
 .vercel
-static/admin
+static-build
 
 #npm files
 node_modules
