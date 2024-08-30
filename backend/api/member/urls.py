@@ -4,9 +4,11 @@ from .resume.views.header import HeaderViewSet
 from .resume.views.personal_info import PersonalInfoViewSet
 from .resume.views.link import LinkViewSet
 from .resume.views.professional_exp import ProfessionalExpViewSet
+from .resume.views.education_exp import EducationExpViewSet
 from .resume.views.reference import ReferenceViewSet
 
 views = {
+    "education": EducationExpViewSet,
     "personal-infos": PersonalInfoViewSet,
     "links": LinkViewSet,
     "professional-exps": ProfessionalExpViewSet,
