@@ -190,4 +190,29 @@ class Migration(migrations.Migration):
                 ),
             ],
         ),
+        migrations.CreateModel(
+            name="Project",
+            fields=[
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField()),
+                ("sub_title", models.CharField(blank=True)),
+                ("start_date", models.DateTimeField(null=True)),
+                ("end_date", models.DateTimeField(null=True)),
+                ("description", models.TextField()),
+                (
+                    "resume",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="resume.header"
+                    ),
+                ),
+            ],
+        ),
     ]
