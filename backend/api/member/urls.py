@@ -9,13 +9,23 @@ from .resume.views.reference import ReferenceViewSet
 from .resume.views.certificate import CertificateViewSet
 from .resume.views.award import AwardViewSet
 from .resume.views.language import LanguageViewSet
+from .resume.views.project import ProjectViewSet
+from .resume.views.skill import SkillViewSet
+from .resume.views.course import CourseViewSet
+from .resume.views.publication import PublicationViewSet
+from .resume.views.interest import InterestViewSet
 
 views = {
-    "education": EducationExpViewSet,
+    "interests": InterestViewSet,
+    "publications": PublicationViewSet,
+    "skills": SkillViewSet,
+    "educations": EducationExpViewSet,
     "personal-infos": PersonalInfoViewSet,
     "links": LinkViewSet,
     "professional-exps": ProfessionalExpViewSet,
     "references": ReferenceViewSet,
+    "projects": ProjectViewSet,
+    "courses": CourseViewSet,
     "certificates": CertificateViewSet,
     "awards": AwardViewSet,
     "languages": LanguageViewSet,
