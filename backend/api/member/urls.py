@@ -6,9 +6,11 @@ from .resume.views.link import LinkViewSet
 from .resume.views.professional_exp import ProfessionalExpViewSet
 from .resume.views.education_exp import EducationExpViewSet
 from .resume.views.reference import ReferenceViewSet
+from.resume.views.skill import SkillViewSet
 
 views = {
-    "education": EducationExpViewSet,
+    "skills": SkillViewSet,
+    "educations": EducationExpViewSet,
     "personal-infos": PersonalInfoViewSet,
     "links": LinkViewSet,
     "professional-exps": ProfessionalExpViewSet,
