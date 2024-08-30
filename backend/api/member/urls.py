@@ -4,13 +4,13 @@ from .resume.views.header import HeaderViewSet
 from .resume.views.education_exp import EducationExpViewSet
 
 router = DefaultRouter()
+router.register(r"members/resumes/education-exp",
+                EducationExpViewSet, basename="view all education experience")
+router.register(r"members/(?P<member_pk>[^/.]+)/resumes/education-exp",
+                EducationExpViewSet, basename="view educational experience by member")
+router.register(r"members/(?P<member_pk>[^/.]+)/resumes/(?P<resume_pk>[^/.]+)/education-exp",
+                EducationExpViewSet, basename="view all education experience by resume id")
 router.register(r"members/(?P<member_pk>[^/.]+)/resumes",
                 HeaderViewSet, basename="view resumes by member id")
 router.register(r"members/resumes", HeaderViewSet, basename="view all resumes")
 router.register(r"members", AccountViewSet)
-router.register(r"members/resumes/educational-exps",
-                EducationExpViewSet, basename="view all educational experience")
-router.register(r"members/(?P<member_pk>[^/.]+)/resumes/educational-exps",
-                EducationExpViewSet, basename="view educational experience by member")
-router.register(r"members/(?P<member_pk>[^/.]+)/resumes/(?P<resume_pk>[^/.]+)/educational-exps",
-                EducationExpViewSet, basename="view all educational experience by resume id")
