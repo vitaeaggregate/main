@@ -8,6 +8,7 @@ from .resume.views.education_exp import EducationExpViewSet
 from .resume.views.reference import ReferenceViewSet
 from .resume.views.certificate import CertificateViewSet
 from .resume.views.award import AwardViewSet
+from .resume.views.language import LanguageViewSet
 
 views = {
     "education": EducationExpViewSet,
@@ -17,6 +18,7 @@ views = {
     "references": ReferenceViewSet,
     "certificates": CertificateViewSet,
     "awards": AwardViewSet,
+    "languages": LanguageViewSet,
 }
 
 router = DefaultRouter()
