@@ -6,7 +6,8 @@ from .resume.views.link import LinkViewSet
 from .resume.views.professional_exp import ProfessionalExpViewSet
 from .resume.views.education_exp import EducationExpViewSet
 from .resume.views.reference import ReferenceViewSet
-from.resume.views.skill import SkillViewSet
+from .resume.views.project import ProjectViewSet
+from .resume.views.skill import SkillViewSet
 
 views = {
     "skills": SkillViewSet,
@@ -14,7 +15,8 @@ views = {
     "personal-infos": PersonalInfoViewSet,
     "links": LinkViewSet,
     "professional-exps": ProfessionalExpViewSet,
-    "references": ReferenceViewSet
+    "references": ReferenceViewSet,
+    "projects": ProjectViewSet
 }
 
 router = DefaultRouter()
