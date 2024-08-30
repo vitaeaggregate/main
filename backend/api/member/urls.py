@@ -4,6 +4,7 @@ from .resume.views.header import HeaderViewSet
 from .resume.views.personal_info import PersonalInfoViewSet
 from .resume.views.link import LinkViewSet
 from .resume.views.professional_exp import ProfessionalExpViewSet
+<<<<<<< HEAD
 from .resume.views.certificate import Certificate
 
 router = DefaultRouter()
@@ -37,15 +38,33 @@ router.register(r"members/(?P<member_pk>[^/.]+)/resumes/(?P<resume_pk>[^/.]+)/pe
                 PersonalInfoViewSet, basename="view personal info by resume id ")
 router.register(r"members/(?P<member_pk>[^/.]+)/resumes/personal-infos",
                 PersonalInfoViewSet, basename="view all personal infos from all resumes from a member")
+=======
+from .resume.views.education_exp import EducationExpViewSet
+from .resume.views.reference import ReferenceViewSet
+
+views = {
+    "education": EducationExpViewSet,
+    "personal-infos": PersonalInfoViewSet,
+    "links": LinkViewSet,
+    "professional-exps": ProfessionalExpViewSet,
+    "references": ReferenceViewSet
+}
+
+router = DefaultRouter()
+
+for route in views:
+    router.register(r"members/(?P<member_pk>[^/.]+)/resumes/(?P<resume_pk>[^/.]+)/" + route,
+                    views[route], basename="view " + route + " by resume id ")
+    router.register(r"members/(?P<member_pk>[^/.]+)/resumes/" + route,
+                    views[route], basename="view all " + route + " from all resumes from a member")
+    router.register(r"members/resumes/" + route,
+                    views[route], basename="view all " + route)
+>>>>>>> b6ce996431a0b265ccba7c9ee02fb6ad0cab7c61
 
 # Resume Route
 router.register(r"members/(?P<member_pk>[^/.]+)/resumes",
                 HeaderViewSet, basename="view resumes by member id")
-
-# View All from everything here
-router.register(r"members/resumes/links",
-                LinkViewSet, basename="view all links")
-router.register(r"members/resumes/personal-infos",
-                PersonalInfoViewSet, basename="view all personal infos")
 router.register(r"members/resumes", HeaderViewSet, basename="view all resumes")
+
+# Member Route
 router.register(r"members", AccountViewSet)
