@@ -4,6 +4,7 @@ from .resume.views.header import HeaderViewSet
 from .resume.views.personal_info import PersonalInfoViewSet
 from .resume.views.link import LinkViewSet
 from .resume.views.professional_exp import ProfessionalExpViewSet
+from .resume.views.certificate import Certificate
 
 router = DefaultRouter()
 
@@ -16,6 +17,14 @@ router.register(r"members/(?P<member_pk>[^/.]+)/resumes/professional-exp",
                 ProfessionalExpViewSet, basename="view all professional exp from all resumes from a member")
 router.register(r"members/resumes/professional-exp",
                 ProfessionalExpViewSet, basename="view all professional exp")
+
+# Certificate Route
+router.register(r"members/(?P<member_pk>[^/.]+)/resumes/(?P<resume_pk>[^/.]+)/certificates",
+                Certificate, basename="view professional exp from by resume id ")
+router.register(r"members/(?P<member_pk>[^/.]+)/resumes/certificates",
+                Certificate, basename="view all professional exp from all resumes from a member")
+router.register(r"members/resumes/certificates",
+                Certificate, basename="view all professional exp")
 
 # Link Route
 router.register(r"members/(?P<member_pk>[^/.]+)/resumes/(?P<resume_pk>[^/.]+)/links",
