@@ -166,7 +166,8 @@ cython_debug/
 
 #Django folder
 static-build
-migrations/
+**/migrations/*
+!**/migrations/__init__.py
 
 #npm folder
 node_modules
