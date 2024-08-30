@@ -9,7 +9,6 @@ from .resume.views.education_exp import EducationExpViewSet
 router = DefaultRouter()
 # Two routes here for each table
 
-
 # Education Exp Route
 router.register(r"members/resumes/education-exp",
                 EducationExpViewSet, basename="view all education experience")
