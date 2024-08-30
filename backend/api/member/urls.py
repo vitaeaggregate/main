@@ -4,10 +4,18 @@ from .resume.views.header import HeaderViewSet
 from .resume.views.personal_info import PersonalInfoViewSet
 from .resume.views.link import LinkViewSet
 from .resume.views.professional_exp import ProfessionalExpViewSet
+from .resume.views.education_exp import EducationExpViewSet
 
 router = DefaultRouter()
-
 # Two routes here for each table
+
+# Education Exp Route
+router.register(r"members/resumes/education-exp",
+                EducationExpViewSet, basename="view all education experience")
+router.register(r"members/(?P<member_pk>[^/.]+)/resumes/education-exp",
+                EducationExpViewSet, basename="view education experience by member")
+router.register(r"members/(?P<member_pk>[^/.]+)/resumes/(?P<resume_pk>[^/.]+)/education-exp",
+                EducationExpViewSet, basename="view all education experience by resume id")
 
 # Professional Exp Route
 router.register(r"members/(?P<member_pk>[^/.]+)/resumes/(?P<resume_pk>[^/.]+)/professional-exp",

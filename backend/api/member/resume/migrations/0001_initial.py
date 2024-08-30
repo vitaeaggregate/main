@@ -115,4 +115,31 @@ class Migration(migrations.Migration):
                 ),
             ],
         ),
+        migrations.CreateModel(
+            name="EducationExp",
+            fields=[
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("degree", models.CharField(blank=True)),
+                ("institution", models.CharField(blank=True)),
+                ("city", models.CharField(blank=True)),
+                ("country", models.CharField(blank=True)),
+                ("start_date", models.DateTimeField(blank=True, null=True)),
+                ("end_date", models.DateTimeField(blank=True, null=True)),
+                ("description", models.CharField(blank=True)),
+                (
+                    "resume",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="resume.header"
+                    ),
+                ),
+            ],
+        ),
     ]
