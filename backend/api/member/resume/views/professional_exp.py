@@ -8,6 +8,6 @@ class ProfessionalExpViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         resume_pk = self.kwargs.get('resume_pk')
-        if member_pk:
-            return ProfessionalExp.objects.filter(member_id=resume_pk)
+        if resume_pk:
+            return ProfessionalExp.objects.filter(resume_id=resume_pk)
         return ProfessionalExp.objects.all()
