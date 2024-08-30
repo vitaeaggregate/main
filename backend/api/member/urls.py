@@ -9,8 +9,10 @@ from .resume.views.reference import ReferenceViewSet
 from .resume.views.project import ProjectViewSet
 from .resume.views.skill import SkillViewSet
 from .resume.views.course import CourseViewSet
+from .resume.views.publication import PublicationViewSet
 
 views = {
+    "publications": PublicationViewSet,
     "skills": SkillViewSet,
     "educations": EducationExpViewSet,
     "personal-infos": PersonalInfoViewSet,
