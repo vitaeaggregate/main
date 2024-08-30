@@ -5,9 +5,18 @@ from .resume.views.personal_info import PersonalInfoViewSet
 from .resume.views.link import LinkViewSet
 from .resume.views.professional_exp import ProfessionalExpViewSet
 from .resume.views.education_exp import EducationExpViewSet
+from .resume.views.project import ProjectViewSet
 
 router = DefaultRouter()
 # Two routes here for each table
+
+# Project Route
+router.register(r"members/resumes/projects",
+                ProjectViewSet, basename="view all projects")
+router.register(r"members/(?P<member_pk>[^/.]+)/resumes/projects",
+                ProjectViewSet, basename="view projects by member")
+router.register(r"members/(?P<member_pk>[^/.]+)/resumes/(?P<resume_pk>[^/.]+)/projects",
+                ProjectViewSet, basename="view all projects by resume id")
 
 # Education Exp Route
 router.register(r"members/resumes/education-exp",
