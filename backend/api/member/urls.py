@@ -2,20 +2,32 @@ from rest_framework.routers import DefaultRouter
 from .views.account import AccountViewSet
 from .resume.views.header import HeaderViewSet
 from .resume.views.personal_info import PersonalInfoViewSet
+from .resume.views.link import LinkViewSet
 
 router = DefaultRouter()
+
+# Two routes here for each table
+
+# Link Route
+router.register(r"members/(?P<member_pk>[^/.]+)/resumes/(?P<resume_pk>[^/.]+)/links",
+                LinkViewSet, basename="view link by resume id ")
+router.register(r"members/(?P<member_pk>[^/.]+)/resumes/links",
+                LinkViewSet, basename="view all links from all resumes from a member")
+
+# Personal Info Route
 router.register(r"members/(?P<member_pk>[^/.]+)/resumes/(?P<resume_pk>[^/.]+)/personal-infos",
-                PersonalInfoViewSet, basename="view personal info from by resume id ")
-
+                PersonalInfoViewSet, basename="view personal info by resume id ")
 router.register(r"members/(?P<member_pk>[^/.]+)/resumes/personal-infos",
-                PersonalInfoViewSet, basename="view all personal info from all resumes from a member")
+                PersonalInfoViewSet, basename="view all personal infos from all resumes from a member")
 
+# Resume Route
 router.register(r"members/(?P<member_pk>[^/.]+)/resumes",
                 HeaderViewSet, basename="view resumes by member id")
 
-router.register(r"members/resumes/personal-info",
-                PersonalInfoViewSet, basename="view all personal-infos")
-
+# View All from everything here
+router.register(r"members/resumes/links",
+                LinkViewSet, basename="view all links")
+router.register(r"members/resumes/personal-infos",
+                PersonalInfoViewSet, basename="view all personal infos")
 router.register(r"members/resumes", HeaderViewSet, basename="view all resumes")
-
 router.register(r"members", AccountViewSet)
