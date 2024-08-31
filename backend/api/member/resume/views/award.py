@@ -7,7 +7,7 @@ class AwardViewSet(viewsets.ModelViewSet):
     serializer_class = AwardSerializer
 
     def get_queryset(self):
-        resume_pk = self.kwards.get('resume_pk')
+        resume_pk = self.kwargs.get('resume_pk')
         if resume_pk:
             return Award.objects.filter(resume_id=resume_pk)
         return Award.objects.all()

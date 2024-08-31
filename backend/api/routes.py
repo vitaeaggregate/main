@@ -1,6 +1,8 @@
+from .member.urls import urlpatterns as member_urls
+from .firebase_admin.urls import urlpatterns as firebase_urls
 from django.urls import include, path
-from .member.urls import router as member_router
 
 routes = [
-    path("", include(member_router.urls)),
+    path("", include(member_urls)),
+    path("", include(firebase_urls)),
 ]

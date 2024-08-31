@@ -29,7 +29,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if config("DEBUG") == "True" else False
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost",".vercel.app", ".now.sh"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", ".vercel.app", ".now.sh"]
 
 # Application definition
 
@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "corsheaders",
     "rest_framework",
+    "api.firebase_admin",
     "api.member",
     "api.member.resume",
 ]
@@ -53,6 +55,12 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # Replace with your frontend URL
 ]
 
 ROOT_URLCONF = "api.urls"
