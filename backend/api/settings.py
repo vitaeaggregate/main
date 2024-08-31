@@ -60,7 +60,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # Replace with your frontend URL
+    config("FRONT_END"),
 ]
 
 ROOT_URLCONF = "api.urls"
