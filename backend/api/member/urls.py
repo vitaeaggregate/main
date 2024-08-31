@@ -1,3 +1,4 @@
+from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 from .views.account import AccountViewSet
 from .resume.views.header import HeaderViewSet
@@ -48,3 +49,7 @@ router.register(r"members/resumes", HeaderViewSet, basename="view all resumes")
 
 # Member Route
 router.register(r"members", AccountViewSet)
+
+urlpatterns = [
+    path("", include(router.urls))
+]
