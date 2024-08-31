@@ -15,6 +15,7 @@ from .resume.views.skill import SkillViewSet
 from .resume.views.course import CourseViewSet
 from .resume.views.publication import PublicationViewSet
 from .resume.views.interest import InterestViewSet
+from .resume.views.comment import CommentViewSet
 
 views = {
     "interests": InterestViewSet,
@@ -30,6 +31,7 @@ views = {
     "certificates": CertificateViewSet,
     "awards": AwardViewSet,
     "languages": LanguageViewSet,
+    "comments": CommentViewSet
 }
 
 router = DefaultRouter()
