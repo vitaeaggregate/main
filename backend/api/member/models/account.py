@@ -1,7 +1,8 @@
 from django.db import models
 
-
 class Account(models.Model):
+    first_name = models.CharField(blank=True)
+    last_name = models.CharField(blank=True)
     email = models.EmailField(blank=False, unique=True)
     firebase_uid = models.CharField(blank=True, unique=True)
     can_comment = models.BooleanField(default=False)

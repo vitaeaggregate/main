@@ -57,6 +57,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
+    "api.firebase_admin.middleware.FirebaseMiddleware",
 ]
 
 CORS_ALLOWED_ORIGINS = [
