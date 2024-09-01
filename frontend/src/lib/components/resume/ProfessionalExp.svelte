@@ -10,6 +10,7 @@
   </script>
 
 <div class="professional-exp">
+    <h2>Professional Experience</h2>
     <form>
         <label for="job-title">Job Title</label>
         <InputText />
