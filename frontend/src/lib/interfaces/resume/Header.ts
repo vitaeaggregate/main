@@ -1,4 +1,4 @@
-export default interface Resume {
+export default interface Header {
 	id: number;
 	member: number;
 	title: string;
