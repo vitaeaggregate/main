@@ -5,7 +5,7 @@
 </script>
 
 <div class="flex flex-col">
-	<h2>Education</h2>
+	<h2>Course</h2>
 	<InputText label="Degree"></InputText>
 	<InputText label="Institution"></InputText>
 	<InputText label="City"></InputText>
