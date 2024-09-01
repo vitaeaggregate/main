@@ -12,7 +12,7 @@ class FirebaseMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        if request.path.startswith("/admin"):
+        if request.path.startswith("/"):
             return self.get_response(request)
 
         auth_header = request.headers.get("Authorization")
