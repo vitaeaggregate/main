@@ -3,14 +3,15 @@ from django.db import models
 
 
 class PersonalInfo(models.Model):
-    resume = models.ForeignKey(Header, on_delete=models.CASCADE, blank=False)
-    full_name = models.CharField(blank=False)
-    job_title = models.CharField(blank=False)
+    resume = models.OneToOneField(
+        Header, related_name="personal_info", on_delete=models.CASCADE, blank=False)
+    full_name = models.CharField(max_length=200, blank=False)
+    job_title = models.CharField(max_length=200, blank=False)
     email = models.EmailField(blank=True)
-    phone_number = models.CharField(blank=True)
-    address = models.CharField(blank=True)
+    phone_number = models.CharField(max_length=15, blank=True)
+    address = models.CharField(max_length=255, blank=True)
     date_of_birth = models.DateField(blank=True, null=True)
-    driving_license = models.CharField(blank=True)
-    gender_pronoun = models.CharField(blank=True)
-    marital_status = models.CharField(blank=True)
-    nationality = models.CharField(blank=True)
+    driving_license = models.CharField(max_length=50, blank=True)
+    gender_pronoun = models.CharField(max_length=20, blank=True)
+    marital_status = models.CharField(max_length=20, blank=True)
+    nationality = models.CharField(max_length=50, blank=True)
