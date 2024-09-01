@@ -1,0 +1,16 @@
+<script>
+	import InputDate from "./InputDate.svelte";
+	import InputText from "./InputText.svelte";
+	import TextArea from "./TextArea.svelte";
+</script>
+
+<div class="flex flex-col">
+	<h2>Education</h2>
+	<InputText label="Degree"></InputText>
+	<InputText label="Institution"></InputText>
+	<InputText label="City"></InputText>
+	<InputText label="Country"></InputText>
+	<InputDate label="Start Date"></InputDate>
+	<InputDate label="End Date"></InputDate>
+	<TextArea label="Description"></TextArea>
+</div>
