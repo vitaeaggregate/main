@@ -1,5 +1,6 @@
 <script>
 	import Award from "$lib/components/resume/Award.svelte";
+	import Certificate from "$lib/components/resume/Certificate.svelte";
 	import Course from "$lib/components/resume/Course.svelte";
 import Education from "$lib/components/resume/Education.svelte";
 	import Language from "$lib/components/resume/Language.svelte";
@@ -16,3 +17,4 @@ import Education from "$lib/components/resume/Education.svelte";
 <Course></Course>
 <Award></Award>
 <ProfessionalExp></ProfessionalExp>
+<Certificate></Certificate>
