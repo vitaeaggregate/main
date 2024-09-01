@@ -6,6 +6,7 @@ import Education from "$lib/components/resume/Education.svelte";
 	import Language from "$lib/components/resume/Language.svelte";
 	import ProfessionalExp from "$lib/components/resume/ProfessionalExp.svelte";
 	import Project from "$lib/components/resume/Project.svelte";
+	import Reference from "$lib/components/resume/Reference.svelte";
 </script>
 
 <h1>Resumes</h1>
@@ -18,3 +19,4 @@ import Education from "$lib/components/resume/Education.svelte";
 <Award></Award>
 <ProfessionalExp></ProfessionalExp>
 <Certificate></Certificate>
+<Reference></Reference>
