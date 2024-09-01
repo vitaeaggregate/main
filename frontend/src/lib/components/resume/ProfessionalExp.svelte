@@ -1,30 +1,16 @@
 <script>
-    import { onMount } from "svelte";
 	import TextArea from "./TextArea.svelte";
 	import InputText from "./InputText.svelte";
 	import InputDate from "./InputDate.svelte";
-    
-    onMount(async () => {
-      
-    });
-  </script>
+</script>
 
-<div class="professional-exp">
+<div class="flex flex-col">
     <h2>Professional Experience</h2>
-    <form>
-        <label for="job-title">Job Title</label>
-        <InputText />
-        <label for="employer">Employer</label>
-        <InputText />
-        <label for="city">City</label>
-        <InputText/>
-        <label for="country">Country</label>
-        <InputText/>
-        <label for="start_date">Start Date</label>
-        <InputDate />
-        <label for="end_date">End Date</label>
-        <InputDate />
-        <label for="description">Description</label>
-        <TextArea />
-    </form>
+        <InputText label="Job Title" placeholder="Put your job title here"></InputText>
+        <InputText label="Employer" placeholder="Put the employer name here"></InputText>
+        <InputText label="City" placeholder="Put the city name here"></InputText>
+        <InputText label="Country" placeholder="Put the name of the country here"></InputText>
+        <InputDate label="Start Date"></InputDate>
+        <InputDate label="End Date"></InputDate>
+        <TextArea label="Description" placeholder="Put the description here"></TextArea>
 </div>
