@@ -5,5 +5,5 @@
 
 <label class="flex flex-col">
 	{label}:
-    <textarea placeholder={placeholder} class="border-2"></textarea>
+	<textarea {placeholder} class="border-2"></textarea>
 </label>
