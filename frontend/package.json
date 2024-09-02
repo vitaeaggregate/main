@@ -35,6 +35,8 @@
 	"type": "module",
 	"dependencies": {
 		"firebase": "^10.13.1",
-		"firebaseui": "^6.1.0"
+		"firebaseui": "^6.1.0",
+		"svelte-lexical": "^0.4.1",
+		"svelte-preprocess": "^6.0.2"
 	}
 }
