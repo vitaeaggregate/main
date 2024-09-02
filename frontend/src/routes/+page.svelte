@@ -11,6 +11,4 @@
 	please put 'new' as a new folder inside the resumes folder.<br />
 	Also please switch to the routing branch.<br />
 	Thankies!<br />
-
-	<a href="/login" class="font-bold">Login</a>
 </p>

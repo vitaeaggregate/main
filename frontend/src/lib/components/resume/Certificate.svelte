@@ -1,6 +1,6 @@
 <script>
-	import InputText from "./InputText.svelte";
-	import TextArea from "./TextArea.svelte";
+	import InputText from "$lib/components/InputText.svelte";
+	import TextArea from "$lib/components/TextArea.svelte";
 </script>
 
 <div class="flex flex-col">
