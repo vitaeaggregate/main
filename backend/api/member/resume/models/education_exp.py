@@ -3,11 +3,11 @@ from django.db import models
 
 
 class EducationExp(models.Model):
-    resume = models.ForeignKey(Header, on_delete=models.CASCADE, blank=False)
-    degree = models.CharField(blank=True)
-    institution = models.CharField(blank=True)
-    city = models.CharField(blank=True)
-    country = models.CharField(blank=True)
+    resume = models.ForeignKey(Header, related_name="educations_exps", on_delete=models.CASCADE, blank=False)
+    degree = models.CharField(max_length=100, blank=True)
+    institution = models.CharField(max_length=100, blank=True)
+    city = models.CharField(max_length=100, blank=True)
+    country = models.CharField(max_length=100, blank=True)
     start_date = models.DateTimeField(null=True, blank=True)
     end_date = models.DateTimeField(null=True, blank=True)
-    description = models.CharField(blank=True)
+    description = models.TextField(blank=True)

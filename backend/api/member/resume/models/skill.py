@@ -1,8 +1,9 @@
 from ..models.header import Header
 from django.db import models
 
+
 class Skill(models.Model):
-    resume = models.ForeignKey(Header, on_delete=models.CASCADE, blank=False)
-    name = models.CharField(blank=False)
+    resume = models.ForeignKey(Header, related_name="skills", on_delete=models.CASCADE, blank=False)
+    name = models.CharField(max_length=100, blank=False)
     description = models.TextField(blank=True)
-    skill_level = models.CharField(blank=True)
+    skill_level = models.CharField(max_length=50, blank=True)

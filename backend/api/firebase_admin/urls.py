@@ -1,12 +1,6 @@
-from django.urls import include, path
-from rest_framework.routers import DefaultRouter
-
-from api.firebase_admin.views import FireBaseSessionViewSet
-
-router = DefaultRouter()
-
-router.register(r"firebase/accounts", FireBaseSessionViewSet)
+from django.urls import path
+from api.firebase_admin.views import FireBaseSessionApiView
 
 urlpatterns = [
-    path("", include(router.urls))
+    path("firebase/accounts/", FireBaseSessionApiView.as_view())
 ]

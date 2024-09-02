@@ -18,4 +18,4 @@ SERVICE_ACCOUNT_KEY = {
 
 cred = credentials.Certificate(SERVICE_ACCOUNT_KEY)
 
-firebase_admin.initialize_app(cred)
+firebase_admin_app = firebase_admin.initialize_app(cred)
