@@ -233,19 +233,19 @@ pre::-webkit-scrollbar-thumb {
 }
 
 #options-button::after {
-	background-image: url(/images/icons/gear.svg);
+	background-image: url(./static/images/icons/gear.svg);
 }
 
 #test-recorder-button::after {
-	background-image: url(/images/icons/journal-code.svg);
+	background-image: url(./static/images/icons/journal-code.svg);
 }
 
 #paste-log-button::after {
-	background-image: url(/images/icons/clipboard.svg);
+	background-image: url(./static/images/icons/clipboard.svg);
 }
 
 #docs-button::after {
-	background-image: url(/images/icons/file-earmark-text.svg);
+	background-image: url(./static/images/icons/file-earmark-text.svg);
 }
 
 #test-recorder-button-snapshot {
@@ -253,15 +253,15 @@ pre::-webkit-scrollbar-thumb {
 }
 
 #test-recorder-button-snapshot::after {
-	background-image: url(/images/icons/camera.svg);
+	background-image: url(./static/images/icons/camera.svg);
 }
 
 #test-recorder-button-copy::after {
-	background-image: url(/images/icons/clipboard.svg);
+	background-image: url(./static/images/icons/clipboard.svg);
 }
 
 #test-recorder-button-download::after {
-	background-image: url(/images/icons/download.svg);
+	background-image: url(./static/images/icons/download.svg);
 }
 
 .typeahead-popover {
@@ -1176,51 +1176,51 @@ i.prettier-error {
 }
 
 .actions i.indent {
-	background-image: url(/images/icons/indent.svg);
+	background-image: url(./static/images/icons/indent.svg);
 }
 
 .actions i.outdent {
-	background-image: url(/images/icons/outdent.svg);
+	background-image: url(./static/images/icons/outdent.svg);
 }
 
 .actions i.lock {
-	background-image: url(/images/icons/lock-fill.svg);
+	background-image: url(./static/images/icons/lock-fill.svg);
 }
 
 .actions i.image {
-	background-image: url(/images/icons/file-image.svg);
+	background-image: url(./static/images/icons/file-image.svg);
 }
 
 .actions i.table {
-	background-image: url(/images/icons/table.svg);
+	background-image: url(./static/images/icons/table.svg);
 }
 
 .actions i.unlock {
-	background-image: url(/images/icons/lock.svg);
+	background-image: url(./static/images/icons/lock.svg);
 }
 
 .actions i.left-align {
-	background-image: url(/images/icons/text-left.svg);
+	background-image: url(./static/images/icons/text-left.svg);
 }
 
 .actions i.center-align {
-	background-image: url(/images/icons/text-center.svg);
+	background-image: url(./static/images/icons/text-center.svg);
 }
 
 .actions i.right-align {
-	background-image: url(/images/icons/text-right.svg);
+	background-image: url(./static/images/icons/text-right.svg);
 }
 
 .actions i.justify-align {
-	background-image: url(/images/icons/justify.svg);
+	background-image: url(./static/images/icons/justify.svg);
 }
 
 .actions i.disconnect {
-	background-image: url(/images/icons/plug.svg);
+	background-image: url(./static/images/icons/plug.svg);
 }
 
 .actions i.connect {
-	background-image: url(/images/icons/plug-fill.svg);
+	background-image: url(./static/images/icons/plug-fill.svg);
 }
 
 table.disable-selection {
@@ -1266,7 +1266,7 @@ i.chevron-down {
 	display: inline-block;
 	height: 8px;
 	width: 8px;
-	background-image: url(/images/icons/chevron-down.svg);
+	background-image: url(../static/images/icons/chevron-down.svg);
 }
 
 .action-button {
