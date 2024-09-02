@@ -1,17 +1,32 @@
-<script>
-    // import {onMount} from "svelte"
+<script lang='ts'>
+	import { createEventDispatcher } from "svelte";
     import InputText from "./resume/InputText.svelte";
     import TextArea from "./resume/TextArea.svelte";
-    // import PersonalInfo from "$lib/interfaces/personal_info";
-    // import Skill from "$lib/interfaces/skill"
-    // onMount(async () => {
-    //     const data = await fetch();
-    // })
+
+    let resumeID: number = 0;
+    let inputName: string = '';
+    let inputDescription: string = '';
+    let inputSkillLevel: string = '';
+
+    $: skill = {
+        resume: resumeID,
+        name: inputName,
+        description: inputDescription,
+        skill_level: inputSkillLevel,
+    }
+
+    const dispatch = createEventDispatcher();
+    $: {
+        dispatch("update", skill)
+    }
+
 </script>
+
+
 
 <div class="flex flex-col">
     <h2>Skills</h2>
-    <InputText label="Name"/>
-    <TextArea label="Description"/>
-    <InputText label="Skill Level"/>
+    <InputText label="Name" bind:value={inputName}/>
+    <TextArea label="Description" bind:value={inputDescription}/>
+    <InputText label="Skill Level" bind:value={inputSkillLevel}/>
 </div>

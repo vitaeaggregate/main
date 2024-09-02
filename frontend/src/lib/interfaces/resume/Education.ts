@@ -1,5 +1,5 @@
 export default interface Education {
-	id: number;
+	id?: number;
 	resume: number;
 	degree?: string;
 	institution?: string;

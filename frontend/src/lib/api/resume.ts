@@ -45,5 +45,6 @@
 // };
 
 // POST Resume Data
+// export const postResumeData = async (req, res) => {};
 
 // DELETE Resume Data

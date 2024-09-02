@@ -1,5 +1,5 @@
 export default interface Certificate {
-	id: number;
+	id?: number;
 	resume: number;
 	name?: string;
 	description?: string;
