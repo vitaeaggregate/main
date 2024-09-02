@@ -1,5 +1,7 @@
-<script>
+<script lang=ts>
   import "./global.css"
+
+  export let value: string | null = null
 
   import {
     Composer,
@@ -32,6 +34,7 @@
   } from 'svelte-lexical';
 
   const initialConfig = {
+    namespace: "",
     theme: PlaygroundEditorTheme,
     nodes: [
       HeadingNode,
@@ -41,7 +44,7 @@
       HorizontalRuleNode,
       ImageNode,
     ],
-    onError: (error) => {
+    onError: (error: any) => {
       throw error;
     },
     editorState: () => {
@@ -65,26 +68,22 @@
 </script>
 
 <Composer {initialConfig}>
-  <div class="editor-shell">
-    <ToolbarRichText />
-    <div class="editor-container">
-      <div class="editor-scroller">
-        <div class="editor">
-          <ContentEditable />
-        </div>
-      </div>
-      <RichTextPlugin />
-      <HistoryPlugin />
-      <ListPlugin />
-      <CheckListPlugin />
-      <HorizontalRulePlugin />
-      <ImagePlugin />
+	<div class="editor-shell">
+		<ToolbarRichText />
+		<div class="editor-container">
+			<div class="editor-scroller">
+				<div class="editor">
+					<ContentEditable />
+				</div>
+			</div>
+			<RichTextPlugin />
+			<HistoryPlugin />
+			<ListPlugin />
+			<CheckListPlugin />
+			<HorizontalRulePlugin />
+			<ImagePlugin />
 
-      <ActionBar />
-    </div>
-  </div>
+			<ActionBar />
+		</div>
+	</div>
 </Composer>
-
-<style>
-  @import "./global.css";
-</style>

@@ -35,7 +35,7 @@
 		<div>
 			<div>
 				<h2>User Info</h2>
-				<p>Text</p>
+				<p>{$account.email}</p>
 			</div>
 			<div>
 				<h2>Resumes</h2>
