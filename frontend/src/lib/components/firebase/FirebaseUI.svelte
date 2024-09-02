@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createOrGetAccount } from "$lib/api/account";
 	import { firebaseAuth } from "$lib/configs/firebase";
-	import { EmailAuthProvider, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
+	import { EmailAuthProvider, GoogleAuthProvider } from "firebase/auth";
 	import type { auth } from "firebaseui";
 	import { onDestroy, onMount } from "svelte";
 
@@ -26,11 +26,11 @@
 			signInSuccessUrl: "/"
 		});
 
-		onAuthStateChanged(firebaseAuth, async (user) => {
+		firebaseAuth.onAuthStateChanged(async (user) => {
 			if (!user) return;
 
 			const token = await user.getIdToken();
-			createOrGetAccount(token);
+			const account = await createOrGetAccount(token);
 		});
 	});
 
@@ -39,11 +39,10 @@
 	});
 </script>
 
-<div bind:this={firebaseUiContainer} class="flex items-center justify-center w-full"></div>
+<div bind:this={firebaseUiContainer} class="flex w-full items-center justify-center"></div>
 
 {#if firebaseUiContainer}
-<style>
-	@import "firebaseui/dist/firebaseui.css";
-</style>
+	<style>
+		@import "firebaseui/dist/firebaseui.css";
+	</style>
 {/if}
-

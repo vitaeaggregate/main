@@ -14,4 +14,6 @@ export async function createOrGetAccount(token: string) {
 
 	if (response.ok) console.log("Token sent successfully");
 	else console.error("Failed to send token");
+
+	return await response.json()
 }
