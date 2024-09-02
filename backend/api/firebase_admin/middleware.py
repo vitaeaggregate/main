@@ -17,9 +17,6 @@ class FirebaseMiddleware:
 
         auth_header = request.headers.get("Authorization")
 
-        #TODO DELETE
-        # auth_header = "a a"
-
         if not auth_header:
             return JsonResponse({'status': 'error', 'message': 'Authorization header missing'}, status=status.HTTP_401_UNAUTHORIZED)
 
@@ -34,17 +31,11 @@ class FirebaseMiddleware:
 
             firebase_uid = decode_token["uid"]
             email = decode_token["email"]
-
-            # TODO DELETE
-            # firebase_uid = "I child leg probably others run other. Huge best join offer per."
-            # email = auth_header[2]
             
             account, created = Account.objects.update_or_create(
                 email=email,
                 defaults={"firebase_uid": firebase_uid}
             )
-
-            print("Hard coded user id: ", account.id)
 
             request.account = AccountSerializer(account).data
 
