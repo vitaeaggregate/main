@@ -11,7 +11,7 @@ class DjangoMiddleware:
         if request.path.startswith("/admin") or request.path.startswith("/sessions"):
             return self.get_response(request)
 
-        token_key = request.headers.get("token")
+        token_key = request.headers.get("Authorization")
 
         if not token_key:
             return JsonResponse({'status': 'error', 'message': 'Token is missing'}, status=status.HTTP_401_UNAUTHORIZED)

@@ -1,5 +1,5 @@
 <script>
-	import InputText from "./InputText.svelte";
+	import InputText from "$lib/components/InputText.svelte";
 </script>
 
 <div class="flex flex-col">

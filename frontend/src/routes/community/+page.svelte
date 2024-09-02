@@ -1,6 +1,5 @@
 <script lang="ts">
-	import RichTextComposer from "../../lib/svelte-lexical/src/RichTextComposer.svelte";
-	import "../../lib/svelte-lexical/src/global.css";
+	import RichTextComposer from "$lib/components/svelte-lexical/RichTextComposer.svelte";
 	import type { Comment } from "svelte/types/compiler/interfaces";
 
   import { onMount } from "svelte";
@@ -18,15 +17,13 @@ console.log(comments)
 
 </script>
 
-<div class="p-2 m-auto">
-	<h1>Community</h1>
-	<p>
-		Welcome to <a href="https://github.com/umaranis/svelte-lexical/"> svelte-lexical </a>
-		demo built using
-		<a href="https://kit.svelte.dev">SvelteKit</a>
-	</p>
-	<div style="text-align: left;">
-		<RichTextComposer />
+<section>
+	<div class="container">
+		<div class="flex justify-center">
+			<div class="max-w-4xl rounded-lg border-2">
+				<RichTextComposer></RichTextComposer>
+			</div>
+		</div>
 	</div>
 	<br/>
 	<h2>Comments</h2>
@@ -35,5 +32,6 @@ console.log(comments)
 	<p>{comment.description}</p>
 	{/each}
 	<p>There is text here</p>
-</div></div>
+</div>
 	
+</section>
