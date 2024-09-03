@@ -45,7 +45,7 @@
 				</ul>
 			</div>
 			<div>
-				<h2>Resumes</h2>
+				<h2><a href="/my/resumes">Resumes</a></h2>
 				{#if resumes}
 					<ul class="flex flex-col gap-5 p-5">
 						{#each resumes as resume}

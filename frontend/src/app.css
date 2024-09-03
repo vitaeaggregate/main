@@ -16,3 +16,7 @@ h3 {
 	font-size: 1em;
 	font-weight: bold;
 }
+
+a {
+	cursor: pointer;
+}
