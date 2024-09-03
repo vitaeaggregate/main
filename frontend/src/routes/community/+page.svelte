@@ -7,7 +7,7 @@
 	import { getCommentsByMemberIdByResumeId } from "$lib/api/comment";
 	import { getResumesByMemberId } from "$lib/api/resume";
 	import { account } from "$lib/store";
-	import type Resume from "$lib/interfaces/resume/Resume";
+	import type {Resume} from "$lib/interfaces/resume/Resume";
 	import { goto } from "$app/navigation";
 	import { currentResume } from '$lib/store';
 	

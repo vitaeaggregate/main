@@ -1,16 +1,12 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
-	import type Resume from "$lib/interfaces/resume/Resume";
+		import type { Resume } from "$lib/interfaces/resume/Resume";
 	import { onMount } from "svelte";
 	import { writable } from "svelte/store";
 	import { account } from "$lib/store";
 	import { getResumesByMemberId } from "$lib/api/resume";
 	import { getCommentsByMemberId, getCommentsByMemberIdByResumeId } from "$lib/api/comment";
-<<<<<<< HEAD
-=======
-	import type { Resume } from "$lib/interfaces/resume/Resume";
 	import { deleteResume } from "$lib/api/resume";
->>>>>>> fc08303bcff564f0ebd36a68adba11dab35997fe
 	import type Comment from "$lib/interfaces/resume/Comment";
 	import { currentResume } from '$lib/store';
 
@@ -62,9 +58,7 @@
 						{#each resumes as resume}
 							<li class="rounded-lg border-2 p-2">
 								<p><strong>Resume id:</strong> {resume.id}</p>
-<<<<<<< HEAD
 								<a href="/community" on:click={() => handleResumeClick(resume.id)}><strong>Title:</strong> {resume.title}</a>
-=======
 								<p><strong>Title:</strong> {resume.title}</p>
 								<h3>Comments</h3>
 								<ul class="flex flex-col gap-5 p-5">
@@ -82,7 +76,6 @@
 									{/if}
 								</ul>
 								<button on:click={() => {handleDelete($account.id, resume.id)}}>Delete</button>
->>>>>>> fc08303bcff564f0ebd36a68adba11dab35997fe
 							</li>
 						{/each}
 					</ul>
