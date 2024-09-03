@@ -1,7 +1,6 @@
 <script lang="ts">
 	import "../app.css";
 
-	import type Account from "$lib/interfaces/member/Account";
 	import { logout } from "$lib/utils";
 	import { goto } from "$app/navigation";
 	import { onMount } from "svelte";

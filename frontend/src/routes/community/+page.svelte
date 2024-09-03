@@ -1,15 +1,29 @@
 <script lang="ts">
 	import RichTextComposer from "$lib/components/svelte-lexical/RichTextComposer.svelte";
 	import type { Comment } from "svelte/types/compiler/interfaces";
+	import { error } from "@sveltejs/kit";
+	import { account } from "$lib/store";
+	import { resume } from "$lib/store";
+  	import { onMount } from "svelte";
+	import { PUBLIC_SERVER } from "$env/static/public";
+	import { writable } from "svelte/store";
+	import { fetchData } from "$lib/utils";
 
-  import { onMount } from "svelte";
-
+	export const id = writable<number | null>(null);
   let comments: Comment[] = [];
 
   onMount(async () => {
-	const url = "http://localhost:8000/members/1/resumes/1/comments"; // Construct URL with API endpoint
+	// if (!$account) return goto("/login/test");
+	const requestInit: RequestInit = {
+			method: "GET"
+		};
+const response = await fetchData(`${PUBLIC_SERVER}/members/${$account.id}/resumes/${$resume.id}/comments`, requestInit);
 
-const response = await fetch(url);
+if (!response.ok) {
+			return error(response.status, response.statusText);
+		}
+
+
 const commentsData: Comment[] = await response.json();
 comments = commentsData;
 console.log(comments)
