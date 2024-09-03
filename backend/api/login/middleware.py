@@ -14,7 +14,7 @@ class DjangoMiddleware:
         token_key = request.headers.get("Authorization")
 
         if not token_key:
-            return JsonResponse({'status': 'error', 'message': 'Token is missing'}, status=status.HTTP_401_UNAUTHORIZED)
+            return JsonResponse({'status': 'error', 'message': 'Token is missing'}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             token = CustomToken.objects.get(key=token_key,)
