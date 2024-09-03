@@ -6,9 +6,10 @@
 	import { goto } from "$app/navigation";
 	import { onMount } from "svelte";
 	import { account } from "$lib/store";
-	
+
 	onMount(() => {
-		account.set(JSON.parse(sessionStorage.getItem("account") || "{}"));
+		const accountSessionStorage = sessionStorage.getItem("account") || null;
+		if (accountSessionStorage) account.set(JSON.parse(accountSessionStorage));
 	});
 
 	const handleLogout = async () => {
