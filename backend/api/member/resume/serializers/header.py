@@ -1,6 +1,6 @@
 from rest_framework import serializers
+from api.member.models.account import Account
 from ..models.header import Header
-
 from .personal_info import PersonalInfoSerializer, PersonalInfo
 from .link import LinkSerializer, Link
 from .award import AwardSerializer, Award
@@ -30,7 +30,6 @@ class HeaderSerializer(serializers.ModelSerializer):
     awards = AwardSerializer(many=True, required=False)
     skills = SkillSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)
-
 
     class Meta:
         model = Header
@@ -82,8 +81,28 @@ class HeaderSerializer(serializers.ModelSerializer):
 
         return {field: representation[field] for field in ["id", "is_shareable"]}
 
+    def removeAllHeaders(self, data):
+        for key, value in data.items():
+            if isinstance(value, dict):
+                if "header" in value:
+                    del value["header"]
+            elif isinstance(value, list):
+                for item in value:
+                    if "header" in item:
+                        del item["header"]
+        return data
+
     def create(self, validated_data):
-        print(validated_data)
+        validated_data = self.removeAllHeaders(validated_data)
+
+        member_data = validated_data.pop("member")
+        title_data = validated_data.pop("title")
+        
+        if "is_shareable" in validated_data:
+            is_shareable_data = validated_data.pop("is_shareable")
+
+        header = Header.objects.create(member=member_data, title=title_data, is_shareable=is_shareable_data)
+
         personal_info_data = validated_data.pop("personal_info", None)
         links_data = validated_data.pop("links", None)
         awards_data = validated_data.pop("awards", None)
@@ -97,8 +116,6 @@ class HeaderSerializer(serializers.ModelSerializer):
         publications_data = validated_data.pop("publications", None)
         skills_data = validated_data.pop("skills", None)
         references_data = validated_data.pop("references", None)
-
-        header = Header.objects.create(**validated_data)
 
         if personal_info_data:
             PersonalInfo.objects.create(header=header, **personal_info_data)

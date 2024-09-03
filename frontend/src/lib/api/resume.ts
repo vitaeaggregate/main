@@ -3,7 +3,7 @@ import type { BaseResume, Resume } from "$lib/interfaces/resume/Resume";
 import { fetchData } from "$lib/utils";
 import { error } from "@sveltejs/kit";
 
-export const getResumesByMemberId = async (memberId: number): Promise<Resume[] | null> => {
+export const getResumesByMemberId = async (memberId: number): Promise<Resume[]> => {
 	const requestInit: RequestInit = {
 		method: "GET"
 	};
@@ -19,7 +19,7 @@ export const getResumesByMemberId = async (memberId: number): Promise<Resume[] |
 
 	const resumes: Resume[] = await response.json();
 
-	return resumes.length ? resumes : null;
+	return resumes;
 };
 
 // POST Resume Data
