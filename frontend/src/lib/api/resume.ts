@@ -33,7 +33,7 @@ export const createResume = async (memberId: number, resume: BaseResume): Promis
 		PUBLIC_SERVER + "/members/" + memberId + "/resumes/",
 		requestInit
 	);
-	
+
 	if (!response.ok) {
 		throw error(response.status, response.statusText);
 	}
@@ -44,3 +44,16 @@ export const createResume = async (memberId: number, resume: BaseResume): Promis
 };
 
 // DELETE Resume Data
+export const deleteResume = async (memberID: number, resume: number): Promise<boolean> => {
+	const requestInit: RequestInit = {
+		method: "DELETE"
+	};
+	const response = await fetchData(
+		PUBLIC_SERVER + "/members/" + memberID + "/resumes/" + resume + "/",
+		requestInit
+	);
+	if (!response.ok) {
+		throw error(response.status, response.statusText);
+	}
+	return true;
+};
