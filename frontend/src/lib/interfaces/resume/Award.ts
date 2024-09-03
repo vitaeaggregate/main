@@ -1,5 +1,5 @@
 export default interface Award {
-	id: number;
+	id?: number;
 	resume: number;
 	title?: string;
 	issuer?: string;

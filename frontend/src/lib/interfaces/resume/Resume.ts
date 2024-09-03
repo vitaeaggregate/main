@@ -11,18 +11,20 @@ import type Project from "$lib/interfaces/resume/Project";
 import type Reference from "$lib/interfaces/resume/Reference";
 import type Skill from "$lib/interfaces/resume/Skill";
 import type ProfessionalExp from "$lib/interfaces/resume/ProfessionalExp";
+import type Publication from "$lib/interfaces/resume/Publication";
 
 export default interface Resume extends Header {
 	personal: PersonalInfo;
-	awards: Award[];
-	certificates: Certificate[];
-	courses: Course[];
-	educations: Education[];
-	interests: Interest[];
-	languages: Language[];
-	links: Link[];
-	professional_exps: ProfessionalExp[];
-	projects: Project[];
-	references: Reference[];
-	skills: Skill[];
+	awards?: Award[];
+	certificates?: Certificate[];
+	courses?: Course[];
+	educations?: Education[];
+	interests?: Interest[];
+	languages?: Language[];
+	links?: Link[];
+	professional_exps?: ProfessionalExp[];
+	projects?: Project[];
+	references?: Reference[];
+	skills?: Skill[];
+	publications?: Publication[];
 }

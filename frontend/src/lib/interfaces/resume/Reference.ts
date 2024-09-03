@@ -1,5 +1,5 @@
 export default interface Reference {
-	id: number;
+	id?: number;
 	resume: number;
 	name: string;
 	job_title?: string;

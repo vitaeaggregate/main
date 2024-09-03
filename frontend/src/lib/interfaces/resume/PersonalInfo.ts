@@ -1,5 +1,5 @@
 export default interface PersonalInfo {
-	id: number;
+	id?: number;
 	resume: number;
 	full_name: string;
 	job_title: string;

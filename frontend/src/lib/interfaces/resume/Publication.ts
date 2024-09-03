@@ -1,5 +1,5 @@
 export default interface Publication {
-	id: number;
+	id?: number;
 	resume: number;
 	title: string;
 	publisher?: string;

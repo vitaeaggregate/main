@@ -1,5 +1,5 @@
 export default interface Course {
-	id: number;
+	id?: number;
 	resume: number;
 	degree?: string;
 	institution?: string;

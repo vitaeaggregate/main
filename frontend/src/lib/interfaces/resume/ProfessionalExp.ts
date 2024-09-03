@@ -1,5 +1,5 @@
 export default interface ProfessionalExp {
-	id: number;
+	id?: number;
 	resume: number;
 	job_title: string;
 	employer: string;

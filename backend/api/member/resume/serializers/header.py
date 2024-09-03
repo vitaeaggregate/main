@@ -96,7 +96,9 @@ class HeaderSerializer(serializers.ModelSerializer):
         skills_data = validated_data.pop("skills", None)
         references_data = validated_data.pop("references", None)
 
-        PersonalInfo.objects.create(header=header, **personal_info_data)
+        print(personal_info_data)
+
+        PersonalInfo.objects.create(header=self, **personal_info_data)
 
         model_data_mapping = {
             Link: links_data,
