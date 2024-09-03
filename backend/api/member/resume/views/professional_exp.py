@@ -7,7 +7,7 @@ class ProfessionalExpViewSet(viewsets.ModelViewSet):
     serializer_class = ProfessionalExpSerializer
 
     def get_queryset(self):
-        resume_pk = self.kwargs.get('resume_pk')
-        if resume_pk:
-            return ProfessionalExp.objects.filter(resume_id=resume_pk)
+        header_pk = self.kwargs.get('header_pk')
+        if header_pk:
+            return ProfessionalExp.objects.filter(header_id=header_pk)
         return ProfessionalExp.objects.all()

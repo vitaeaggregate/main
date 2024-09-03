@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
-	import type Resume from "$lib/interfaces/resume/Resume";
 	import { onMount } from "svelte";
 	import { writable } from "svelte/store";
 	import { account } from "$lib/store";
 	import { getResumesByMemberId } from "$lib/api/resume";
 	import { getCommentsByMemberId, getCommentsByMemberIdByResumeId } from "$lib/api/comment";
+	import type { Resume } from "$lib/interfaces/resume/Resume";
 	import type Comment from "$lib/interfaces/resume/Comment";
 
 	export const id = writable<number | null>(null);
@@ -39,6 +39,7 @@
 				<h2>Member Info</h2>
 				<ul class="flex flex-col gap-5 p-5">
 					<li class="rounded-lg border-2 p-2">
+						<p><strong>Id: </strong>{$account.id}</p>
 						<p><strong>Email: </strong>{$account.email}</p>
 					</li>
 				</ul>
@@ -80,7 +81,7 @@
 					<ul class="flex flex-col gap-5 p-5">
 						{#each memberComments as comment}
 							<li class="rounded-lg border-2 p-2">
-								<p><strong>Resume id:</strong> {comment.resume}</p>
+								<p><strong>Resume id:</strong> {comment.header}</p>
 								<p><strong>Comment:</strong> {comment.description}</p>
 							</li>
 						{/each}

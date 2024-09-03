@@ -3,13 +3,13 @@
     import InputText from "$lib/components/InputText.svelte";
     import TextArea from "$lib/components/TextArea.svelte";
 
-    let resumeID: number = 0;
+    let headerId: number = 0;
     let inputName: string = '';
     let inputDescription: string = '';
     let inputSkillLevel: string = '';
 
     $: skill = {
-        resume: resumeID,
+        header: headerId,
         name: inputName,
         description: inputDescription,
         skill_level: inputSkillLevel,

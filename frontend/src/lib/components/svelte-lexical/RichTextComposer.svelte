@@ -1,8 +1,6 @@
 <script lang=ts>
   import "./global.css"
 
-  export let value: string | null = null
-
   import {
     Composer,
     ContentEditable,

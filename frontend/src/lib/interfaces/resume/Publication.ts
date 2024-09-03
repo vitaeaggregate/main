@@ -1,8 +1,8 @@
 export default interface Publication {
 	id?: number;
-	resume: number;
-	title: string;
+	header?: number;
+	title?: string;
 	publisher?: string;
-	date?: Date;
+	date?: string;
 	description?: string;
 }

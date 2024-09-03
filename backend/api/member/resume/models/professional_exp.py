@@ -3,7 +3,7 @@ from django.db import models
 
 
 class ProfessionalExp(models.Model):
-    resume = models.ForeignKey(Header, related_name="professional_exps", on_delete=models.CASCADE, blank=False)
+    header = models.ForeignKey(Header, related_name="professional_exps", on_delete=models.CASCADE, blank=False)
     job_title = models.CharField(max_length=100, blank=False)
     employer = models.CharField(max_length=100, blank=False)
     city = models.CharField(max_length=100, blank=True)
