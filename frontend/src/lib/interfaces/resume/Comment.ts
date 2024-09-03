@@ -1,5 +1,8 @@
-export default interface Comment {
-	id?: number;
+export interface Comment extends BaseComment {
+	id: number;
+}
+
+export interface BaseComment {
 	header?: number;
 	member?: number;
 	description?: string;

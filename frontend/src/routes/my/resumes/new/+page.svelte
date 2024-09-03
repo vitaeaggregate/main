@@ -2,4 +2,7 @@
 	import Resume from "$lib/components/resume/resume.svelte";
 </script>
 
-<Resume></Resume>
+<section>
+	<h1>New Resume</h1>
+	<Resume></Resume>
+</section>

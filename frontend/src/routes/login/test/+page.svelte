@@ -13,9 +13,9 @@
 
 	let email = "";
 
-	onMount(() => {
-		if ($account) return goto("/my/dashboard");
-	});
+	$: {
+		if ($account) goto("/my/dashboard");
+	}
 
 	let handleSubmit = async () => {
 		const response = await login(email);

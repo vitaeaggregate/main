@@ -15,6 +15,8 @@ import type Publication from "$lib/interfaces/resume/Publication";
 
 export interface Resume extends BaseResume {
 	id: number;
+	created_at: Date;
+	updated_at: Date;
 }
 
 export interface BaseResume extends BaseHeader {
