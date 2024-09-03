@@ -41,14 +41,15 @@
 			</div>
 			<div>
 				<h2>Resumes</h2>
+				
 				<ul>
 					{#each resumes as resume}
 					<!-- Should have a link to the resume -->
-						<li>- <a href="members/{$account.id}/resumes/{resume.id}">{resume.title}</a></li>
+						<li>- <a href="members/{$account.id}/{resume.id}">{resume.title}</a></li>
 					{/each}
 				</ul>
 				<br />
-				<a href="/resumes" class="hover:italic">Create new one?</a>
+				<a href="/resumes" class="hover:italic">Create new resume?</a>
 			</div>
 			<div>
 				<h2>Community</h2>
