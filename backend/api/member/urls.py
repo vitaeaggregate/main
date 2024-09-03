@@ -47,6 +47,8 @@ router = DefaultRouter()
 # Comment Route
 router.register(r"members/(?P<member_pk>[^/.]+)/resumes/(?P<resume_pk>[^/.]+)/comments",
                 CommentViewSet, basename="view comments by member id and resume id")
+router.register(r"members/(?P<member_pk>[^/.]+)/comments",
+                CommentViewSet, basename="view comments by member id")
 
 # Resume Route
 router.register(r"members/(?P<member_pk>[^/.]+)/resumes",
