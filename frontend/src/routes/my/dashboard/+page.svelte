@@ -17,8 +17,9 @@
 	let memberComments: Comment[] | null = null;
 	let resumesComments: { [resumeId: number]: Comment[] } = {};
 
-	function handleDelete(id:number){
-		deleteResume(id)
+	function handleDelete(id:number, resumeId: number){
+		deleteResume(id, resumeId);
+		resumes = resumes?.filter((resume) => resume.id !== resumeId) || null;
 	}
 
 	onMount(async () => {
@@ -72,7 +73,7 @@
 										</li>
 									{/if}
 								</ul>
-								<button on:click={() => {handleDelete(resume.id)}}>Delete</button>
+								<button on:click={() => {handleDelete($account.id, resume.id)}}>Delete</button>
 							</li>
 						{/each}
 					</ul>
