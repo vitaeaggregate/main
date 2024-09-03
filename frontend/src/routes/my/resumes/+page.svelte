@@ -12,6 +12,7 @@
 	import ProfessionalExp from "$lib/components/resume/ProfessionalExp.svelte";
 	import Project from "$lib/components/resume/Project.svelte";
 	import Reference from "$lib/components/resume/Reference.svelte";
+	import { addResume } from "$lib/api/resume";
 
 	let personalInfo = {}
 	let profExp = {};
@@ -41,10 +42,25 @@
 		award = event.detail;
 		certificate = event.detail;
 		reference = event.detail;
-		console.log(personalInfo)
 	}
 
 	function handleSubmit() {
+		const resumeObject = {
+			personal_info: personalInfo,
+			professional_exp: profExp,
+			links: link,
+			skills: skill,
+			education: education,
+			courses: course,
+			languages: language,
+			interests: interest,
+			projects: project,
+			publications: publication,
+			awards: award,
+			certificates: certificate,
+			references: reference,
+		}
+		addResume(resumeObject);
 	}
 </script>
 
