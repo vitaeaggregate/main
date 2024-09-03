@@ -8,7 +8,20 @@ export const getCommentsByMemberId = async (memberId: number): Promise<Comment[]
 
 	if (!response.ok) throw error(response.status, response.statusText);
 
-    const comments: Comment[] = await response.json();
+	const comments: Comment[] = await response.json();
+
+	return comments;
+};
+
+export const getCommentsByMemberIdByResumeId = async (
+	memberId: number,
+	resumeId: number
+): Promise<Comment[]> => {
+	const response = await fetchData(PUBLIC_SERVER + "/members/" + memberId + "/resumes/" + resumeId + "/comments");
+
+	if (!response.ok) throw error(response.status, response.statusText);
+
+	const comments: Comment[] = await response.json();
 
     return comments;
 };
