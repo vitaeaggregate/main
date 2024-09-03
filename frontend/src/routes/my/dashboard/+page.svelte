@@ -32,7 +32,6 @@
 						<p><strong>Email: </strong>{$account.email}</p>
 					</li>
 				</ul>
-				<p>{$account.email}</p>
 			</div>
 			<div>
 				<h2>Resumes</h2>
