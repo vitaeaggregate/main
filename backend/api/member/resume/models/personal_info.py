@@ -3,7 +3,7 @@ from django.db import models
 
 
 class PersonalInfo(models.Model):
-    resume = models.OneToOneField(
+    header = models.OneToOneField(
         Header, related_name="personal_info", on_delete=models.CASCADE, blank=False)
     full_name = models.CharField(max_length=200, blank=False)
     job_title = models.CharField(max_length=200, blank=False)

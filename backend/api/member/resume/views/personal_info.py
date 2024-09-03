@@ -7,7 +7,7 @@ class PersonalInfoViewSet(viewsets.ModelViewSet):
     serializer_class = PersonalInfoSerializer
 
     def get_queryset(self):
-        resume_pk = self.kwargs.get("resume_pk")
-        if (resume_pk):
-            return PersonalInfo.objects.filter(resume_id=resume_pk)
+        header_pk = self.kwargs.get("header_pk")
+        if (header_pk):
+            return PersonalInfo.objects.filter(header_id=header_pk)
         return PersonalInfo.objects.all()
