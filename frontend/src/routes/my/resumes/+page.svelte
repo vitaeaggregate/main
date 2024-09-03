@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 	import Education from "$lib/components/resume/Education.svelte";
 	import Interest from "$lib/components/resume/Interest.svelte";
 	import Links from "$lib/components/resume/Links.svelte";
@@ -33,4 +33,46 @@
 <Award></Award>
 <ProfessionalExp></ProfessionalExp>
 <Certificate></Certificate>
-<Reference></Reference>
+<Reference></Reference> -->
+
+
+<script lang="ts">
+	import { goto } from "$app/navigation";
+	import { PUBLIC_SERVER } from "$env/static/public";
+	import type Resume from "$lib/interfaces/resume/Resume";
+	import { fetchData } from "$lib/utils";
+	import { error } from "@sveltejs/kit";
+	import { onMount } from "svelte";
+	import { writable } from "svelte/store";
+	import { account } from "$lib/store";
+
+		let resumes: Resume[] = [];
+
+		export const id = writable<number | null>(null);
+
+onMount(async () => {
+
+	const requestInit: RequestInit = {
+		method: "GET"
+	};
+
+	const response = await fetchData(`${PUBLIC_SERVER}/members/${$account.id}/resumes`, requestInit);
+
+	if (!response.ok) {
+		return error(response.status, response.statusText);
+	}
+
+	resumes = await response.json();
+	console.log(resumes)
+});
+</script>
+
+<div class="flex">
+	{#each resumes as resume}
+    <h2>{resume.title}</h2>
+    <ul>
+      {#each resume.languages as language}
+        <li>{language}</li> {/each}
+    </ul>
+  {/each}
+</div>

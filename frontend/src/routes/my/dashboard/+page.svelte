@@ -28,6 +28,7 @@
 		}
 
 		resumes = await response.json();
+		console.log(resumes)
 	});
 </script>
 
