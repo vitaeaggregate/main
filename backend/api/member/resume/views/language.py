@@ -7,7 +7,7 @@ class LanguageViewSet(viewsets.ModelViewSet):
     serializer_class = LanguageSerializer
 
     def get_queryset(self):
-        resume_pk = self.kwargs.get('resume_pk')
-        if resume_pk:
-            return Language.objects.filter(resume_id=resume_pk)
+        header_pk = self.kwargs.get('header_pk')
+        if header_pk:
+            return Language.objects.filter(header_id=header_pk)
         return Language.objects.all()

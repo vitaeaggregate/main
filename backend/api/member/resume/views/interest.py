@@ -7,7 +7,7 @@ class InterestViewSet(viewsets.ModelViewSet):
     serializer_class = InterestSerializer
 
     def get_queryset(self):
-        resume_pk = self.kwargs.get("resume_pk")
-        if (resume_pk):
-            return Interest.objects.filter(resume_id=resume_pk)
+        header_pk = self.kwargs.get("header_pk")
+        if (header_pk):
+            return Interest.objects.filter(header_id=header_pk)
         return Interest.objects.all()

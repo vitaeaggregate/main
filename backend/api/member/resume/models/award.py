@@ -3,7 +3,7 @@ from .header import Header
 
 
 class Award(models.Model):
-    resume = models.ForeignKey(
+    header = models.ForeignKey(
         Header, related_name="awards", on_delete=models.CASCADE, blank=False)
     title = models.CharField(max_length=100, blank=True)
     issuer = models.CharField(max_length=100, blank=True)

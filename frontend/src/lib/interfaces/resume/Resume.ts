@@ -1,5 +1,5 @@
+import type { BaseHeader } from "$lib/interfaces/resume/Header";
 import type Award from "$lib/interfaces/resume/Award";
-import type Header from "$lib/interfaces/resume/Header";
 import type Certificate from "$lib/interfaces/resume/Certificate";
 import type Interest from "$lib/interfaces/resume/Interest";
 import type PersonalInfo from "$lib/interfaces/resume/PersonalInfo";
@@ -13,8 +13,13 @@ import type Skill from "$lib/interfaces/resume/Skill";
 import type ProfessionalExp from "$lib/interfaces/resume/ProfessionalExp";
 import type Publication from "$lib/interfaces/resume/Publication";
 
-export default interface Resume extends Header {
-	personal: PersonalInfo;
+export interface Resume extends BaseResume {
+	id: number;
+}
+
+export interface BaseResume extends BaseHeader {
+	personal_info?: PersonalInfo;
+	is_shareable?: boolean;
 	awards?: Award[];
 	certificates?: Certificate[];
 	courses?: Course[];

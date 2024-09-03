@@ -3,7 +3,7 @@ from django.db import models
 
 
 class Course(models.Model):
-    resume = models.ForeignKey(
+    header = models.ForeignKey(
         Header, related_name="courses", on_delete=models.CASCADE, blank=False)
     degree = models.CharField(max_length=100, blank=True)
     institution = models.CharField(max_length=100, blank=True)

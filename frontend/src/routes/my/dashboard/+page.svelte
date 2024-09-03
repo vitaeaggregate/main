@@ -5,7 +5,7 @@
 	import { writable } from "svelte/store";
 	import { account } from "$lib/store";
 	import { getResumesByMemberId } from "$lib/api/resume";
-	import { getCommentsByMemberId } from "$lib/api/comment";
+	import { getCommentsByMemberId, getCommentsByMemberIdByResumeId } from "$lib/api/comment";
 	import type Comment from "$lib/interfaces/resume/Comment";
 	import { currentResume } from '$lib/store';
 

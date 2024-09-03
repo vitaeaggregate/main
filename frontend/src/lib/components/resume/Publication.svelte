@@ -4,14 +4,14 @@
     import InputDate from "$lib/components/InputDate.svelte";
 	import { createEventDispatcher } from "svelte";
 
-    let resumeID: number = 0;
-	let inputTitle: string = '';
-	let inputPublisher: string = '';
-	let inputDate: Date = new Date;
-	let inputDescription: string = '';
+    let headerId: number;
+	let inputTitle: string;
+	let inputPublisher: string;
+	let inputDate: Date;
+	let inputDescription: string;
 
     $: publication = {
-        resume: resumeID,
+        header: headerId,
         title: inputTitle,
         publisher: inputPublisher,
         date: inputDate,

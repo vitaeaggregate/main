@@ -2,13 +2,14 @@
 	import { createEventDispatcher } from "svelte";
 	import InputText from "$lib/components/InputText.svelte";
 	import TextArea from "$lib/components/TextArea.svelte";
-    let resumeID: number = 0;
-    let inputLanguage: string = '';
-    let inputDescription: string = '';
-    let inputSkillLevel: string = '';
+
+    let headerId: number;
+    let inputLanguage: string;
+    let inputDescription: string;
+    let inputSkillLevel: string;
 
     $:language = {
-        resume: resumeID,
+        header: headerId,
         language: inputLanguage,
         description: inputDescription,
         skill_level: inputSkillLevel,

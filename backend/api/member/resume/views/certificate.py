@@ -7,7 +7,7 @@ class CertificateViewSet(viewsets.ModelViewSet):
     serializer_class = CertificateSerializer
 
     def get_queryset(self):
-        resume_pk = self.kwargs.get('resume_pk')
-        if resume_pk:
-            return Certificate.objects.filter(resume_id=resume_pk)
+        header_pk = self.kwargs.get('header_pk')
+        if header_pk:
+            return Certificate.objects.filter(header_id=header_pk)
         return Certificate.objects.all()
