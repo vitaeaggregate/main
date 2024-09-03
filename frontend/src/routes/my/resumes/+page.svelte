@@ -52,22 +52,6 @@
 
 	let title: string = '';
 
-	// function handleUpdate(event:CustomEvent) {
-	// 	// personalInfo = event.detail;
-	// 	// profExp = event.detail;
-	// 	// link = event.detail;
-	// 	// skill = event.detail;
-	// 	// education = event.detail;
-	// 	// course = event.detail;
-	// 	// language = event.detail;
-	// 	// interest = event.detail;
-	// 	// project = event.detail;
-	// 	// publication = event.detail;
-	// 	// award = event.detail;
-	// 	// certificate = event.detail;
-	// 	// reference = event.detail;
-	// }
-
 	function handleSubmit() {
 		if (!$account) {
 			return

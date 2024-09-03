@@ -42,3 +42,16 @@ export const addResume = async (memberId: number, resume: Resume): Promise<Resum
 };
 
 // DELETE Resume Data
+export const deleteResume = async (resume: Resume): Promise<Resume> => {
+	const requestInit: RequestInit = {
+		method: "DELETE"
+	};
+	const response = await fetch(PUBLIC_SERVER + "/resumes/" + resume, requestInit);
+	if (!response.ok) {
+		throw error(response.status, response.statusText);
+	}
+
+	const resumeData: Resume = await response.json();
+
+	return resumeData;
+};

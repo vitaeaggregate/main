@@ -6,6 +6,7 @@
 	import { account } from "$lib/store";
 	import { getResumesByMemberId } from "$lib/api/resume";
 	import { getCommentsByMemberId, getCommentsByMemberIdByResumeId } from "$lib/api/comment";
+	import { deleteResume } from "$lib/api/resume";
 	import type Comment from "$lib/interfaces/resume/Comment";
 
 	export const id = writable<number | null>(null);
@@ -15,6 +16,10 @@
 	let resumes: Resume[] | null = null;
 	let memberComments: Comment[] | null = null;
 	let resumesComments: { [resumeId: number]: Comment[] } = {};
+
+	function handleDelete(){
+		deleteResume()
+	}
 
 	onMount(async () => {
 		if (!$account) return goto("/login/test");
@@ -66,6 +71,7 @@
 										</li>
 									{/if}
 								</ul>
+								<button on:click={() => {handleDelete(resume.id)}}>Delete</button>
 							</li>
 						{/each}
 					</ul>
