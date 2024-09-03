@@ -7,6 +7,7 @@
 	import { getResumesByMemberId } from "$lib/api/resume";
 	import { getCommentsByMemberId } from "$lib/api/comment";
 	import type Comment from "$lib/interfaces/resume/Comment";
+	import { currentResume } from '$lib/store';
 
 	export const id = writable<number | null>(null);
 	export const resumeId = writable<number | null>(null)
@@ -20,6 +21,15 @@
 		resumes = await getResumesByMemberId($account.id);
 		comments = await getCommentsByMemberId($account.id);
 	});
+
+	const handleResumeClick = (resumeId: number | null) => {
+  currentResume.update((current) => ({
+    ...current,
+    id: resumeId
+  }));
+};
+
+  $: console.log($currentResume);
 </script>
 
 <section class="">
@@ -42,7 +52,7 @@
 						{#each resumes as resume}
 							<li class="rounded-lg border-2 p-2">
 								<p><strong>Resume id:</strong> {resume.id}</p>
-								<p><strong>Title:</strong> {resume.title}</p>
+								<a href="/community" on:click={() => handleResumeClick(resume.id)}><strong>Title:</strong> {resume.title}</a>
 							</li>
 						{/each}
 					</ul>

@@ -17,11 +17,13 @@ export const getCommentsByMemberIdByResumeId = async (
 	memberId: number,
 	resumeId: number
 ): Promise<Comment[]> => {
-	const response = await fetchData(PUBLIC_SERVER + "/members/" + memberId + "/resumes/" + resumeId + "/comments");
+	const response = await fetchData(
+		PUBLIC_SERVER + "/members/" + memberId + "/resumes/" + resumeId + "/comments"
+	);
 
 	if (!response.ok) throw error(response.status, response.statusText);
 
 	const comments: Comment[] = await response.json();
 
-    return comments;
+	return comments;
 };
