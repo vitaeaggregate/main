@@ -9,3 +9,5 @@ class Comment(models.Model):
     member = models.ForeignKey(
         Account, related_name="comments", on_delete=models.SET_NULL, blank=False, null=True)
     description = models.TextField(blank=False)
+    created_at = models.DateTimeField(auto_now_add=True, blank=False)
+    updated_at = models.DateTimeField(auto_now=True, blank=False)
