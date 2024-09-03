@@ -4,20 +4,20 @@
 	import { createEventDispatcher } from "svelte";
 	// import Page from "../../routes/+page.svelte";
     
-    let resumeID: number = 0;
-	let inputFullName: string = '';
-	let inputJobTitle: string = '';
-	let inputEmail: string = '';
-	let inputPhoneNumber: string = '';
-	let inputAddress: string = '';
-	let inputDateOfBirth: Date = new Date;
-	let inputDrivingLicense: string = '';
-	let inputGenderPronoun: string = '';
-	let inputMaritalStatus: string = '';
-	let inputNationality: string = '';
+    let headerId: number;
+	let inputFullName: string;
+	let inputJobTitle: string;
+	let inputEmail: string;
+	let inputPhoneNumber: string;
+	let inputAddress: string;
+	let inputDateOfBirth: Date;
+	let inputDrivingLicense: string;
+	let inputGenderPronoun: string;
+	let inputMaritalStatus: string;
+	let inputNationality: string;
 
     $: personalInfo = {
-        resume: resumeID,
+        header: headerId,
         full_name: inputFullName,
         job_title: inputJobTitle,
         email: inputEmail,

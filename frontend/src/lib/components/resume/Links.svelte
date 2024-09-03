@@ -2,12 +2,12 @@
     import InputText from "$lib/components/InputText.svelte";
 	import { createEventDispatcher } from "svelte";
     
-    let resumeID: number = 0;
-    let inputTitle: string = '';
-    let inputURL: string = '';
+    let headerId: number;
+    let inputTitle: string;
+    let inputURL: string;
 
     $: linksObject = {
-        resume: resumeID,
+        header: headerId,
         title: inputTitle,
         url: inputURL,
     }

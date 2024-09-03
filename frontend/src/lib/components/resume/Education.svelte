@@ -4,17 +4,17 @@
 	import InputDate from "$lib/components/InputDate.svelte";
 	import TextArea from "$lib/components/TextArea.svelte";
 
-	let resumeID: number = 0;
-	let inputDegree:string = '';
-	let inputInstitution:string = '';
-	let inputCity:string = '';
-	let inputCountry:string = '';
-	let inputStartDate:Date = new Date;
-	let inputEndDate:Date = new Date;
-	let inputDescription: string = ''
+	let headerId: number;
+	let inputDegree:string;
+	let inputInstitution:string;
+	let inputCity:string;
+	let inputCountry:string;
+	let inputStartDate:Date;
+	let inputEndDate:Date;
+	let inputDescription: string
 
 	$: education = {
-		resume: resumeID,
+		header: headerId,
 		degree: inputDegree,
 		institution: inputInstitution,
 		city: inputCity,

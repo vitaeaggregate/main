@@ -3,15 +3,15 @@
 	import InputText from "$lib/components/InputText.svelte";
 	import InputDate from "$lib/components/InputDate.svelte";
 	
-	let resumeID: number = 0;
-	let inputTitle: string = '';
-	let inputSubTitle: string = '';
-	let inputStartDate: Date = new Date;
-	let inputEndDate: Date = new Date;
-	let inputDescription: string = '';
+	let headerId: number;
+	let inputTitle: string;
+	let inputSubTitle: string;
+	let inputStartDate: Date;
+	let inputEndDate: Date;
+	let inputDescription: string;
 
 	$: project = {
-		resume: resumeID,
+		header: headerId,
 		title: inputTitle,
 		sub_title: inputSubTitle,
 		start_date: inputStartDate,
