@@ -12,6 +12,8 @@
 	import ProfessionalExperience from "$lib/components/resume/ProfessionalExperience.svelte";
 	import Projects from "$lib/components/resume/Project.svelte";
 	import References from "$lib/components/resume/Reference.svelte";
+
+	import { account } from "$lib/store";
 	
 	import type Resume from "$lib/interfaces/resume/Resume";
 	import type PersonalInfo from "$lib/interfaces/resume/PersonalInfo";
@@ -50,23 +52,26 @@
 
 	let title: string = '';
 
-	function handleUpdate(event:CustomEvent) {
-		// personalInfo = event.detail;
-		// profExp = event.detail;
-		// link = event.detail;
-		// skill = event.detail;
-		// education = event.detail;
-		// course = event.detail;
-		// language = event.detail;
-		// interest = event.detail;
-		// project = event.detail;
-		// publication = event.detail;
-		// award = event.detail;
-		// certificate = event.detail;
-		// reference = event.detail;
-	}
+	// function handleUpdate(event:CustomEvent) {
+	// 	// personalInfo = event.detail;
+	// 	// profExp = event.detail;
+	// 	// link = event.detail;
+	// 	// skill = event.detail;
+	// 	// education = event.detail;
+	// 	// course = event.detail;
+	// 	// language = event.detail;
+	// 	// interest = event.detail;
+	// 	// project = event.detail;
+	// 	// publication = event.detail;
+	// 	// award = event.detail;
+	// 	// certificate = event.detail;
+	// 	// reference = event.detail;
+	// }
 
 	function handleSubmit() {
+		if (!$account) {
+			return
+		}
 		if (!personalInfo) {
 			return;
 		}
@@ -87,7 +92,7 @@
 			certificates: certificate? [certificate]: undefined,
 			references: reference? [reference]: undefined,
 		}
-		addResume(resumeObject);
+		addResume($account.id, resumeObject);
 	}
 </script>
 

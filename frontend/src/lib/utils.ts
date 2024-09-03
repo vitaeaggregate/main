@@ -3,7 +3,7 @@ import { PUBLIC_SERVER } from "$env/static/public";
 import { error } from "@sveltejs/kit";
 import { account } from "./store";
 
-export const fetchData = async (url: string, requestInit: RequestInit) => {
+export const fetchData = async (url: string, requestInit?: RequestInit) => {
 	if (!sessionStorage.getItem("token")) return error(400, "No token");
 
 	const token = sessionStorage.getItem("token") || "";
@@ -11,6 +11,8 @@ export const fetchData = async (url: string, requestInit: RequestInit) => {
 	if (token === "") {
 		return error(400, "No token");
 	}
+
+	if(!requestInit) requestInit = {}
 
 	requestInit.headers = requestInit.headers
 		? {

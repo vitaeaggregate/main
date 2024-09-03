@@ -44,14 +44,17 @@ router = DefaultRouter()
 #     router.register(r"members/resumes/" + route,
 #                     views[route], basename="view all " + route)
 
-# Comment Route
-router.register(r"members/(?P<member_pk>[^/.]+)/resumes/(?P<resume_pk>[^/.]+)/comments",
-                CommentViewSet, basename="view comments by member id and resume id")
 
 # Resume Route
 router.register(r"members/(?P<member_pk>[^/.]+)/resumes",
                 HeaderViewSet, basename="view resumes by member id")
 router.register(r"members/resumes", HeaderViewSet, basename="view all resumes")
+
+# Comment Route
+router.register(r"members/(?P<member_pk>[^/.]+)/resumes/(?P<resume_pk>[^/.]+)/comments",
+                CommentViewSet, basename="view comments by member id and resume id")
+router.register(r"members/(?P<member_pk>[^/.]+)/comments",
+                CommentViewSet, basename="view comments by member id")
 
 # Member Route
 router.register(r"members", AccountViewSet)
