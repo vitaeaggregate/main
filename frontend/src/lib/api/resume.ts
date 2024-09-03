@@ -14,10 +14,31 @@ export const getResumesByMemberId = async (memberId: number): Promise<Resume[] |
 	);
 
 	if (!response.ok) {
-		return error(response.status, response.statusText);
+		throw error(response.status, response.statusText);
 	}
 
-    const resumes: Resume[] = await response.json()
+	const resumes: Resume[] = await response.json();
 
 	return resumes.length ? resumes : null;
 };
+
+// POST Resume Data
+export const addResume = async (memberId: number, resume: Resume): Promise<Resume> => {
+	const requestInit: RequestInit = {
+		method: "POST",
+		body: JSON.stringify(resume)
+	};
+	const response = await fetchData(
+		PUBLIC_SERVER + "/members/" + memberId + "/resumes/",
+		requestInit
+	);
+	if (!response.ok) {
+		throw error(response.status, response.statusText);
+	}
+
+	const resumeData: Resume = await response.json();
+
+	return resumeData;
+};
+
+// DELETE Resume Data

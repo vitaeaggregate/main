@@ -1,5 +1,5 @@
 export default interface Project {
-	id: number;
+	id?: number;
 	resume: number;
 	title: string;
 	sub_title?: string;

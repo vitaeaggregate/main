@@ -1,5 +1,5 @@
 export default interface Link {
-	id: number;
+	id?: number;
 	resume: number;
 	title: string;
 	url: string;

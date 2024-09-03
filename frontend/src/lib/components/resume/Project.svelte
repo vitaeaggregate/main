@@ -1,12 +1,35 @@
-<script>
+<script lang='ts'>
+	import { createEventDispatcher } from "svelte";
 	import InputText from "$lib/components/InputText.svelte";
 	import InputDate from "$lib/components/InputDate.svelte";
+	
+	let resumeID: number = 0;
+	let inputTitle: string = '';
+	let inputSubTitle: string = '';
+	let inputStartDate: Date = new Date;
+	let inputEndDate: Date = new Date;
+	let inputDescription: string = '';
+
+	$: project = {
+		resume: resumeID,
+		title: inputTitle,
+		sub_title: inputSubTitle,
+		start_date: inputStartDate,
+		end_date: inputEndDate,
+		description: inputDescription,
+	}
+
+	const dispatch = createEventDispatcher();
+	$: {
+		dispatch("update", project)
+	}
 </script>
 
 <div class="flex flex-col">
-	<InputText label="Title"></InputText>
-	<InputText label="Subtitle"></InputText>
-	<InputDate label="Start Date"></InputDate>
-	<InputDate label="End Date"></InputDate>
-	<InputText label="Description"></InputText>
+	<h2>Projects</h2>
+	<InputText label="Title" bind:value={inputTitle}/>
+	<InputText label="Subtitle" bind:value={inputSubTitle}/>
+	<InputDate label="Start Date" bind:value={inputStartDate}/>
+	<InputDate label="End Date" bind:value={inputEndDate}/>
+	<InputText label="Description" bind:value={inputDescription}/>
 </div>

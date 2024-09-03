@@ -1,5 +1,5 @@
 export default interface Language {
-	id: number;
+	id?: number;
 	resume: number;
 	language: string;
 	description: string;
