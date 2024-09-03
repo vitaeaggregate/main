@@ -1,38 +1,54 @@
 <script lang="ts">
-	import type Header from '$lib/interfaces/resume/Header';
-  import { onMount } from 'svelte';
-  import { writable } from 'svelte/store';
-  
-  export const id = writable<number | null>(null);
+	import { goto } from "$app/navigation";
+	import { PUBLIC_SERVER } from "$env/static/public";
+	import type Resume from "$lib/interfaces/resume/Resume";
+	import { fetchData } from "$lib/utils";
+	import { error } from "@sveltejs/kit";
+	import { onMount } from "svelte";
+	import { writable } from "svelte/store";
+	import { account } from "$lib/store";
 
-  let resumes: Header[] = [];
+	export const id = writable<number | null>(null);
 
-onMount(async () => {
+	let resumes: Resume[] = [];
 
+	onMount(async () => {
+		if (!$account) return goto("/login/test");
 
-  const response = await fetch(URL);
-  // The URL should include the member id stored in the local storage
-  const dataResume: Header[] = await response.json();
+		const requestInit: RequestInit = {
+			method: "GET"
+		};
 
-  resumes = [...dataResume];
-    });
-  </script>
+		const response = await fetchData(`${PUBLIC_SERVER}/members/${$account.id}/resumes`, requestInit);
 
+		if (!response.ok) {
+			return error(response.status, response.statusText);
+		}
 
-<div class="grid grid-rows-2">
+		resumes = await response.json();
+	});
+</script>
 
-  <div><h1>Dashboard</h1></div>
-  <div class="grid grid-cols-3 gap-20">
-    <div><h2>User Info</h2>
-      <p>Text</p>
-    </div>
-    <div><h2>Resumes</h2>
-      {#each resumes as resume}
-        <p>{resume.title}</p>
-      {/each}
-    </div>
-    <div><h2>Community</h2>
-      <p>Text</p>
-    </div>
-  </div>
-</div>
+<section class="">
+	{#if $account}
+		<div><h1>Dashboard</h1></div>
+		<div>
+			<div>
+				<h2>User Info</h2>
+				<p>{$account.email}</p>
+			</div>
+			<div>
+				<h2>Resumes</h2>
+				<ul>
+					{#each resumes as resume}
+						<li>- {resume.title}</li>
+					{/each}
+				</ul>
+			</div>
+			<div>
+				<h2>Community</h2>
+				<p>Text</p>
+			</div>
+		</div>
+	{/if}
+</section>

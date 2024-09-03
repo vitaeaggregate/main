@@ -1,7 +1,7 @@
 export default interface Header {
-	id: number;
-	member: number;
-	title: string;
-	created_at: Date;
-	updated_at: Date;
+	id?: number;
+	member?: number;
+	title?: string;
+	created_at?: Date;
+	updated_at?: Date;
 }

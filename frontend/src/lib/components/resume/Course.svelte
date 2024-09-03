@@ -1,8 +1,8 @@
 <script lang='ts'>
 	import { createEventDispatcher } from "svelte";
-	import InputDate from "./InputDate.svelte";
-	import InputText from "./InputText.svelte";
-	import TextArea from "./TextArea.svelte";
+	import InputText from "$lib/components/InputText.svelte";
+	import InputDate from "$lib/components/InputDate.svelte";
+	import TextArea from "$lib/components/TextArea.svelte";
 
 	let resumeID: number = 0;
 	let inputDegree: string = '';

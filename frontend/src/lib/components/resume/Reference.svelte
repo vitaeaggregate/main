@@ -1,6 +1,6 @@
 <script lang='ts'>
 	import { createEventDispatcher } from "svelte";
-	import InputText from "./InputText.svelte";
+	import InputText from "$lib/components/InputText.svelte";
 
 	let resumeID: number = 0;
 	let inputName: string = '';

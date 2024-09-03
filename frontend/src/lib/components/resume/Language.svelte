@@ -1,8 +1,7 @@
 <script lang='ts'>
 	import { createEventDispatcher } from "svelte";
-	import InputText from "./InputText.svelte";
-	import TextArea from "./TextArea.svelte";
-
+	import InputText from "$lib/components/InputText.svelte";
+	import TextArea from "$lib/components/TextArea.svelte";
     let resumeID: number = 0;
     let inputLanguage: string = '';
     let inputDescription: string = '';
