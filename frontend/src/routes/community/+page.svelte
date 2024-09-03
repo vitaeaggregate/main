@@ -1,35 +1,69 @@
 <script lang="ts">
 	import RichTextComposer from "$lib/components/svelte-lexical/RichTextComposer.svelte";
-	import type { Comment } from "$lib/interfaces/resume/Comment";
-	import { error } from "@sveltejs/kit";
-	import { account } from "$lib/store";
-	import { resume } from "$lib/store";
+	import type Comment from "$lib/interfaces/resume/Comment";
   	import { onMount } from "svelte";
-	import { PUBLIC_SERVER } from "$env/static/public";
 	import { writable } from "svelte/store";
-	import { fetchData } from "$lib/utils";
-
+	import TextArea from "$lib/components/TextArea.svelte"
+	import { getCommentsByMemberIdByResumeId } from "$lib/api/comment";
+	import { getResumesByMemberId } from "$lib/api/resume";
+	import { account } from "$lib/store";
+	import type Resume from "$lib/interfaces/resume/Resume";
+	import { goto } from "$app/navigation";
+	
 	export const id = writable<number | null>(null);
-  let comments: Comment[] = [];
+	export const resumeId = writable<number | null>(null)
 
-  onMount(async () => {
-	// if (!$account) return goto("/login/test");
-	const requestInit: RequestInit = {
-			method: "GET"
-		};
-const response = await fetchData(`${PUBLIC_SERVER}/members/${$account.id}/resumes/${$resume.id}/comments`, requestInit);
+	let resumes: Resume[] | null = null;
+	let resumesComments: { [resumeId: number]: Comment[] } = {};
+	let fetchedData: { id: any; } | null = null;
 
-if (!response.ok) {
-			return error(response.status, response.statusText);
+	  onMount(async () => {
+		if (!$account) return 
+		resumes = await getResumesByMemberId($account.id);
+
+		if (!resumes) return;
+
+		for (let resume of resumes) {
+			const comments = await getCommentsByMemberIdByResumeId($account.id, resume.id);
+			resumesComments[resume.id] = comments;
 		}
+	});
+	</script>
+	<main>
+	<h1>Community</h1>
+	<br/>
+	<div class="flex justify-center">
 
-
-const commentsData: Comment[] = await response.json();
-comments = commentsData;
-console.log(comments)
-  });
-
-</script>
+	<div class="w-4/5 h-3/5 bg-gray-200 overflow-y-auto p-6">
+	texttexttext
+	</div>
+		</div>
+		<br /><br />
+		<h2>Comments</h2>
+		<div class="flex justify-center">
+		<div class="w-4/5 h-3/5 overflow-y-auto p-6"><ul class="flex flex-col gap-5 p-5">
+			{#if resumes}
+			{#each resumes as resume}
+			<ul class="flex flex-col gap-5 p-5">
+					{#each resumesComments[resume.id] as comment}
+						<li class="rounded-lg border-2 p-2">
+							<p><strong>Member id:</strong> {comment.member}</p>
+							<p><strong>Comment:</strong> {comment.description}</p>
+						</li>
+					{/each}
+			</ul>
+			{/each}
+			{/if}
+	</div>
+		</div>
+	<h3>New comment</h3>
+		<div class=" bg-gray-100">
+			<form class="p-5">
+				<TextArea label="Comment"></TextArea>
+			</form>
+			<button class="w-28 h-10 bg-slate-200 mt-5 float-right">Submit</button>
+		</div>
+	</main>
 
 <!-- <section>
 	<div class="container">
@@ -49,19 +83,3 @@ console.log(comments)
 </div>
 	
 </section> -->
-<main>
-<h1>Community</h1>
-<br/>
-<div class="flex justify-center">
-
-<div class="w-4/5 h-3/5 bg-gray-200 overflow-y-auto p-6">
-	  /// this is the main content div that i need the content inside to scroll internally
-	  /// what i mean by this is i dont want the whole page to move when there is a lot of content 
-	  /// just the content inside this divdddddddddddddddddddddddddddddddddddddddddddddddddddddd
-</div>
-	</div>
-	<br />
-	<h2>Comments</h2>
-	<div>{comments.description}</div>
-	
-</main>
