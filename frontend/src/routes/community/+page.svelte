@@ -1,10 +1,9 @@
 <script lang="ts">
-	import RichTextComposer from "$lib/components/svelte-lexical/RichTextComposer.svelte";
 	import type Comment from "$lib/interfaces/resume/Comment";
   	import { onMount } from "svelte";
 	import { writable } from "svelte/store";
 	import TextArea from "$lib/components/TextArea.svelte"
-	import { getCommentsByMemberIdByResumeId } from "$lib/api/comment";
+	import { createComment, getCommentsByMemberIdByResumeId } from "$lib/api/comment";
 	import { getResumesByMemberId } from "$lib/api/resume";
 	import { account } from "$lib/store";
 	import type {Resume} from "$lib/interfaces/resume/Resume";
@@ -31,9 +30,13 @@
 			console.log(resumes)
 		}
 	
-
+	// 	async function handleSubmit() {
+	// 		await createComment();
+	// 	}
 	});
-	</script>
+	
+
+</script>
 	<main>
 	<h1>Community</h1>
 	<br/>
@@ -66,27 +69,8 @@
 	<h3>New comment</h3>
 		<div class=" bg-gray-100">
 			<form class="p-5">
-				<TextArea label="Comment"></TextArea>
+				<TextArea label="Comment" value=""></TextArea>
 			</form>
-			<button class="w-28 h-10 bg-slate-200 mt-5 float-right">Submit</button>
+			<button class="w-28 h-10 bg-slate-200 mt-5 float-right" on:click={handleSubmit}>Submit</button>
 		</div>
 	</main>
-
-<!-- <section>
-	<div class="container">
-		<div class="flex justify-center">
-			<div class="max-w-4xl rounded-lg border-2">
-				<RichTextComposer></RichTextComposer>
-			</div>
-		</div>
-	</div>
-	<br/>
-	<h2>Comments</h2>
-	<div>
-	{#each comments as comment}
-	<p>{comment.description}</p>
-	{/each}
-	<p>There is text here</p>
-</div>
-	
-</section> -->

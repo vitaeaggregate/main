@@ -13,8 +13,9 @@
 	export const id = writable<number | null>(null);
 	export const resumeId = writable<number | null>(null)
 
-	let resumes: Resume[] | null = null;
-	let comments: Comment[] | null = null;
+		let resumes: Resume[] | null = null;
+	let memberComments: Comment[] | null = null;
+	let resumesComments: { [resumeId: number]: Comment[] } = {};
 
 	function handleDelete(id:number, resumeId: number){
 		deleteResume(id, resumeId);
@@ -25,8 +26,17 @@
 		if (!$account) return goto("/login/test");
 
 		resumes = await getResumesByMemberId($account.id);
-		comments = await getCommentsByMemberId($account.id);
+		memberComments = await getCommentsByMemberId($account.id);
+
+		if (!resumes) return;
+
+		for (let resume of resumes) {
+			const comments = await getCommentsByMemberIdByResumeId($account.id, resume.id);
+			resumesComments[resume.id] = comments;
+		}
 	});
+
+	
 
 	const handleResumeClick = (resumeId: number | null) => {
   currentResume.update((current) => ({
@@ -49,7 +59,6 @@
 						<p><strong>Email: </strong>{$account.email}</p>
 					</li>
 				</ul>
-				<p>{$account.email}</p>
 			</div>
 			<div>
 				<h2>Resumes</h2>
@@ -59,7 +68,6 @@
 							<li class="rounded-lg border-2 p-2">
 								<p><strong>Resume id:</strong> {resume.id}</p>
 								<a href="/community" on:click={() => handleResumeClick(resume.id)}><strong>Title:</strong> {resume.title}</a>
-								<p><strong>Title:</strong> {resume.title}</p>
 								<h3>Comments</h3>
 								<ul class="flex flex-col gap-5 p-5">
 									{#if resumesComments[resume.id]?.length}
@@ -85,20 +93,19 @@
 			</div>
 			<div>
 				<h2>Community</h2>
-				<h3>Comments</h3>
-				{#if comments}
-					<ul class="flex flex-col gap-5 p-5">
-						{#each comments as comment}
-							<li class="rounded-lg border-2 p-2">
-								<p><strong>Resume id:</strong> {comment.resume}</p>
-								<p><strong>Comment:</strong> {comment.description}</p>
-							</li>
-						{/each}
-					</ul>
-				{:else}
-					<p>No Comments</p>
-				{/if}
-			</div>
+				{#if memberComments}
+				<ul class="flex flex-col gap-5 p-5">
+					{#each memberComments as comment}
+						<li class="rounded-lg border-2 p-2">
+							<p><strong>Resume id:</strong> {comment.id}</p>
+							<p><strong>Comment:</strong> {comment.description}</p>
+						</li>
+					{/each}
+				</ul>
+			{:else}
+				<p>No Comments</p>
+			{/if}
 		</div>
-	{/if}
+	</div>
+{/if}
 </section>

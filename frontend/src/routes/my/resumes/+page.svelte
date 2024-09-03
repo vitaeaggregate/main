@@ -196,7 +196,6 @@
 <div>
 	<h1>Resumes</h1>
 
-	<InputText label="Resume Name" bind:value={title} />
 	<PersonalInformation on:update={(event) => (personalInfo = event.detail)} />
 	<Links on:update={(event) => (link = event.detail)} />
 	<Skills on:update={(event) => (skill = event.detail)} />
@@ -213,11 +212,11 @@
 
 	<button on:click={handleSubmit}>Submit</button>
 </div>
-<Education></Education>
+<!-- <Education></Education>
 <Project></Project>
 <Language></Language>
 <Course></Course>
 <Award></Award>
 <ProfessionalExp></ProfessionalExp>
 <Certificate></Certificate>
-<Reference></Reference>
+<Reference></Reference> -->
