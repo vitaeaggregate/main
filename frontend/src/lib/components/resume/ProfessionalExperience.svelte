@@ -4,17 +4,17 @@
 	import InputDate from "$lib/components/InputDate.svelte";
 	import { createEventDispatcher } from "svelte";
 
-    let resumeID: number = 0;
-    let inputJobTitle: string = '';
-    let inputEmployer: string = '';
-    let inputCity: string = '';
-    let inputCountry: string = '';
-    let inputStartDate: Date = new Date;
-    let inputEndDate: Date = new Date;
-    let inputDescription: string = '';
+    let headerId: number;
+    let inputJobTitle: string;
+    let inputEmployer: string;
+    let inputCity: string;
+    let inputCountry: string;
+    let inputStartDate: Date;
+    let inputEndDate: Date;
+    let inputDescription: string;
 
     $: professionalExperience = {
-        resume: resumeID,
+        header: headerId,
         job_title: inputJobTitle,
         employer: inputEmployer,
         city: inputCity,

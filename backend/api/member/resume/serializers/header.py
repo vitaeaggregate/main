@@ -17,19 +17,20 @@ from .skill import SkillSerializer, Skill
 
 
 class HeaderSerializer(serializers.ModelSerializer):
-    personal_info = PersonalInfoSerializer(many=False, read_only=True)
-    links = LinkSerializer(many=True, read_only=True)
-    awards = AwardSerializer(many=True, read_only=True)
-    certificates = CertificateSerializer(many=True, read_only=True)
-    courses = CourseSerializer(many=True, read_only=True)
-    education_exps = EducationExpSerializer(many=True, read_only=True)
-    interests = InterestSerializer(many=True, read_only=True)
-    languages = LanguageSerializer(many=True, read_only=True)
-    professional_exps = ProfessionalExpSerializer(many=True, read_only=True)
-    projects = ProjectSerializer(many=True, read_only=True)
-    publications = PublicationSerializer(many=True, read_only=True)
-    references = ReferenceSerializer(many=True, read_only=True)
-    skills = SkillSerializer(many=True, read_only=True)
+    professional_exps = ProfessionalExpSerializer(many=True, required=False)
+    personal_info = PersonalInfoSerializer(many=False, required=False)
+    education_exps = EducationExpSerializer(many=True, required=False)
+    publications = PublicationSerializer(many=True, required=False)
+    certificates = CertificateSerializer(many=True, required=False)
+    references = ReferenceSerializer(many=True, required=False)
+    interests = InterestSerializer(many=True, required=False)
+    languages = LanguageSerializer(many=True, required=False)
+    projects = ProjectSerializer(many=True, required=False)
+    courses = CourseSerializer(many=True, required=False)
+    awards = AwardSerializer(many=True, required=False)
+    skills = SkillSerializer(many=True, required=False)
+    links = LinkSerializer(many=True, required=False)
+
 
     class Meta:
         model = Header
@@ -82,12 +83,13 @@ class HeaderSerializer(serializers.ModelSerializer):
         return {field: representation[field] for field in ["id", "is_shareable"]}
 
     def create(self, validated_data):
+        print(validated_data)
         personal_info_data = validated_data.pop("personal_info", None)
         links_data = validated_data.pop("links", None)
         awards_data = validated_data.pop("awards", None)
         certificates_data = validated_data.pop("certificates", None)
         courses_data = validated_data.pop("courses", None)
-        education_exps_data = validated_data.pop("educations_exps", None)
+        education_exps_data = validated_data.pop("education_exps", None)
         interests_data = validated_data.pop("interests", None)
         languages_data = validated_data.pop("languages", None)
         professional_exps_data = validated_data.pop("professional_exp", None)
@@ -96,7 +98,10 @@ class HeaderSerializer(serializers.ModelSerializer):
         skills_data = validated_data.pop("skills", None)
         references_data = validated_data.pop("references", None)
 
-        PersonalInfo.objects.create(header=header, **personal_info_data)
+        header = Header.objects.create(**validated_data)
+
+        if personal_info_data:
+            PersonalInfo.objects.create(header=header, **personal_info_data)
 
         model_data_mapping = {
             Link: links_data,
@@ -117,8 +122,6 @@ class HeaderSerializer(serializers.ModelSerializer):
             if data_list is not None:
                 for data in data_list:
                     model.objects.create(header=header, **data)
-
-        header = Header.objects.create(**validated_data)
 
         return header
 

@@ -7,7 +7,7 @@ class LinkViewSet(viewsets.ModelViewSet):
     serializer_class = LinkSerializer
 
     def get_queryset(self):
-        resume_pk = self.kwargs.get("resume_pk")
-        if (resume_pk):
-            return Link.objects.filter(resume_id=resume_pk)
+        header_pk = self.kwargs.get("header_pk")
+        if (header_pk):
+            return Link.objects.filter(header_id=header_pk)
         return Link.objects.all()

@@ -3,7 +3,7 @@ from django.db import models
 
 
 class EducationExp(models.Model):
-    resume = models.ForeignKey(Header, related_name="educations_exps", on_delete=models.CASCADE, blank=False)
+    header = models.ForeignKey(Header, related_name="educations_exps", on_delete=models.CASCADE, blank=False)
     degree = models.CharField(max_length=100, blank=True)
     institution = models.CharField(max_length=100, blank=True)
     city = models.CharField(max_length=100, blank=True)

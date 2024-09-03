@@ -1,12 +1,12 @@
 export default interface PersonalInfo {
 	id?: number;
-	resume: number;
-	full_name: string;
-	job_title: string;
+	header?: number;
+	full_name?: string;
+	job_title?: string;
 	email?: string;
 	phone_number?: string;
 	address?: string;
-	date_of_birth?: Date;
+	date_of_birth?: string;
 	driving_license?: string;
 	gender_pronoun?: string;
 	marital_status?: string;

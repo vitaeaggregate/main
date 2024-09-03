@@ -1,5 +1,5 @@
 import { PUBLIC_SERVER } from "$env/static/public";
-import type Resume from "$lib/interfaces/resume/Resume";
+import type { BaseResume, Resume } from "$lib/interfaces/resume/Resume";
 import { fetchData } from "$lib/utils";
 import { error } from "@sveltejs/kit";
 
@@ -23,15 +23,17 @@ export const getResumesByMemberId = async (memberId: number): Promise<Resume[] |
 };
 
 // POST Resume Data
-export const addResume = async (memberId: number, resume: Resume): Promise<Resume> => {
+export const createResume = async (memberId: number, resume: BaseResume): Promise<Resume> => {
 	const requestInit: RequestInit = {
 		method: "POST",
 		body: JSON.stringify(resume)
 	};
+
 	const response = await fetchData(
 		PUBLIC_SERVER + "/members/" + memberId + "/resumes/",
 		requestInit
 	);
+	
 	if (!response.ok) {
 		throw error(response.status, response.statusText);
 	}
