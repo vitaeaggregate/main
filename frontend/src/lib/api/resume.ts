@@ -1,49 +1,23 @@
-// import { env } from '$env/dynamic/public';
-// import Award from '$lib/interfaces/award';
-// import Certificate from '$lib/interfaces/certificate';
-// import Course from '$lib/interfaces/course';
-// import Education from '$lib/interfaces/education';
-// import Interest from '$lib/interfaces/interest';
-// import Language from '$lib/interfaces/language';
-// import Link from '$lib/interfaces/link';
-// import PersonalInfo from '$lib/interfaces/personal_info';
-// import ProfessionalExp from '$lib/interfaces/professional_exp';
-// import Project from '$lib/interfaces/project';
-// import Publication from '$lib/interfaces/publication';
-// import Reference from '$lib/interfaces/reference';
-// import Skill from '$lib/interfaces/skill';
+import { PUBLIC_SERVER } from "$env/static/public";
+import type Resume from "$lib/interfaces/resume/Resume";
+import { fetchData } from "$lib/utils";
+import { error } from "@sveltejs/kit";
 
-// // GET Resume Data
-// export const getResumeData = async () => {
-// 	const awardEndpoint = '';
-// 	const certificateEndpoint = '';
-// 	const courseEndpoint = '';
-// 	const educationEndpoint = '';
-// 	const interestEndpoint = '';
-// 	const languageEndpoint = '';
-// 	const linkEndpoint = '';
-// 	const personalInfoEndpoint = '';
-// 	const professionalExpEndpoint = '';
-// 	const projectEndpoint = '';
-// 	const referenceEndpoint = '';
-// 	const skillEndpoint = '';
+export const getResumesByMemberId = async (memberId: number): Promise<Resume[] | null> => {
+	const requestInit: RequestInit = {
+		method: "GET"
+	};
 
-// 	console.log(
-// 		awardEndpoint,
-// 		certificateEndpoint,
-// 		courseEndpoint,
-// 		educationEndpoint,
-// 		interestEndpoint,
-// 		languageEndpoint,
-// 		linkEndpoint,
-// 		personalInfoEndpoint,
-// 		professionalExpEndpoint,
-// 		projectEndpoint,
-// 		referenceEndpoint,
-// 		skillEndpoint
-// 	);
-// };
+	const response = await fetchData(
+		PUBLIC_SERVER + "/members/" + memberId + "/resumes",
+		requestInit
+	);
 
-// POST Resume Data
+	if (!response.ok) {
+		return error(response.status, response.statusText);
+	}
 
-// DELETE Resume Data
+    const resumes: Resume[] = await response.json()
+
+	return resumes.length ? resumes : null;
+};
