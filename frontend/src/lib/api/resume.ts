@@ -4,14 +4,7 @@ import { fetchData } from "$lib/utils";
 import { error } from "@sveltejs/kit";
 
 export const getResumesByMemberId = async (memberId: number): Promise<Resume[]> => {
-	const requestInit: RequestInit = {
-		method: "GET"
-	};
-
-	const response = await fetchData(
-		PUBLIC_SERVER + "/members/" + memberId + "/resumes",
-		requestInit
-	);
+	const response = await fetchData(PUBLIC_SERVER + "/members/" + memberId + "/resumes");
 
 	if (!response.ok) {
 		throw error(response.status, response.statusText);

@@ -1,27 +1,20 @@
-<script lang='ts'>
-	import { createEventDispatcher } from "svelte";
-    import InputText from "$lib/components/InputText.svelte";
-    import TextArea from "$lib/components/TextArea.svelte";
+<script lang="ts">
+	import InputText from "$lib/components/InputText.svelte";
+	import TextArea from "$lib/components/TextArea.svelte";
 
-    let headerId: number;
-    let inputName: string;
-    let inputDescription: string;
+	export let value = {};
 
-    $: interest = {
-        header: headerId,
-        name: inputName,
-        description: inputDescription,
-    }
+	let inputName: string = "";
+	let inputDescription: string = "";
 
-    const dispatch = createEventDispatcher();
-    $: {
-        dispatch("update", interest);
-    }
-
+	$: value = {
+		name: inputName,
+		description: inputDescription
+	};
 </script>
 
 <div class="flex flex-col">
-    <h2>Interest</h2>
-    <InputText label="Name" bind:value={inputName}/>
-    <TextArea label="Description" bind:value={inputDescription}/>
+	<h2>Interest</h2>
+	<InputText label="Name" bind:value={inputName} />
+	<TextArea label="Description" bind:value={inputDescription} />
 </div>

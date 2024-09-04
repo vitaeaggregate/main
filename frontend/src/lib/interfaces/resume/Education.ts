@@ -5,7 +5,7 @@ export default interface Education {
 	institution?: string;
 	city?: string;
 	country?: string;
-	start_date?: string;
-	end_date?: string;
+	start_date?: Date;
+	end_date?: Date;
 	description?: string;
 }

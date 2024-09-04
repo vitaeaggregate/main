@@ -2,26 +2,21 @@
 	import { createEventDispatcher } from "svelte";
 	import InputText from "$lib/components/InputText.svelte";
 
-	let headerId: number;
-	let inputName: string;
-	let inputJobTitle: string;
-	let inputOrganization: string;
-	let inputEmail: string;
-	let inputPhone: string;
+	export let value = {};
 
-	$: reference = {
-		header: headerId,
+	let inputName: string = "";
+	let inputJobTitle: string = "";
+	let inputOrganization: string = "";
+	let inputEmail: string = "";
+	let inputPhone: string = "";
+
+	$: value = {
 		name: inputName,
 		job_title: inputJobTitle,
 		organization: inputOrganization,
 		email: inputEmail,
 		phone: inputPhone
 	};
-
-	const dispatch = createEventDispatcher();
-	$: {
-		dispatch("update", reference);
-	}
 </script>
 
 <div class="flex flex-col">

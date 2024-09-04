@@ -17,6 +17,6 @@ export const loadedResumes = writable<{
 export const checkAccountAndRedirect = (loadPage: () => void) => {
 	account.subscribe(($account) => {
 		if ($account) loadPage();
-		else if ($account === null) goto("/login/test", { replaceState: true });
+		else if ($account === null) goto("/login/test", { replaceState: false });
 	});
 };

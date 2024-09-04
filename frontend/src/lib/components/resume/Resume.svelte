@@ -18,16 +18,16 @@
 	import type PersonalInfo from "$lib/interfaces/resume/PersonalInfo";
 	import type Link from "$lib/interfaces/resume/Link";
 	import type ProfessionalExp from "$lib/interfaces/resume/ProfessionalExp";
-	import type Skill from "$lib/interfaces/resume/Skill";
 	import type Education from "$lib/interfaces/resume/Education";
 	import type Course from "$lib/interfaces/resume/Course";
 	import type Language from "$lib/interfaces/resume/Language";
 	import type Interest from "$lib/interfaces/resume/Interest";
 	import type Project from "$lib/interfaces/resume/Project";
-	import type Publication from "$lib/interfaces/resume/Publication";
 	import type Award from "$lib/interfaces/resume/Award";
-	import type Certificate from "$lib/interfaces/resume/Certificate";
 	import type Reference from "$lib/interfaces/resume/Reference";
+	import type Skill from "$lib/interfaces/resume/Skill";
+	import type Publication from "$lib/interfaces/resume/Publication";
+	import type Certificate from "$lib/interfaces/resume/Certificate";
 
 	export const id: number | null = null;
 	export let value: BaseResume | null = null;
@@ -48,23 +48,36 @@
 	let certificates: Certificate[] = [];
 	let references: Reference[] = [];
 
+	let professional_exp: ProfessionalExp = {};
+	let link: Link = {};
+	let skill: Skill = {};
+	let education: Education = {};
+	let course: Course = {};
+	let language: Language = {};
+	let interest: Interest = {};
+	let project: Project = {};
+	let publication: Publication = {};
+	let award: Award = {};
+	let certificate: Certificate = {};
+	let reference: Reference = {};
+
 	$: {
 		value = {
 			title,
 			is_shareable,
 			personal_info,
-			professional_exps,
-			links,
-			skills,
-			educations,
-			courses,
-			languages,
-			interests,
-			projects,
-			publications,
-			awards,
-			certificates,
-			references
+			professional_exps: [professional_exp],
+			links: [link],
+			skills: [skill],
+			educations: [education],
+			courses: [course],
+			languages: [language],
+			interests: [interest],
+			projects: [project],
+			publications: [publication],
+			awards: [award],
+			certificates: [certificate],
+			references: [reference]
 		};
 	}
 </script>
@@ -73,15 +86,16 @@
 	<InputText label="Resume Name" bind:value={title} />
 	<InputCheckBox label="Share" bind:value={is_shareable}></InputCheckBox>
 	<PersonalInfoComponent bind:value={personal_info} />
-	<!-- <button on:click={() => (links = [...links, {}])}>Add Link</button>
-	{#each links as link, index}
-		<LinkComponent bind:value={links[index]} />
-		<button
-			on:click={() => {
-				console.log(index);
-				links.splice(index, 1);
-				links = [...links];
-			}}>Delete</button
-		>
-	{/each} -->
+	<EducationComponent bind:value={education}></EducationComponent>
+	<InterestComponent bind:value={interest}></InterestComponent>
+	<LinkComponent bind:value={link}></LinkComponent>
+	<PublicationComponent bind:value={publication}></PublicationComponent>
+	<SkillComponent bind:value={skill}></SkillComponent>
+	<AwardComponent bind:value={award}></AwardComponent>
+	<CertificateComponent bind:value={certificate}></CertificateComponent>
+	<CourseComponent bind:value={course}></CourseComponent>
+	<LanguageComponent bind:value={language}></LanguageComponent>
+	<ProfessionalExpComponent bind:value={professional_exp}></ProfessionalExpComponent>
+	<ProjectComponent bind:value={project}></ProjectComponent>
+	<ReferenceComponent bind:value={reference}></ReferenceComponent>
 </div>

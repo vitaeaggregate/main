@@ -1,6 +1,6 @@
 <script lang="ts">
 	export let label: string = "Input Date";
-	export let value: string;
+	export let value: Date;
 </script>
 
 <label class="flex flex-col">

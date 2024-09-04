@@ -7,10 +7,9 @@
 	import { deleteResume } from "$lib/api/resume";
 	import type { Comment } from "$lib/interfaces/resume/Comment";
 
-	
 	export const id = writable<number | null>(null);
-	export const resumeId = writable<number | null>(null)
-		let token: string | null = null;
+	export const resumeId = writable<number | null>(null);
+	let token: string | null = null;
 
 	let memberComments: Comment[] = [];
 
@@ -33,8 +32,6 @@
 
 		memberComments = await getCommentsByMemberId($account.id);
 
-		console.log(memberComments)
-
 		for (const resume of resumes) {
 			const comments = await getCommentsByMemberIdByResumeId($account.id, resume.id);
 			loadedResumes.update((current) => {
@@ -43,14 +40,12 @@
 				}
 				return current;
 			});
-		};
+		}
 	};
 
 	function handleResumeClick(resumeId: number) {
-		console.log(resumeId)
-		goto(`/community/${resumeId}`)
-
-}
+		goto(`/community/${resumeId}`);
+	}
 
 	function handleDelete(id: number, resumeId: number) {
 		deleteResume(id, resumeId);
@@ -87,7 +82,9 @@
 							<li class="rounded-lg border-2 p-2">
 								<p><span class="text-xl">{resume.title}</span></p>
 								<p><strong>Resume id:</strong> {resume.id}</p>
-								<p class="hover:italic" on:click={() => handleResumeClick(resume.id)}><strong>Title:</strong> {resume.title}</p>
+								<p class="hover:italic">
+									<a href={`/community/${resumeId}`}><strong>Title:</strong> {resume.title}</a>
+								</p>
 								<p><strong>Shared:</strong> {resume.is_shareable ? "Yes" : "No"}</p>
 								<h3>Comments</h3>
 								{#if Object.keys(comments).length}
