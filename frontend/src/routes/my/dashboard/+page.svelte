@@ -1,12 +1,7 @@
 <script lang="ts">
-<<<<<<< HEAD
 	import { goto } from "$app/navigation";
-	import type { Resume } from "$lib/interfaces/resume/Resume";
 	import { writable } from "svelte/store";
-	import { account, isAuthenticated, loadedResumes } from "$lib/store";
-=======
-	import { account, checkAccountAndRedirect, loadedResumes } from "$lib/store";
->>>>>>> c02dca96ed1170cdd21454086a647a5ad983f80e
+	import { account, loadedResumes, checkAccountAndRedirect } from "$lib/store";
 	import { getResumesByMemberId } from "$lib/api/resume";
 	import { getCommentsByMemberId, getCommentsByMemberIdByResumeId } from "$lib/api/comment";
 	import { deleteResume } from "$lib/api/resume";
@@ -65,17 +60,10 @@
 	checkAccountAndRedirect(loadPage);
 </script>
 
-<<<<<<< HEAD
-<section class="">
-	{#if $account}
-		<div class="mb-5"><h1 class=" bg-slate-200">Dashboard</h1></div>
-		<div class="grid grid-cols-3 gap-8">
-=======
 {#if $account}
 	<section class="">
 		<h1>Dashboard</h1>
-		<div>
->>>>>>> c02dca96ed1170cdd21454086a647a5ad983f80e
+		<div class="">
 			<div>
 				<h2>User Info</h2>
 				<ul class="flex flex-col gap-5 p-5">
@@ -95,10 +83,7 @@
 							<li class="rounded-lg border-2 p-2">
 								<p><span class="text-xl">{resume.title}</span></p>
 								<p><strong>Resume id:</strong> {resume.id}</p>
-<<<<<<< HEAD
 								<p class="hover:italic" on:click={() => handleResumeClick(resume.id)}><strong>Title:</strong> {resume.title}</p>
-=======
->>>>>>> c02dca96ed1170cdd21454086a647a5ad983f80e
 								<p><strong>Shared:</strong> {resume.is_shareable ? "Yes" : "No"}</p>
 								<h3>Comments</h3>
 								{#if Object.keys(comments).length}
@@ -127,12 +112,8 @@
 			</div>
 			<div>
 				<h2>Community</h2>
-<<<<<<< HEAD
-				{#if memberComments}
-=======
 				<h3>Your Comments</h3>
 				{#if memberComments.length}
->>>>>>> c02dca96ed1170cdd21454086a647a5ad983f80e
 					<ul class="flex flex-col gap-5 p-5">
 						{#each memberComments as comment}
 							<li class="rounded-lg border-2 p-2">
@@ -146,10 +127,5 @@
 				{/if}
 			</div>
 		</div>
-<<<<<<< HEAD
-{/if}
-</section>
-=======
 	</section>
 {/if}
->>>>>>> c02dca96ed1170cdd21454086a647a5ad983f80e
