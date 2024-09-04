@@ -38,11 +38,11 @@ class CommentViewSet(viewsets.ModelViewSet):
         return comments
 
     def create(self, request, *args, **kwargs):
-        if self.is_owner(self, request, Action.CREATE):
+        if self.is_owner(request, Action.CREATE):
             return super().create(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs):
-        if self.is_owner(self, request, Action.UPDATE):
+        if self.is_owner(request, Action.UPDATE):
             return super().update(request, *args, **kwargs)
 
     def destroy(self, request, *args, **kwargs):
@@ -51,7 +51,7 @@ class CommentViewSet(viewsets.ModelViewSet):
 
     def is_owner(self, request, action: Action) -> bool:
         member_pk = self.kwargs.get("member_pk")
-        if not member_pk == request.account.get("id"):
+        if not int(member_pk) == request.account.get("id"):
             raise PermissionDenied(
                 "You Don't have the permission to " + action.__str__() + " a resume in the name of another user.")
         return True
