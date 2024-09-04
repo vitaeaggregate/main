@@ -1,16 +1,14 @@
 <script lang="ts">
-	import type {BaseComment, Comment} from "$lib/interfaces/resume/Comment";
+	import type {Comment} from "$lib/interfaces/resume/Comment";
   	import { onMount } from "svelte";
 	import { writable } from "svelte/store";
-	import TextArea from "$lib/components/TextArea.svelte"
-	import { createComment, getCommentsByMemberIdByResumeId } from "$lib/api/comment";
+	import { getCommentsByMemberIdByResumeId } from "$lib/api/comment";
 	import { getResumesByMemberId } from "$lib/api/resume";
 	import { account, loadedResumes } from "$lib/store";
 	import type {Resume} from "$lib/interfaces/resume/Resume";
 	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
-	import Resume from "$lib/components/resume/resume.svelte";
-	import Comment from "$lib/components/resume/comment.svelte";
+	import NewComment from "$lib/components/resume/comment.svelte";
 	
 	export const id = writable<number | null>(null);
 
@@ -28,14 +26,9 @@
 		for (let resume of resumes) {
 			const comments = await getCommentsByMemberIdByResumeId($account.id, resume.id);
 			resumesComments[resume.id] = comments;
-			console.log(resumesComments[resume.id])
 		}
 
 	});
-
-	function handleCreate(memberId: number, comment: BaseComment) {
- createComment(memberId, comment);
-	}
 	
 </script>
 	<main>
@@ -68,5 +61,5 @@
 	</div>
 		</div>
 	<h3>New comment</h3>
-<Comment bind:id={resumeId}></Comment>
+<NewComment></NewComment>
 	</main>

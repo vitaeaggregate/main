@@ -29,15 +29,31 @@ export const getCommentsByMemberIdByResumeId = async (
 	return comments;
 };
 
+export const getCommentsByResumeId = async (resumeId: number): Promise<Comment[]> => {
+	const response = await fetchData(
+		PUBLIC_SERVER + "/members/" + "/resumes/" + resumeId + "/comments/"
+	);
+
+	if (!response.ok) throw error(response.status, response.statusText);
+
+	const comments: Comment[] = await response.json();
+
+	return comments;
+};
+
 // POST Comment
-export const createComment = async (memberId: number, comment: BaseComment): Promise<Comment> => {
+export const createComment = async (
+	memberId: number,
+	resumeId: number,
+	comment: BaseComment
+): Promise<Comment> => {
 	const requestInit: RequestInit = {
 		method: "POST",
 		body: JSON.stringify(comment)
 	};
 
 	const response = await fetchData(
-		PUBLIC_SERVER + "/members/" + memberId + "/comments/",
+		PUBLIC_SERVER + "/members/" + memberId + "/resumes/" + resumeId + "/comments/",
 		requestInit
 	);
 
