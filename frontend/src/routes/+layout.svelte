@@ -4,19 +4,16 @@
 	import { logout } from "$lib/utils";
 	import { goto } from "$app/navigation";
 	import { onMount } from "svelte";
-	import { account, isAuthenticated } from "$lib/store";
+	import { account } from "$lib/store";
 
 	onMount(() => {
 		const accountSessionStorage = sessionStorage.getItem("account") || null;
-		if (accountSessionStorage) {
-			isAuthenticated.set(true);
-			account.set(JSON.parse(accountSessionStorage));
-		} else isAuthenticated.set(false);
+		if (accountSessionStorage) account.set(JSON.parse(accountSessionStorage));
+		else account.set(null);
 	});
 
 	const handleLogout = async () => {
 		account.set(null);
-		isAuthenticated.set(false)
 		await logout();
 	};
 </script>

@@ -1,14 +1,11 @@
 <script lang="ts">
+	import { browser } from "$app/environment";
 	import { goto } from "$app/navigation";
 	import { getCommentsByMemberIdByResumeId } from "$lib/api/comment";
 	import { getResumesByMemberId } from "$lib/api/resume";
-	import { account, isAuthenticated, loadedResumes } from "$lib/store";
+	import { account, checkAccountAndRedirect, loadedResumes } from "$lib/store";
 
-	$: {
-		if (!$isAuthenticated && $account) loadPage();
-		else if (!$isAuthenticated) goto("/login/test");
-	}
-
+	
 	const loadPage = async () => {
 		if (!$account) return;
 
@@ -34,6 +31,8 @@
 			});
 		}
 	};
+
+	checkAccountAndRedirect(loadPage);
 </script>
 
 <section>

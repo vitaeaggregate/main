@@ -4,7 +4,6 @@
 	import InputText from "$lib/components/InputText.svelte";
 	import { login } from "$lib/utils";
 	import { account } from "$lib/store";
-	import { onMount } from "svelte";
 
 	interface ServerResponse {
 		account: Account;
@@ -14,7 +13,7 @@
 	let email = "";
 
 	$: {
-		if ($account) goto("/my/dashboard");
+		if ($account) goto("/my/dashboard", { replaceState: true });
 	}
 
 	let handleSubmit = async () => {
@@ -30,10 +29,12 @@
 	};
 </script>
 
-<section class="flex w-full justify-center p-10">
-	<form class="flex max-w-52 flex-col items-center gap-5">
-		<h2>Login</h2>
-		<InputText bind:value={email} placeholder="Email" />
-		<button on:click={handleSubmit}>Enter</button>
-	</form>
-</section>
+{#if $account === null}
+	<section class="flex w-full justify-center p-10">
+		<form class="flex max-w-52 flex-col items-center gap-5">
+			<h2>Login</h2>
+			<InputText bind:value={email} placeholder="Email" />
+			<button on:click={handleSubmit}>Enter</button>
+		</form>
+	</section>
+{/if}

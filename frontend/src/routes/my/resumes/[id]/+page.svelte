@@ -1,18 +1,23 @@
 <script>
 	import Resume from "$lib/components/resume/Resume.svelte";
-	import { account, isAuthenticated } from "$lib/store";
+	import { account, checkAccountAndRedirect } from "$lib/store";
 	import { page } from "$app/stores";
 	import { goto } from "$app/navigation";
+	import { browser } from "$app/environment";
 
 	$: resumeId = Number($page.params.id);
+
 	$: {
-		if (!$isAuthenticated && $account) loadPage();
-		else if (!$isAuthenticated) goto("/login/test");
+		if ($account) {
+			loadPage();
+		} else if (browser) {
+			setTimeout(() => goto("/login/test", { replaceState: true }));
+		}
 	}
 
-    const loadPage = () => {
-        
-    }
+	const loadPage = () => {};
+
+	checkAccountAndRedirect(loadPage);
 </script>
 
 <section>
