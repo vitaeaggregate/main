@@ -22,7 +22,6 @@ export const getResumesByMemberId = async (memberId: number): Promise<Resume[]> 
 	return resumes;
 };
 
-// POST Resume Data
 export const createResume = async (memberId: number, resume: BaseResume): Promise<Resume> => {
 	const requestInit: RequestInit = {
 		method: "POST",
@@ -34,16 +33,11 @@ export const createResume = async (memberId: number, resume: BaseResume): Promis
 		requestInit
 	);
 
-	if (!response.ok) {
-		throw error(response.status, response.statusText);
-	}
-
 	const resumeData: Resume = await response.json();
 
 	return resumeData;
 };
 
-// DELETE Resume Data
 export const deleteResume = async (memberID: number, resume: number): Promise<boolean> => {
 	const requestInit: RequestInit = {
 		method: "DELETE"

@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { goto } from "$app/navigation";
-	import { account, isAuthenticated, loadedResumes } from "$lib/store";
+	import { account, checkAccountAndRedirect, loadedResumes } from "$lib/store";
 	import { getResumesByMemberId } from "$lib/api/resume";
 	import { getCommentsByMemberId, getCommentsByMemberIdByResumeId } from "$lib/api/comment";
 	import { deleteResume } from "$lib/api/resume";
@@ -8,12 +7,7 @@
 
 	let token: string | null = null;
 
-	let memberComments: Comment[] | null = null;
-
-	$: {
-		if (!$isAuthenticated) goto("/login/test");
-		if ($account) loadPage();
-	}
+	let memberComments: Comment[] = [];
 
 	const loadPage = async () => {
 		if (!$account) return;
@@ -34,6 +28,8 @@
 
 		memberComments = await getCommentsByMemberId($account.id);
 
+		console.log(memberComments)
+
 		for (const resume of resumes) {
 			const comments = await getCommentsByMemberIdByResumeId($account.id, resume.id);
 			loadedResumes.update((current) => {
@@ -49,11 +45,13 @@
 		deleteResume(id, resumeId);
 		delete $loadedResumes[id];
 	}
+
+	checkAccountAndRedirect(loadPage);
 </script>
 
-<section class="">
-	<h1>Dashboard</h1>
-	{#if $account}
+{#if $account}
+	<section class="">
+		<h1>Dashboard</h1>
 		<div>
 			<div>
 				<h2>Member Info</h2>
@@ -70,10 +68,10 @@
 				<a href="/my/resumes/new">Add Resume</a>
 				{#if Object.keys($loadedResumes).length}
 					<ul class="flex flex-col gap-5 p-5">
-						{#each Object.entries($loadedResumes) as [resumeId, { resume, comments }]}
+						{#each Object.entries($loadedResumes).reverse() as [resumeId, { resume, comments }]}
 							<li class="rounded-lg border-2 p-2">
+								<p><span class="text-xl">{resume.title}</span></p>
 								<p><strong>Resume id:</strong> {resume.id}</p>
-								<p><strong>Title:</strong> {resume.title}</p>
 								<p><strong>Shared:</strong> {resume.is_shareable ? "Yes" : "No"}</p>
 								<h3>Comments</h3>
 								{#if Object.keys(comments).length}
@@ -103,7 +101,7 @@
 			<div>
 				<h2>Community</h2>
 				<h3>Your Comments</h3>
-				{#if memberComments}
+				{#if memberComments.length}
 					<ul class="flex flex-col gap-5 p-5">
 						{#each memberComments as comment}
 							<li class="rounded-lg border-2 p-2">
@@ -117,5 +115,5 @@
 				{/if}
 			</div>
 		</div>
-	{/if}
-</section>
+	</section>
+{/if}

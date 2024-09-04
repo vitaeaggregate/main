@@ -6,8 +6,8 @@
 	let headerId: number;
 	let inputTitle: string;
 	let inputSubTitle: string;
-	let inputStartDate: Date;
-	let inputEndDate: Date;
+	let inputStartDate: string;
+	let inputEndDate: string;
 	let inputDescription: string;
 
 	$: project = {
