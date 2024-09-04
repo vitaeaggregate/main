@@ -43,34 +43,20 @@
 				</p>
 			{/if}
 		</div>
-		<br /><br />
-		<h2>Comments</h2>
-		<div class="flex justify-center">
-		<div class="w-4/5 h-3/5 overflow-y-auto p-6"><ul class="flex flex-col gap-5 p-5">
-			{#each Object.entries(resumesComments) as [id, comments]}
-			{#if +id === resumeId}
-  <h2>Resume ID: {id}</h2>
-  <ul>
-    {#each comments as comment, index}
-      <li class="bg-gray-200 p-4">{index + 1}: {comment.description}</li><br/>
-    {/each}
-  </ul>{/if}
-{/each}
 	</div>
 	<br /><br />
 	<h2>Comments</h2>
 	<div class="flex justify-center">
-		<div class="h-3/5 w-4/5 overflow-y-auto p-6">
-			<ul class="flex flex-col gap-5 p-5">
-				{#each Object.entries(resumesComments) as [id, comments]}
-					{#if +id === resumeId}
-						<h2>Resume ID: {id}</h2>
-						<ul>
-							{#each comments as comment}
-								<li>{comment.description}</li>
-							{/each}
-						</ul>{/if}
-				{/each}
+	<div class="w-4/5 h-3/5 overflow-y-auto p-6"><ul class="flex flex-col gap-5 p-5">
+		{#each Object.entries(resumesComments) as [id, comments]}
+		{#if +id === resumeId}
+<h2>Resume ID: {id}</h2>
+<ul>
+{#each comments as comment, index}
+  <li class="bg-gray-200 p-4">{index + 1}: {comment.description}</li><br/>
+{/each}
+</ul>{/if}
+{/each}
 			</ul>
 		</div>
 	</div>
