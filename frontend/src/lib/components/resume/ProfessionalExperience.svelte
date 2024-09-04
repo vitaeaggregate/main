@@ -9,8 +9,8 @@
     let inputEmployer: string;
     let inputCity: string;
     let inputCountry: string;
-    let inputStartDate: Date;
-    let inputEndDate: Date;
+    let inputStartDate: string;
+    let inputEndDate: string;
     let inputDescription: string;
 
     $: professionalExperience = {

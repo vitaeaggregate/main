@@ -5,8 +5,8 @@
 	import { account, isAuthenticated, loadedResumes } from "$lib/store";
 
 	$: {
-		if (!$isAuthenticated) goto("/login/test");
-		if ($account) loadPage();
+		if (!$isAuthenticated && $account) loadPage();
+		else if (!$isAuthenticated) goto("/login/test");
 	}
 
 	const loadPage = async () => {

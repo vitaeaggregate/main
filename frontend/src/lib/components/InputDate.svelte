@@ -1,8 +1,6 @@
 <script lang="ts">
-	import { onMount } from "svelte";
-
 	export let label: string = "Input Date";
-	export let value: Date;
+	export let value: string;
 </script>
 
 <label class="flex flex-col">

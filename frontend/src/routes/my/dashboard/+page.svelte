@@ -11,8 +11,8 @@
 	let memberComments: Comment[] | null = null;
 
 	$: {
-		if (!$isAuthenticated) goto("/login/test");
-		if ($account) loadPage();
+		if (!$isAuthenticated && $account) loadPage();
+		else if (!$isAuthenticated) goto("/login/test");
 	}
 
 	const loadPage = async () => {
@@ -70,10 +70,10 @@
 				<a href="/my/resumes/new">Add Resume</a>
 				{#if Object.keys($loadedResumes).length}
 					<ul class="flex flex-col gap-5 p-5">
-						{#each Object.entries($loadedResumes) as [resumeId, { resume, comments }]}
+						{#each Object.entries($loadedResumes).reverse() as [resumeId, { resume, comments }]}
 							<li class="rounded-lg border-2 p-2">
+								<p><span class="text-xl">{resume.title}</span></p>
 								<p><strong>Resume id:</strong> {resume.id}</p>
-								<p><strong>Title:</strong> {resume.title}</p>
 								<p><strong>Shared:</strong> {resume.is_shareable ? "Yes" : "No"}</p>
 								<h3>Comments</h3>
 								{#if Object.keys(comments).length}

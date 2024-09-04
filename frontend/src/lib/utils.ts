@@ -12,7 +12,7 @@ export const fetchData = async (url: string, requestInit?: RequestInit) => {
 		return error(400, "No token");
 	}
 
-	if(!requestInit) requestInit = {}
+	if (!requestInit) requestInit = {};
 
 	requestInit.headers = requestInit.headers
 		? {
@@ -27,12 +27,18 @@ export const fetchData = async (url: string, requestInit?: RequestInit) => {
 
 	const response = await fetch(url, requestInit);
 
-	if (!response.ok) {
-		if (response.status === 401) logout();
-		return error(response.status, response.statusText);
-	}
+	await handleError(response);
 
 	return response;
+};
+
+const handleError = async (response: Response) => {
+	if (!response.ok) {
+		const errorBody = await response.text();
+		console.error("Error :" + errorBody);
+		if (response.status === 401) logout();
+		throw error(response.status, response.statusText);
+	}
 };
 
 export const logout = async () => {
