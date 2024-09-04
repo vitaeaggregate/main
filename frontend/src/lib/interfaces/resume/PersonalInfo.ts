@@ -6,7 +6,7 @@ export default interface PersonalInfo {
 	email?: string;
 	phone_number?: string;
 	address?: string;
-	date_of_birth?: string;
+	date_of_birth?: Date;
 	driving_license?: string;
 	gender_pronoun?: string;
 	marital_status?: string;

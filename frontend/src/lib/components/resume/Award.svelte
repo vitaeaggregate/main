@@ -1,27 +1,21 @@
 <script lang="ts">
-	import { createEventDispatcher } from "svelte";
 	import InputText from "$lib/components/InputText.svelte";
 	import InputDate from "$lib/components/InputDate.svelte";
 	import TextArea from "$lib/components/TextArea.svelte";
 
-	let headerId: number;
-	let inputTitle: string;
-	let inputIssuer: string;
-	let inputDate: string;
-	let inputDescription: string;
+	export let value = {};
 
-	$: award = {
-		header: headerId,
+	let inputTitle: string = "";
+	let inputIssuer: string = "";
+	let inputDate: Date;
+	let inputDescription: string = "";
+
+	$: value = {
 		title: inputTitle,
 		issuer: inputIssuer,
 		date: inputDate,
 		description: inputDescription
 	};
-
-	const dispatch = createEventDispatcher();
-	$: {
-		dispatch("update", award);
-	}
 </script>
 
 <div class="flex flex-col">

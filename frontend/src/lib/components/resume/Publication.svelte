@@ -2,25 +2,19 @@
     import TextArea from "$lib/components/TextArea.svelte";
     import InputText from "$lib/components/InputText.svelte";
     import InputDate from "$lib/components/InputDate.svelte";
-	import { createEventDispatcher } from "svelte";
 
-    let headerId: number;
-	let inputTitle: string;
-	let inputPublisher: string;
-	let inputDate: string;
-	let inputDescription: string;
+    export let value = {};
 
-    $: publication = {
-        header: headerId,
+	let inputTitle: string = "";
+	let inputPublisher: string = "";
+	let inputDate: Date;
+	let inputDescription: string = "";
+
+    $: value = {
         title: inputTitle,
         publisher: inputPublisher,
         date: inputDate,
         description: inputDescription,
-    }
- 
-    const dispatch = createEventDispatcher();
-    $: {
-        dispatch("update", publication);
     }
 </script>
 

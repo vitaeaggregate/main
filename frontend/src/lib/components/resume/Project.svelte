@@ -1,27 +1,21 @@
 <script lang='ts'>
-	import { createEventDispatcher } from "svelte";
 	import InputText from "$lib/components/InputText.svelte";
 	import InputDate from "$lib/components/InputDate.svelte";
 	
-	let headerId: number;
-	let inputTitle: string;
-	let inputSubTitle: string;
-	let inputStartDate: string;
-	let inputEndDate: string;
-	let inputDescription: string;
+	export let value = {}
 
-	$: project = {
-		header: headerId,
+	let inputTitle: string = "";
+	let inputSubTitle: string = "";
+	let inputStartDate: Date;
+	let inputEndDate: Date;
+	let inputDescription: string = "";
+
+	$: value = {
 		title: inputTitle,
 		sub_title: inputSubTitle,
 		start_date: inputStartDate,
 		end_date: inputEndDate,
 		description: inputDescription,
-	}
-
-	const dispatch = createEventDispatcher();
-	$: {
-		dispatch("update", project)
 	}
 </script>
 
