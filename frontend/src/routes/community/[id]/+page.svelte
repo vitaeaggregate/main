@@ -54,7 +54,7 @@
   <h2>Resume ID: {id}</h2>
   <ul>
     {#each comments as comment, index}
-      <li>{index + 1}: {comment.description}</li><br/>
+      <li class="bg-gray-200 p-4">{index + 1}: {comment.description}</li><br/>
     {/each}
   </ul>{/if}
 {/each}
