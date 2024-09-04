@@ -10,6 +10,7 @@
 	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
 	import Resume from "$lib/components/resume/resume.svelte";
+	import Comment from "$lib/components/resume/comment.svelte";
 	
 	export const id = writable<number | null>(null);
 
@@ -25,9 +26,9 @@
 		if (!resumes) return;
 
 		for (let resume of resumes) {
-			console.log(resumes)
 			const comments = await getCommentsByMemberIdByResumeId($account.id, resume.id);
 			resumesComments[resume.id] = comments;
+			console.log(resumesComments[resume.id])
 		}
 
 	});
@@ -55,25 +56,17 @@
 		<h2>Comments</h2>
 		<div class="flex justify-center">
 		<div class="w-4/5 h-3/5 overflow-y-auto p-6"><ul class="flex flex-col gap-5 p-5">
-			{#if resumes}
-			{#each resumes as resume}
-			<ul class="flex flex-col gap-5 p-5">
-					{#each resumesComments[resume.id] as comment}
-						<li class="rounded-lg border-2 p-2">
-							<p><strong>Member id:</strong> {comment.member}</p>
-							<p><strong>Comment:</strong> {comment.description}</p>
-						</li>
-					{/each}
-			</ul>
-			{/each}
-			{/if}
+			{#each Object.entries(resumesComments) as [id, comments]}
+			{#if +id === resumeId}
+  <h2>Resume ID: {id}</h2>
+  <ul>
+    {#each comments as comment}
+      <li>{comment.description}</li>
+    {/each}
+  </ul>{/if}
+{/each}
 	</div>
 		</div>
 	<h3>New comment</h3>
-		<div class=" bg-gray-100">
-			<form class="p-5">
-				<TextArea label="Comment" value=""></TextArea>
-			</form>
-			<button class="w-28 h-10 bg-slate-200 mt-5 float-right" on:click={() => handleCreate($account.id, _)}>Submit</button>
-		</div>
+<Comment bind:id={resumeId}></Comment>
 	</main>
