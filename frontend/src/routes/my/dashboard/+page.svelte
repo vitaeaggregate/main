@@ -1,11 +1,16 @@
 <script lang="ts">
-	import { account, checkAccountAndRedirect, loadedResumes } from "$lib/store";
+	import { goto } from "$app/navigation";
+	import { writable } from "svelte/store";
+	import { account, loadedResumes, checkAccountAndRedirect } from "$lib/store";
 	import { getResumesByMemberId } from "$lib/api/resume";
 	import { getCommentsByMemberId, getCommentsByMemberIdByResumeId } from "$lib/api/comment";
 	import { deleteResume } from "$lib/api/resume";
 	import type { Comment } from "$lib/interfaces/resume/Comment";
 
-	let token: string | null = null;
+	
+	export const id = writable<number | null>(null);
+	export const resumeId = writable<number | null>(null)
+		let token: string | null = null;
 
 	let memberComments: Comment[] = [];
 
@@ -38,8 +43,14 @@
 				}
 				return current;
 			});
-		}
+		};
 	};
+
+	function handleResumeClick(resumeId: number) {
+		console.log(resumeId)
+		goto(`/community/${resumeId}`)
+
+}
 
 	function handleDelete(id: number, resumeId: number) {
 		deleteResume(id, resumeId);
@@ -52,9 +63,9 @@
 {#if $account}
 	<section class="">
 		<h1>Dashboard</h1>
-		<div>
+		<div class="">
 			<div>
-				<h2>Member Info</h2>
+				<h2>User Info</h2>
 				<ul class="flex flex-col gap-5 p-5">
 					<li class="rounded-lg border-2 p-2">
 						<p><strong>Id: </strong>{$account.id}</p>
@@ -72,6 +83,7 @@
 							<li class="rounded-lg border-2 p-2">
 								<p><span class="text-xl">{resume.title}</span></p>
 								<p><strong>Resume id:</strong> {resume.id}</p>
+								<p class="hover:italic" on:click={() => handleResumeClick(resume.id)}><strong>Title:</strong> {resume.title}</p>
 								<p><strong>Shared:</strong> {resume.is_shareable ? "Yes" : "No"}</p>
 								<h3>Comments</h3>
 								{#if Object.keys(comments).length}

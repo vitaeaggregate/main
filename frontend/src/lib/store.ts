@@ -6,6 +6,7 @@ import { goto } from "$app/navigation";
 
 export const account = writable<Account | null>();
 
+// This was currentResume
 export const loadedResumes = writable<{
 	[resumeId: number]: {
 		resume: Resume;
