@@ -5,6 +5,6 @@ export interface Header extends BaseHeader {
 }
 
 export interface BaseHeader {
-	member: number;
+	member?: number;
 	title?: string;
 }

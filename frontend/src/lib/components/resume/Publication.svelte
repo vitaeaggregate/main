@@ -7,7 +7,7 @@
     let headerId: number;
 	let inputTitle: string;
 	let inputPublisher: string;
-	let inputDate: Date;
+	let inputDate: string;
 	let inputDescription: string;
 
     $: publication = {
