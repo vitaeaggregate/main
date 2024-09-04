@@ -4,8 +4,8 @@
 
 	export let value: Link | null = null;
 
-	let title: string;
-	let url: string;
+	let title: string = "";
+	let url: string = "";
 
 	$: value = {
 		title,

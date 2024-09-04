@@ -1,21 +1,15 @@
 <script lang='ts'>
-	import { createEventDispatcher } from "svelte";
 	import InputText from "$lib/components/InputText.svelte";
 	import TextArea from "$lib/components/TextArea.svelte";
 
-	let headerId: number;
-	let inputName: string;
-	let inputDescription: string;
+	export let value = {}
 
-	$: certificate = {
-		header: headerId,
+	let inputName: string = "";
+	let inputDescription: string = "";
+
+	$: value = {
 		name: inputName,
 		description: inputDescription,
-	}
-
-	const dispatch = createEventDispatcher();
-	$: {
-		dispatch("update", certificate)
 	}
 </script>
 
