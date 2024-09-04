@@ -53,8 +53,8 @@
 			{#if +id === resumeId}
   <h2>Resume ID: {id}</h2>
   <ul>
-    {#each comments as comment}
-      <li>{comment.description}</li>
+    {#each comments as comment, index}
+      <li>{index + 1}: {comment.description}</li><br/>
     {/each}
   </ul>{/if}
 {/each}

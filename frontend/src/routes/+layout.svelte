@@ -35,6 +35,7 @@
 			</div>
 		</div>
 	</header>
+
 	<main class="flex justify-center">
 		<div class="container px-10">
 			<slot />
