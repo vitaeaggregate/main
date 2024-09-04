@@ -63,7 +63,14 @@ export const deleteComment = async (
 		method: "DELETE"
 	};
 	const response = await fetchData(
-		PUBLIC_SERVER + "/members/" + memberId + "/resumes/" + resumeId + "/comments" + commentId + "/",
+		PUBLIC_SERVER +
+			"/members/" +
+			memberId +
+			"/resumes/" +
+			resumeId +
+			"/comments/" +
+			commentId +
+			"/",
 		requestInit
 	);
 	if (!response.ok) {

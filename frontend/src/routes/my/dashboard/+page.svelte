@@ -3,7 +3,7 @@
 	import { writable } from "svelte/store";
 	import { account, loadedResumes, checkAccountAndRedirect } from "$lib/store";
 	import { getResumesByMemberId } from "$lib/api/resume";
-	import { getCommentsByMemberId, getCommentsByMemberIdByResumeId } from "$lib/api/comment";
+	import { deleteComment, getCommentsByMemberId, getCommentsByMemberIdByResumeId } from "$lib/api/comment";
 	import { deleteResume } from "$lib/api/resume";
 	import type { Comment } from "$lib/interfaces/resume/Comment";
 
@@ -57,6 +57,10 @@
 		delete $loadedResumes[id];
 	}
 
+	function handleDeleteComment(id: number, resumeId: number, commentId: number) {
+		deleteComment(id, resumeId, commentId)
+	}
+
 	checkAccountAndRedirect(loadPage);
 </script>
 
@@ -92,6 +96,11 @@
 											<li class="rounded-lg border-2 p-2">
 												<p><strong>Member id:</strong> {comment.member}</p>
 												<p><strong>Comment:</strong> {comment.description}</p>
+												<button
+												on:click={() => {
+													handleDeleteComment($account.id, resume.id, comment.id);
+												}}>Delete</button
+											>
 											</li>
 										{/each}
 									</ul>
@@ -101,7 +110,7 @@
 								<button
 									on:click={() => {
 										handleDelete($account.id, resume.id);
-									}}>Delete</button
+									}}>Delete Resume</button
 								>
 							</li>
 						{/each}
