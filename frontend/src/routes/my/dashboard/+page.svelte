@@ -1,51 +1,65 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
-		import type { Resume } from "$lib/interfaces/resume/Resume";
-	import { onMount } from "svelte";
+	import type { Resume } from "$lib/interfaces/resume/Resume";
 	import { writable } from "svelte/store";
-	import { account } from "$lib/store";
+	import { account, isAuthenticated, loadedResumes } from "$lib/store";
 	import { getResumesByMemberId } from "$lib/api/resume";
 	import { getCommentsByMemberId, getCommentsByMemberIdByResumeId } from "$lib/api/comment";
 	import { deleteResume } from "$lib/api/resume";
-	import type Comment from "$lib/interfaces/resume/Comment";
-	import { currentResume } from '$lib/store';
-
-	export const id = writable<number | null>(null);
-	export const resumeId = writable<number | null>(null)
-
-		let resumes: Resume[] | null = null;
-	let memberComments: Comment[] | null = null;
-	let resumesComments: { [resumeId: number]: Comment[] } = {};
-
-	function handleDelete(id:number, resumeId: number){
-		deleteResume(id, resumeId);
-		resumes = resumes?.filter((resume) => resume.id !== resumeId) || null;
-	}
-
-	onMount(async () => {
-		if (!$account) return goto("/login/test");
-
-		resumes = await getResumesByMemberId($account.id);
-		memberComments = await getCommentsByMemberId($account.id);
-
-		if (!resumes) return;
-
-		for (let resume of resumes) {
-			const comments = await getCommentsByMemberIdByResumeId($account.id, resume.id);
-			resumesComments[resume.id] = comments;
-		}
-	});
+	import type { Comment } from "$lib/interfaces/resume/Comment";
 
 	
+	export const id = writable<number | null>(null);
+	export const resumeId = writable<number | null>(null)
+		let token: string | null = null;
 
-	const handleResumeClick = (resumeId: number | null) => {
-  currentResume.update((current) => ({
-    ...current,
-    id: resumeId
-  }));
-};
+	let memberComments: Comment[] | null = null;
 
-  $: console.log($currentResume);
+	$: {
+		if (!$isAuthenticated) goto("/login/test");
+		if ($account) loadPage();
+	}
+
+	const loadPage = async () => {
+		if (!$account) return;
+
+		token = sessionStorage.getItem("token");
+
+		const resumes = await getResumesByMemberId($account.id);
+
+		loadedResumes.update((current) => {
+			resumes.forEach((resume) => {
+				current[resume.id] = {
+					resume,
+					comments: {}
+				};
+			});
+			return current;
+		});
+
+		memberComments = await getCommentsByMemberId($account.id);
+
+		for (const resume of resumes) {
+			const comments = await getCommentsByMemberIdByResumeId($account.id, resume.id);
+			loadedResumes.update((current) => {
+				for (const comment of comments) {
+					current[resume.id].comments[comment.id] = comment;
+				}
+				return current;
+			});
+		};
+	};
+
+	function handleResumeClick(resumeId: number) {
+		console.log(resumeId)
+		goto(`/community/${resumeId}`)
+
+}
+
+	function handleDelete(id: number, resumeId: number) {
+		deleteResume(id, resumeId);
+		delete $loadedResumes[id];
+	}
 </script>
 
 <section class="">
@@ -56,56 +70,62 @@
 				<h2>User Info</h2>
 				<ul class="flex flex-col gap-5 p-5">
 					<li class="rounded-lg border-2 p-2">
+						<p><strong>Id: </strong>{$account.id}</p>
+						<p><strong>Token: </strong>{token}</p>
 						<p><strong>Email: </strong>{$account.email}</p>
 					</li>
 				</ul>
 			</div>
 			<div>
-				<h2>Resumes</h2>
-				{#if resumes}
+				<h2 class="mb-3"><a href="/my/resumes">Resumes</a></h2>
+				<a href="/my/resumes/new">Add Resume</a>
+				{#if Object.keys($loadedResumes).length}
 					<ul class="flex flex-col gap-5 p-5">
-						{#each resumes as resume}
+						{#each Object.entries($loadedResumes) as [resumeId, { resume, comments }]}
 							<li class="rounded-lg border-2 p-2">
 								<p><strong>Resume id:</strong> {resume.id}</p>
-								<a href="/community" on:click={() => handleResumeClick(resume.id)}><strong>Title:</strong> {resume.title}</a>
+								<p class="hover:italic" on:click={() => handleResumeClick(resume.id)}><strong>Title:</strong> {resume.title}</p>
+								<p><strong>Shared:</strong> {resume.is_shareable ? "Yes" : "No"}</p>
 								<h3>Comments</h3>
-								<ul class="flex flex-col gap-5 p-5">
-									{#if resumesComments[resume.id]?.length}
-										{#each resumesComments[resume.id] as comment}
+								{#if Object.keys(comments).length}
+									<ul class="flex flex-col gap-5 p-5">
+										{#each Object.entries(comments) as [commentId, comment]}
 											<li class="rounded-lg border-2 p-2">
 												<p><strong>Member id:</strong> {comment.member}</p>
 												<p><strong>Comment:</strong> {comment.description}</p>
 											</li>
 										{/each}
-									{:else}
-										<li class="rounded-lg border-2 p-2">
-											<p><strong>No Comments</strong></p>
-										</li>
-									{/if}
-								</ul>
-								<button on:click={() => {handleDelete($account.id, resume.id)}}>Delete</button>
+									</ul>
+								{:else}
+									<p><strong>No Comments</strong></p>
+								{/if}
+								<button
+									on:click={() => {
+										handleDelete($account.id, resume.id);
+									}}>Delete</button
+								>
 							</li>
 						{/each}
 					</ul>
 				{:else}
-					<p>No Resumes</p>
+					<p><strong>No Resumes</strong></p>
 				{/if}
 			</div>
 			<div>
 				<h2>Community</h2>
 				{#if memberComments}
-				<ul class="flex flex-col gap-5 p-5">
-					{#each memberComments as comment}
-						<li class="rounded-lg border-2 p-2">
-							<p><strong>Resume id:</strong> {comment.id}</p>
-							<p><strong>Comment:</strong> {comment.description}</p>
-						</li>
-					{/each}
-				</ul>
-			{:else}
-				<p>No Comments</p>
-			{/if}
+					<ul class="flex flex-col gap-5 p-5">
+						{#each memberComments as comment}
+							<li class="rounded-lg border-2 p-2">
+								<p><strong>Resume id:</strong> {comment.header}</p>
+								<p><strong>Comment:</strong> {comment.description}</p>
+							</li>
+						{/each}
+					</ul>
+				{:else}
+					<p><strong>No Comments</strong></p>
+				{/if}
+			</div>
 		</div>
-	</div>
 {/if}
 </section>

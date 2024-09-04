@@ -3,7 +3,7 @@ from django.db import models
 
 
 class Project(models.Model):
-    header = models.ForeignKey(Header, related_name="projects", on_delete=models.CASCADE, blank=False)
+    header = models.ForeignKey(Header, related_name="projects", on_delete=models.CASCADE, blank=True, null=True)
     title = models.CharField(max_length=100, blank=False)
     sub_title = models.CharField(max_length=100, blank=True)
     start_date = models.DateTimeField(null=True, blank=True)
