@@ -8,6 +8,7 @@ cryptography==43.0.0
 dj-database-url==2.2.0
 Django==5.1
 django-cors-headers==4.4.0
+django-heroku==0.3.1
 django-seed==0.3.1
 djangorestframework==3.15.2
 Faker==28.1.0
@@ -24,11 +25,14 @@ google-resumable-media==2.7.2
 googleapis-common-protos==1.65.0
 grpcio==1.66.1
 grpcio-status==1.66.1
+gunicorn==23.0.0
 httplib2==0.22.0
 idna==3.8
 msgpack==1.0.8
+packaging==24.1
 proto-plus==1.24.0
 protobuf==5.28.0
+psycopg2==2.9.9
 psycopg2-binary==2.9.9
 pyasn1==0.6.0
 pyasn1_modules==0.4.0
@@ -45,3 +49,4 @@ toposort==1.10
 typing_extensions==4.12.2
 uritemplate==4.1.1
 urllib3==2.2.2
+whitenoise==6.7.0
