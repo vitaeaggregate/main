@@ -3,7 +3,7 @@
 	import { checkAccountAndRedirect } from "$lib/store";
 	import { page } from "$app/stores";
 
-	$: resumeId = Number($page.params.id);
+	// $: resumeId = Number($page.params.id);
 
 	const loadPage = () => {};
 
@@ -11,6 +11,6 @@
 </script>
 
 <section>
-	<h1>Update Resume (id: {resumeId})</h1>
-	<Resume bind:id={resumeId}></Resume>
+	<!-- <h1>Update Resume (id: {resumeId})</h1> -->
+	<!-- <Resume bind:id={resumeId}></Resume> -->
 </section>
