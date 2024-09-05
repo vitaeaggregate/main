@@ -1,7 +1,6 @@
 <script context="module" lang="ts">
 	export interface Config {
 		readOnly?: boolean;
-		listOnly?: boolean;
 		listLabel?: String;
 	}
 </script>
@@ -25,7 +24,7 @@
 	let currentSkill: Skill | null = null;
 
 	const handleRemove = (name: string | undefined) => {
-		if (Array.isArray(value)) value = value.filter((value) => value.name !== name);
+		if (Array.isArray(value)) value = [...value.filter((value) => value.name !== name)];
 	};
 
 	const handleEdit = (skill: Skill) => {

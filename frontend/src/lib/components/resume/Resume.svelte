@@ -129,9 +129,7 @@
 	<InputText label="Resume Name" bind:value={value.title} />
 	<InputCheckBox label="Share" bind:value={value.is_shareable}></InputCheckBox>
 	<PersonalInfoComponent bind:value={value.personal_info}></PersonalInfoComponent>
-	<SkillComponent
-		value={value.skills}
-		config={{ readOnly: true, listOnly: true, listLabel: "Skills" }}
+	<SkillComponent bind:value={value.skills} config={{ readOnly: true, listLabel: "Skills" }}
 	></SkillComponent>
 
 	<div class="fixed bottom-0 right-0 m-9 rounded-lg border-2 bg-slate-100 p-2">
