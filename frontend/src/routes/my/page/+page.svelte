@@ -2,52 +2,64 @@
 	import { goto } from "$app/navigation";
 	import { writable } from "svelte/store";
 	import { account, loadedResumes, checkAccountAndRedirect } from "$lib/store";
-	import { getAllResumes } from "$lib/api/resume";
+	import { getResumesByMemberId } from "$lib/api/resume";
 	import { deleteComment, getCommentsByMemberId, getCommentsByMemberIdByResumeId } from "$lib/api/comment";
 	import { deleteResume } from "$lib/api/resume";
 	import type { Comment } from "$lib/interfaces/resume/Comment";
-	import type { Resume } from "$lib/interfaces/resume/Resume"
 
 	export const id = writable<number | null>(null);
 	export const resumeId = writable<number | null>(null);
 	let token: string | null = null;
 
-	// let memberComments: Comment[] = [];
-	let resumeDisplay:Resume[] = []
+	let memberComments: Comment[] = [];
 
 	const loadPage = async () => {
+		if (!$account) return;
+
 		token = sessionStorage.getItem("token");
 
-		const resumes = await getAllResumes();
-		resumeDisplay = [...resumes]
+		const resumes = await getResumesByMemberId($account.id);
+
+		loadedResumes.update((current) => {
+			resumes.forEach((resume) => {
+				current[resume.id] = {
+					resume,
+					comments: {}
+				};
+			});
+			return current;
+		});
+
+		memberComments = await getCommentsByMemberId($account.id);
+
+		for (const resume of resumes) {
+			const comments = await getCommentsByMemberIdByResumeId($account.id, resume.id);
+			loadedResumes.update((current) => {
+				for (const comment of comments) {
+					current[resume.id].comments[comment.id] = comment;
+				}
+				return current;
+			});
+		}
 	};
 
-	// function handleResumeClick(resumeId: number) {
-	// 	goto(`/community/${resumeId}`);
-	// }
-	function handleCreateResumeClick() {
-		goto('/my/resumes/new');
+	function handleResumeClick(resumeId: number) {
+		goto(`/community/${resumeId}`);
+	}
+
+	function handleDelete(id: number, resumeId: number) {
+		deleteResume(id, resumeId);
+		delete $loadedResumes[id];
+	}
+
+	function handleDeleteComment(id: number, resumeId: number, commentId: number) {
+		deleteComment(id, resumeId, commentId)
 	}
 
 	checkAccountAndRedirect(loadPage);
 </script>
 
-<section class="">
-	<div class="bfb">
-		<button on:click={handleCreateResumeClick}>Create Resume</button>
-	</div>
-	<div>
-		{#each resumeDisplay as resume}
-			<ul>
-				<li>	
-					<a href='/community/{resume.id}'>{resume.title}</a>		
-				</li>
-			</ul>
-		{/each}
-	</div>
-</section>
-
-<!-- <{#if $account}
+{#if $account}
 	<section class="">
 		<h1>Dashboard</h1>
 		<div class="">
@@ -122,4 +134,4 @@
 			</div>
 		</div>
 	</section>
-{/if}> -->
+{/if}

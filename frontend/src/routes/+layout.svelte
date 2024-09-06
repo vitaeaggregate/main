@@ -24,6 +24,7 @@
 			<div class="flex justify-between">
 				<nav class="flex justify-start gap-10 uppercase">
 					<a href="/">home</a>
+					<a href="/my/page">my page</a>
 					<a href="/my/dashboard">dashboard</a>
 					<a href="/community">community</a>
 				</nav>

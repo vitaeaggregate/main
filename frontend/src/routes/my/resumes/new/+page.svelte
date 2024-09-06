@@ -29,7 +29,7 @@
 		if (!$account || !resume) return;
 		resume.member = $account.id;
 		resume = await createResume($account.id, resume);
-		if (resume) goto("/my/dashboard");
+		if (resume) goto("/my/page");
 	};
 
 	checkAccountAndRedirect(loadPage);
