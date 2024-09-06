@@ -56,20 +56,23 @@
 		deleteComment(id, resumeId, commentId)
 	}
 
+	function handleCreateResumeClick() {
+		goto('/my/resumes/new');
+	}
+
 	checkAccountAndRedirect(loadPage);
 </script>
 
 {#if $account}
 	<section class="">
-		<h1>Dashboard</h1>
+		<h1>My Page</h1>
 		<div class="">
 			<div>
 				<h2>User Info</h2>
 				<ul class="flex flex-col gap-5 p-5">
 					<li class="rounded-lg border-2 p-2">
-						<p><strong>Id: </strong>{$account.id}</p>
-						<p><strong>Token: </strong>{token}</p>
-						<p><strong>Email: </strong>{$account.email}</p>
+						<p><strong>Welcome Back! </strong> {$account.email}</p>
+						<!-- <p><strong>Email: </strong>{$account.email}</p> -->
 					</li>
 				</ul>
 			</div>
@@ -109,6 +112,10 @@
 										handleDelete($account.id, resume.id);
 									}}>Delete Resume</button
 								>
+								<!-- CREATE EDIT BUTTON -->
+								<button
+								on:click={() => {}}>Edit Resume</button
+							>
 							</li>
 						{/each}
 					</ul>
@@ -123,7 +130,7 @@
 					<ul class="flex flex-col gap-5 p-5">
 						{#each memberComments as comment}
 							<li class="rounded-lg border-2 p-2">
-								<p><strong>Resume id:</strong> {comment.header}</p>
+								<a href={`/community/${comment.header}`} class="hover:italic"><strong>Resume:</strong> {comment.header}</a>
 								<p><strong>Comment:</strong> {comment.description}</p>
 							</li>
 						{/each}

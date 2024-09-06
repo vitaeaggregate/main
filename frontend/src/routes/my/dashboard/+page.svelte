@@ -20,11 +20,9 @@
 
 		const resumes = await getAllResumes();
 		resumeDisplay = [...resumes]
+		console.log(resumeDisplay);
 	};
 
-	// function handleResumeClick(resumeId: number) {
-	// 	goto(`/community/${resumeId}`);
-	// }
 	function handleCreateResumeClick() {
 		goto('/my/resumes/new');
 	}
