@@ -1,7 +1,7 @@
 <script lang="ts">
 	export let label: string | null = null;
 	export let placeholder: string | null = label;
-	export let value: string | null = null;
+	export let value: string = "";
 </script>
 
 <label class="flex flex-col"

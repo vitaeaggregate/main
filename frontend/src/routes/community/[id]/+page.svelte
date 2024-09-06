@@ -74,6 +74,7 @@
 
 	const loadPage = async () => {
 		if (!$account) return;
+
 		const resume = await getResumesByMemberId($account.id);
         resumes = resume[resumeId] || null;
 

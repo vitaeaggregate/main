@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import django_heroku
 import os
 import dj_database_url
 from pathlib import Path
@@ -46,7 +47,7 @@ INSTALLED_APPS = [
     "api.firebase_admin",
     "api.member",
     "api.member.resume",
-    #TODO Delete this 2 for production (Using real data)
+    # TODO Delete this 2 for production (Using real data)
     "api.login",
     "rest_framework.authtoken",
 ]
@@ -57,13 +58,14 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
-    #TODO Uncomment this for firebase
+    # TODO Uncomment this for firebase
     # "api.firebase_admin.middleware.FirebaseMiddleware",
-    #TODO Remove this for production
+    # TODO Remove this for production
     "api.login.middleware.DjangoMiddleware",
 ]
 
@@ -137,6 +139,8 @@ STATIC_URL = "static/"
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static-build")
 
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
@@ -147,9 +151,11 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 5
 }
 
-#TODO Delete this for production (Using real data)
+# TODO Delete this for production (Using real data)
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.TokenAuthentication",
     ],
 }
+
+django_heroku.settings(locals())

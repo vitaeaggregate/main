@@ -14,6 +14,17 @@ export const getResumesByMemberId = async (memberId: number): Promise<Resume[]> 
 	return resumes;
 };
 
+export const getAllResumes = async (): Promise<Resume[]> => {
+	const response = await fetchData(PUBLIC_SERVER + "/members/resumes");
+
+	if (!response.ok) {
+		throw error(response.status, response.statusText);
+	}
+	const resumes: Resume[] = await response.json();
+
+	return resumes;
+};
+
 export const createResume = async (memberId: number, resume: BaseResume): Promise<Resume> => {
 	const requestInit: RequestInit = {
 		method: "POST",
