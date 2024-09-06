@@ -33,18 +33,15 @@
 	};
 
 	const closeModalClick = () => {
+		console.log(currentSkill);
+		if (Array.isArray(value)) {
+			const index = value.findIndex((skill) => {
+				if (currentSkill) return skill.id === currentSkill.id;
+			});
+			if (currentSkill) value.splice(index, 1, currentSkill);
+		}
 		currentSkill = null;
 	};
-
-	$: {
-		if (Array.isArray(value) && currentSkill) {
-			for (let skill of value)
-				if (skill.id === currentSkill.id) {
-					skill = currentSkill;
-					value = [...value, skill];
-				}
-		}
-	}
 </script>
 
 {#if currentSkill}
@@ -57,6 +54,7 @@
 		{#if config.listLabel}
 			<h2>{config.listLabel}</h2>
 		{/if}
+
 		{#each value as skill (skill.id)}
 			<SkillItem bind:value={skill} readOnly={config.readOnly}></SkillItem>
 			<div>

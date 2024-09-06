@@ -30,7 +30,6 @@
 	import type Certificate from "$lib/interfaces/resume/Certificate";
 	import { onMount, tick, type ComponentType } from "svelte";
 	import Button from "$lib/components/Button.svelte";
-	import { readonly } from "svelte/store";
 	import Modal from "../Modal.svelte";
 
 	export const id: number | null = null;

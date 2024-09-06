@@ -12,10 +12,6 @@
 	};
 	export let readOnly: boolean = false;
 
-	let name = value.name;
-	let description = value.description;
-	let skill_level = value.skill_level;
-
 	onMount(() => {
 		if (value.id) return;
 		value.id = getRandomId();
@@ -24,9 +20,9 @@
 
 {#if readOnly}
 	<div>
-		<p><strong>Name:</strong> {name}</p>
-		<p><strong>Description:</strong> {description}</p>
-		<p><strong>Skill Level:</strong> {skill_level}</p>
+		<p><strong>Name:</strong> {value.name}</p>
+		<p><strong>Description:</strong> {value.description}</p>
+		<p><strong>Skill Level:</strong> {value.skill_level}</p>
 	</div>
 {:else}
 	<div>

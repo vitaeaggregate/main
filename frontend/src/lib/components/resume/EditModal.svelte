@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Button from "$lib/components/Button.svelte";
-	import { onMount, type ComponentType } from "svelte";
+	import { onMount, tick, type ComponentType } from "svelte";
 
 	export let component: ComponentType;
 	export let value: {};
@@ -10,11 +10,11 @@
 	let initialValue: {};
 
 	onMount(() => {
-		initialValue = value;
+		initialValue = { ...value };
 	});
 
 	const handleCancelClick = () => {
-		value = initialValue;
+		value = { ...initialValue };
 		closeModalClick();
 	};
 </script>
