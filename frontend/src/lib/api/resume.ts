@@ -11,6 +11,16 @@ export const getResumesByMemberId = async (memberId: number): Promise<Resume[]> 
 	}
 
 	const resumes: Resume[] = await response.json();
+	return resumes;
+};
+
+export const getAllResumes = async (): Promise<Resume[]> => {
+	const response = await fetchData(PUBLIC_SERVER + "/members/resumes");
+
+	if (!response.ok) {
+		throw error(response.status, response.statusText);
+	}
+	const resumes: Resume[] = await response.json();
 
 	return resumes;
 };

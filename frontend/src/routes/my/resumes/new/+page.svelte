@@ -24,7 +24,7 @@
 		skills: []
 	};
 
-	const resumeStore  = writable(resume);
+	const resumeStore = writable(resume);
 
 	const loadPage = () => {};
 
@@ -32,7 +32,7 @@
 		if (!$account || !resume) return;
 		resume.member = $account.id;
 		resume = await createResume($account.id, resume);
-		if (resume) goto("/my/dashboard");
+		if (resume) goto("/my/page");
 	};
 
 	checkAccountAndRedirect(loadPage);

@@ -20,9 +20,9 @@
 
 {#if readOnly}
 	<div>
-		<p><strong>Name:</strong> {value.name}</p>
-		<p><strong>Description:</strong> {value.description}</p>
-		<p><strong>Skill Level:</strong> {value.skill_level}</p>
+		<p><strong>Name:</strong> {value.name ? value.name : ""}</p>
+		<p><strong>Description:</strong> {value.description ? value.description : ""}</p>
+		<p><strong>Skill Level:</strong> {value.skill_level ? value.skill_level : ""}</p>
 	</div>
 {:else}
 	<div>

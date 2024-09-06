@@ -31,6 +31,7 @@
 	import { onMount, tick, type ComponentType } from "svelte";
 	import Button from "$lib/components/Button.svelte";
 	import Modal from "../Modal.svelte";
+	import { getRandomId } from "$lib/utils";
 
 	export const id: number | null = null;
 	export let value: BaseResume;
@@ -42,7 +43,7 @@
 	type ComponentMapping = {
 		key: ArrayKeys<BaseResume>;
 		component: ComponentType;
-		componentValue: {};
+		componentValue: { id?: string | number };
 	};
 
 	let isModalHidden: boolean = false;
@@ -78,22 +79,69 @@
 		};
 	}
 
-	const closeModalClick = (event: Event) => {
-		if (event instanceof KeyboardEvent && event.key !== "Enter") return;
-		isModalHidden = true;
+	const addSection = (section: ComponentMapping) => {
+		if (!section || !section.key) return;
+		currentSection = section;
+		value[section.key] = [...value[section.key], currentSection.componentValue];
 	};
 
 	const addCurrentSection = () => {
-		if (!currentSection || !currentSection.key || !value) return;
-		if (Array.isArray(value[currentSection.key])) {
-			value[currentSection.key] = [...value[currentSection.key], currentSection.componentValue];
-			currentSection.componentValue = {};
-		}
+		if (!currentSection || !currentSection.key) return;
+		// Add the next
+		value[currentSection.key] = [...value[currentSection.key], {}];
+		currentSection.componentValue = {};
+	};
+
+	const closeModalClick = (event?: Event) => {
+		if (event instanceof KeyboardEvent && event.key !== "Enter") return;
+		currentSection = null;
+		isModalHidden = true;
+	};
+
+	const cancelCurrentSection = () => {
+		if (!currentSection || !currentSection.key) return;
+		// Remove the last addition
+		removeLast();
+		resetComponent();
+		closeModalClick();
+	};
+
+	const removeLast = () => {
+		if (currentSection && currentSection.key)
+			value[currentSection.key] = [
+				...value[currentSection.key].splice(0, value[currentSection.key].length - 1)
+			];
+	};
+
+	const resetComponent = () => {
+		if (!currentSection) return;
+		currentSection.componentValue = {};
+		currentSection = null;
 	};
 
 	$: {
-		if (currentSection) backModalClick = () => (currentSection = null);
+		if (currentSection)
+			backModalClick = () => {
+				if (currentSection && Object.keys(currentSection.componentValue).length === 1) removeLast();
+				resetComponent();
+			};
 		else backModalClick = null;
+	}
+
+	$: {
+		if (currentSection && currentSection.key && currentSection.componentValue) {
+			// value[currentSection.key] --> value.skills, value.links
+			if (value[currentSection.key].length)
+				value[currentSection.key] = value[currentSection.key].map((section) => {
+					if (
+						currentSection &&
+						currentSection.componentValue &&
+						currentSection.componentValue.id == section.id
+					)
+						return currentSection.componentValue;
+					else return section;
+				});
+		}
 	}
 </script>
 
@@ -107,7 +155,7 @@
 				{#if !currentSection}
 					<div class="flex flex-wrap justify-center gap-5">
 						{#each Object.entries(buttons) as [text, object], index (index)}
-							<Button on:click={() => (currentSection = object)}>{text}</Button>
+							<Button on:click={() => addSection(object)}>{text}</Button>
 						{/each}
 					</div>
 				{:else}
@@ -118,7 +166,7 @@
 						></svelte:component>
 						<div class="flex justify-between">
 							<Button on:click={addCurrentSection}>Add</Button>
-							<Button on:click={closeModalClick}>Cancel</Button>
+							<Button on:click={cancelCurrentSection}>Cancel</Button>
 						</div>
 					</div>
 				{/if}
@@ -130,6 +178,7 @@
 	<PersonalInfoComponent bind:value={value.personal_info}></PersonalInfoComponent>
 	<SkillComponent bind:value={value.skills} config={{ readOnly: true, listLabel: "Skills" }}
 	></SkillComponent>
+
 
 	<div class="fixed bottom-0 right-0 m-9 rounded-lg border-2 bg-slate-100 p-2">
 		<Button on:click={() => (isModalHidden = false)}>Add Section</Button>
