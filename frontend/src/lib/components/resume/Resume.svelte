@@ -9,7 +9,7 @@
 	import CertificateComponent from "$lib/components/resume/Certificate.svelte";
 	import CourseComponent from "$lib/components/resume/Course.svelte";
 	import LanguageComponent from "$lib/components/resume/Language.svelte";
-	import ProfessionalExpComponent from "$lib/components/resume/ProfessionalExperience.svelte";
+	import ProfessionalExpComponent from "$lib/components/resume/ProfessionalExp.svelte";
 	import ProjectComponent from "$lib/components/resume/Project.svelte";
 	import ReferenceComponent from "$lib/components/resume/Reference.svelte";
 	import InputText from "$lib/components/InputText.svelte";
@@ -28,74 +28,111 @@
 	import type Skill from "$lib/interfaces/resume/Skill";
 	import type Publication from "$lib/interfaces/resume/Publication";
 	import type Certificate from "$lib/interfaces/resume/Certificate";
+	import { onMount, tick, type ComponentType } from "svelte";
+	import Button from "$lib/components/Button.svelte";
+	import { readonly } from "svelte/store";
+	import Modal from "../Modal.svelte";
 
 	export const id: number | null = null;
-	export let value: BaseResume | null = null;
+	export let value: BaseResume;
 
-	let title = "";
-	let is_shareable = false;
-	let personal_info: PersonalInfo = {};
-	let professional_exps: ProfessionalExp[] = [];
-	let links: Link[] = [];
-	let skills: Skill[] = [];
-	let educations: Education[] = [];
-	let courses: Course[] = [];
-	let languages: Language[] = [];
-	let interests: Interest[] = [];
-	let projects: Project[] = [];
-	let publications: Publication[] = [];
-	let awards: Award[] = [];
-	let certificates: Certificate[] = [];
-	let references: Reference[] = [];
+	type ArrayKeys<type> = {
+		[key in keyof type]: type[key] extends Array<any> ? key : never;
+	}[keyof type];
 
-	let professional_exp: ProfessionalExp = {};
-	let link: Link = {};
-	let skill: Skill = {};
-	let education: Education = {};
-	let course: Course = {};
-	let language: Language = {};
-	let interest: Interest = {};
-	let project: Project = {};
-	let publication: Publication = {};
-	let award: Award = {};
-	let certificate: Certificate = {};
-	let reference: Reference = {};
+	type ComponentMapping = {
+		key: ArrayKeys<BaseResume>;
+		component: ComponentType;
+		componentValue: {};
+	};
+
+	let isModalHidden: boolean = false;
+	let currentSection: ComponentMapping | null = null;
+	let backModalClick: (() => void) | null = null;
+
+	const buttons: { [text: string]: ComponentMapping } = {
+		...createButton("Professional Experience", "professional_exps", ProfessionalExpComponent),
+		...createButton("Link", "links", LinkComponent),
+		...createButton("Skill", "skills", SkillComponent),
+		...createButton("Award", "awards", AwardComponent),
+		...createButton("Certificate", "certificates", CertificateComponent),
+		...createButton("Course", "courses", CourseComponent),
+		...createButton("Education", "educations", EducationComponent),
+		...createButton("Interest", "interests", InterestComponent),
+		...createButton("Language", "languages", LanguageComponent),
+		...createButton("Project", "projects", ProjectComponent),
+		...createButton("Publication", "publications", PublicationComponent),
+		...createButton("Reference", "references", ReferenceComponent)
+	};
+
+	function createButton(
+		text: string,
+		key: ArrayKeys<BaseResume>,
+		component: ComponentType
+	): { [text: string]: ComponentMapping } {
+		return {
+			[text]: {
+				key,
+				component,
+				componentValue: {}
+			}
+		};
+	}
+
+	const closeModalClick = (event: Event) => {
+		if (event instanceof KeyboardEvent && event.key !== "Enter") return;
+		isModalHidden = true;
+	};
+
+	const addCurrentSection = () => {
+		if (!currentSection || !currentSection.key || !value) return;
+		if (Array.isArray(value[currentSection.key])) {
+			value[currentSection.key] = [...value[currentSection.key], currentSection.componentValue];
+			currentSection.componentValue = {};
+		}
+	};
 
 	$: {
-		value = {
-			title,
-			is_shareable,
-			personal_info,
-			professional_exps: [professional_exp],
-			links: [link],
-			skills: [skill],
-			educations: [education],
-			courses: [course],
-			languages: [language],
-			interests: [interest],
-			projects: [project],
-			publications: [publication],
-			awards: [award],
-			certificates: [certificate],
-			references: [reference]
-		};
+		if (currentSection) backModalClick = () => (currentSection = null);
+		else backModalClick = null;
 	}
 </script>
 
-<div>
-	<InputText label="Resume Name" bind:value={title} />
-	<InputCheckBox label="Share" bind:value={is_shareable}></InputCheckBox>
-	<PersonalInfoComponent bind:value={personal_info} />
-	<EducationComponent bind:value={education}></EducationComponent>
-	<InterestComponent bind:value={interest}></InterestComponent>
-	<LinkComponent bind:value={link}></LinkComponent>
-	<PublicationComponent bind:value={publication}></PublicationComponent>
-	<SkillComponent bind:value={skill}></SkillComponent>
-	<AwardComponent bind:value={award}></AwardComponent>
-	<CertificateComponent bind:value={certificate}></CertificateComponent>
-	<CourseComponent bind:value={course}></CourseComponent>
-	<LanguageComponent bind:value={language}></LanguageComponent>
-	<ProfessionalExpComponent bind:value={professional_exp}></ProfessionalExpComponent>
-	<ProjectComponent bind:value={project}></ProjectComponent>
-	<ReferenceComponent bind:value={reference}></ReferenceComponent>
-</div>
+<section>
+	{#if !isModalHidden}
+		<Modal closeClick={closeModalClick} backClick={backModalClick}>
+			<div>
+				<div class="flex justify-center">
+					<h2>Add Section</h2>
+				</div>
+				{#if !currentSection}
+					<div class="flex flex-wrap justify-center gap-5">
+						{#each Object.entries(buttons) as [text, object], index (index)}
+							<Button on:click={() => (currentSection = object)}>{text}</Button>
+						{/each}
+					</div>
+				{:else}
+					<div class="flex flex-col gap-4">
+						<svelte:component
+							this={currentSection.component}
+							bind:value={currentSection.componentValue}
+						></svelte:component>
+						<div class="flex justify-between">
+							<Button on:click={addCurrentSection}>Add</Button>
+							<Button on:click={closeModalClick}>Cancel</Button>
+						</div>
+					</div>
+				{/if}
+			</div>
+		</Modal>
+	{/if}
+	<InputText label="Resume Name" bind:value={value.title} />
+	<InputCheckBox label="Share" bind:value={value.is_shareable}></InputCheckBox>
+	<PersonalInfoComponent bind:value={value.personal_info}></PersonalInfoComponent>
+	<SkillComponent bind:value={value.skills} config={{ readOnly: true, listLabel: "Skills" }}
+	></SkillComponent>
+
+	<div class="fixed bottom-0 right-0 m-9 rounded-lg border-2 bg-slate-100 p-2">
+		<Button on:click={() => (isModalHidden = false)}>Add Section</Button>
+	</div>
+</section>
