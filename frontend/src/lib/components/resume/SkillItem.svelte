@@ -2,6 +2,8 @@
 	import InputText from "$lib/components/InputText.svelte";
 	import TextArea from "$lib/components/TextArea.svelte";
 	import type Skill from "$lib/interfaces/resume/Skill";
+	import { getRandomId } from "$lib/utils";
+	import { onMount } from "svelte";
 
 	export let value: Skill = {
 		name: "",
@@ -13,6 +15,11 @@
 	let name = value.name;
 	let description = value.description;
 	let skill_level = value.skill_level;
+
+	onMount(() => {
+		if (value.id) return;
+		value.id = getRandomId();
+	});
 </script>
 
 {#if readOnly}
