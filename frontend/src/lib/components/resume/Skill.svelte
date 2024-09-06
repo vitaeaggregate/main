@@ -1,15 +1,10 @@
-<script context="module" lang="ts">
-	export interface Config {
-		readOnly?: boolean;
-		listLabel?: String;
-	}
-</script>
-
 <script lang="ts">
 	import SkillItem from "$lib/components/resume/SkillItem.svelte";
+	import Button from "$lib/components/Button.svelte";
+	import Modal from "$lib/components/Modal.svelte";
+	import EditModal from "$lib/components/resume/EditModal.svelte";
 	import type Skill from "$lib/interfaces/resume/Skill";
-	import Button from "../Button.svelte";
-	import EditModal from "./EditModal.svelte";
+	import type ComponentConfig from "$lib/interfaces/resume/ComponentConfig";
 
 	export let value: Skill | Skill[] = {
 		name: "",
@@ -17,34 +12,55 @@
 		skill_level: ""
 	};
 
-	export let config: Config = {
+	export let config: ComponentConfig = {
 		readOnly: false
 	};
 
 	let currentSkill: Skill | null = null;
+	let isModalHidden: boolean = true;
 
-	const handleRemove = (name: string | undefined) => {
-		if (Array.isArray(value)) value = [...value.filter((value) => value.name !== name)];
+	const handleRemove = (id: string | number) => {
+		if (Array.isArray(value)) value = [...value.filter((value) => value.id !== id)];
 	};
 
 	const handleEdit = (skill: Skill) => {
-		currentSkill = { ...skill };
+		currentSkill = skill;
 	};
+
+	const closeModalClick = () => {
+		currentSkill = null;
+	};
+
+	$: {
+		if (Array.isArray(value))
+			value = value.map((skill) => {
+				if (currentSkill && currentSkill.id == skill.id) return skill;
+				else return skill;
+			});
+	}
 </script>
 
 {#if currentSkill}
-	<EditModal component={SkillItem} value={currentSkill}></EditModal>
+	<Modal closeClick={closeModalClick}>
+		<EditModal component={SkillItem} bind:value={currentSkill} {closeModalClick} title="Edit Skill"
+		></EditModal>
+	</Modal>
 {/if}
 {#if Array.isArray(value) && value.length}
 	<div class="flex flex-col">
 		{#if config.listLabel}
 			<h2>{config.listLabel}</h2>
 		{/if}
-		{#each value as skill, index (skill.name)}
+
+		{#each value as skill (skill.id)}
 			<SkillItem bind:value={skill} readOnly={config.readOnly}></SkillItem>
 			<div>
 				<Button on:click={() => handleEdit(skill)}>Edit</Button>
-				<Button on:click={() => handleRemove(skill.name)}>Remove</Button>
+				<Button
+					on:click={() => {
+						if (skill.id) handleRemove(skill.id);
+					}}>Remove</Button
+				>
 			</div>
 			<hr />
 		{/each}

@@ -1,9 +1,9 @@
 export default interface Project {
-	id?: number;
+	id?: number | string;
 	header?: number;
 	title?: string;
 	sub_title?: string;
-	start_date?: string;
-	end_date?: string;
+	start_date?: string | Date;
+	end_date?: string | Date;
 	description?: string;
 }

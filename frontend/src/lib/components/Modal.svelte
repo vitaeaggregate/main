@@ -9,6 +9,11 @@
 
 	export let backClick: ((event: Event) => void) | null = null;
 	export let closeClick: ((event: Event) => void) | null;
+	export let config: {
+		closeText?: string;
+	} = {
+		closeText: "Close"
+	};
 
 	let modal: HTMLDivElement | null = null;
 </script>
@@ -26,7 +31,7 @@
 			{#if backClick}
 				<Button on:click={backClick}>Back</Button>
 			{/if}
-			<Button on:click={closeClick}>Close</Button>
+			<Button on:click={closeClick}>{config.closeText}</Button>
 		</div>
 		<slot></slot>
 	</div>

@@ -71,6 +71,13 @@ export const login = async (email: string) => {
 	return response;
 };
 
+export const getRandomId = () => {
+	const date = new Date();
+	const timestamp = date.getTime();
+	const randomNumber = Math.floor(Math.random() * 0xf);
+	return `${timestamp.toString(16)}-${randomNumber.toString(16)}`;
+};
+
 const clearSessionStorage = () => {
 	account.set(null);
 	sessionStorage.removeItem("account");
