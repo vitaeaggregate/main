@@ -19,6 +19,8 @@ router.register(r"members/(?P<member_pk>[^/.]+)/resumes",
 router.register(r"members/resumes", HeaderViewSet, basename="view all resumes")
 router.register(r"members/(?P<member_pk>[^/.]+)/resumes/(?P<resume_pk>[^/.]+)",
                 HeaderViewSet, basename="view certain resume of a member by resume id")
+router.register(r"resumes/(?P<resume_pk>[^/.]+)",
+                HeaderViewSet, basename="view certain resume by resume id")
 
 # Member Route
 router.register(r"members", AccountViewSet)

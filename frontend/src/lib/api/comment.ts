@@ -18,7 +18,7 @@ export const getCommentsByMemberIdByResumeId = async (
 	resumeId: number
 ): Promise<Comment[]> => {
 	const response = await fetchData(
-		PUBLIC_SERVER + "/members/" + memberId + "/resumes/" + resumeId + "/comments"
+		PUBLIC_SERVER + "/members/" + memberId + "/resumes/" + resumeId + "/comments/"
 	);
 
 	if (!response.ok) throw error(response.status, response.statusText);

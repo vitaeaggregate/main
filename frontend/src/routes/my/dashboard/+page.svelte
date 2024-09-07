@@ -21,7 +21,6 @@
 		const resumes = await getAllResumes();
 		resumeDisplay = [...resumes]
 	};
-
 	// function handleResumeClick(resumeId: number) {
 	// 	goto(`/community/${resumeId}`);
 	// }
