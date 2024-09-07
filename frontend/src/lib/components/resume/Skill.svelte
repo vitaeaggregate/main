@@ -1,73 +1,33 @@
 <script lang="ts">
-	import SkillItem from "$lib/components/resume/SkillItem.svelte";
-	import Button from "$lib/components/Button.svelte";
-	import Modal from "$lib/components/Modal.svelte";
-	import EditModal from "$lib/components/resume/EditModal.svelte";
+	import InputText from "$lib/components/InputText.svelte";
+	import TextArea from "$lib/components/TextArea.svelte";
 	import type Skill from "$lib/interfaces/resume/Skill";
-	import type ComponentConfig from "$lib/interfaces/resume/ComponentConfig";
+	import { getRandomId } from "$lib/utils";
+	import { onMount } from "svelte";
 
-	export let value: Skill | Skill[] = {
+	export let value: Skill = {
 		name: "",
 		description: "",
 		skill_level: ""
 	};
+	export let readOnly: boolean = false;
 
-	export let config: ComponentConfig = {
-		readOnly: false
-	};
-
-	let currentSkill: Skill | null = null;
-	let isModalHidden: boolean = true;
-
-	const handleRemove = (id: string | number) => {
-		if (Array.isArray(value)) value = [...value.filter((value) => value.id !== id)];
-	};
-
-	const handleEdit = (skill: Skill) => {
-		currentSkill = skill;
-	};
-
-	const closeModalClick = () => {
-		currentSkill = null;
-	};
-
-	$: {
-		if (Array.isArray(value))
-			value = value.map((skill) => {
-				if (currentSkill && currentSkill.id == skill.id) return skill;
-				else return skill;
-			});
-	}
+	onMount(() => {
+		if (value.id) return;
+		value.id = getRandomId();
+	});
 </script>
 
-{#if currentSkill}
-	<Modal closeClick={closeModalClick}>
-		<EditModal component={SkillItem} bind:value={currentSkill} {closeModalClick} title="Edit Skill"
-		></EditModal>
-	</Modal>
-{/if}
-{#if Array.isArray(value) && value.length}
-	<div class="flex flex-col">
-		{#if config.listLabel}
-			<h2>{config.listLabel}</h2>
-		{/if}
-
-		{#each value as skill (skill.id)}
-			<SkillItem bind:value={skill} readOnly={config.readOnly}></SkillItem>
-			<div>
-				<Button on:click={() => handleEdit(skill)}>Edit</Button>
-				<Button
-					on:click={() => {
-						if (skill.id) handleRemove(skill.id);
-					}}>Remove</Button
-				>
-			</div>
-			<hr />
-		{/each}
+{#if readOnly}
+	<div>
+		<p><strong>Name:</strong> {value.name ? value.name : ""}</p>
+		<p><strong>Description:</strong> {value.description ? value.description : ""}</p>
+		<p><strong>Skill Level:</strong> {value.skill_level ? value.skill_level : ""}</p>
 	</div>
-{:else if !Array.isArray(value)}
-	<div class="flex flex-col">
-		<h2>Skill</h2>
-		<SkillItem bind:value readOnly={config.readOnly}></SkillItem>
+{:else}
+	<div>
+		<InputText label="Name" bind:value={value.name} />
+		<TextArea label="Description" bind:value={value.description} />
+		<InputText label="Skill Level" bind:value={value.skill_level} />
 	</div>
 {/if}

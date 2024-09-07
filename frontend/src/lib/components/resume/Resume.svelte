@@ -1,68 +1,56 @@
 <script lang="ts">
-	import EducationComponent from "$lib/components/resume/Education.svelte";
-	import InterestComponent from "$lib/components/resume/Interest.svelte";
-	import LinkComponent from "$lib/components/resume/Link.svelte";
-	import PersonalInfoComponent from "$lib/components/resume/PersonalInfo.svelte";
-	import PublicationComponent from "$lib/components/resume/Publication.svelte";
-	import SkillComponent from "$lib/components/resume/Skill.svelte";
-	import AwardComponent from "$lib/components/resume/Award.svelte";
-	import CertificateComponent from "$lib/components/resume/Certificate.svelte";
-	import CourseComponent from "$lib/components/resume/Course.svelte";
-	import LanguageComponent from "$lib/components/resume/Language.svelte";
-	import ProfessionalExpComponent from "$lib/components/resume/ProfessionalExp.svelte";
-	import ProjectComponent from "$lib/components/resume/Project.svelte";
-	import ReferenceComponent from "$lib/components/resume/Reference.svelte";
+	import PersonalInfo from "$lib/components/resume/PersonalInfo.svelte";
+	import Skill from "$lib/components/resume/Skill.svelte";
+	import Award from "$lib/components/resume/Award.svelte";
+	import Certificate from "$lib/components/resume/Certificate.svelte";
+	import Course from "$lib/components/resume/Course.svelte";
+	import Education from "$lib/components/resume/Education.svelte";
+	import Language from "$lib/components/resume/Language.svelte";
+	import Interest from "$lib/components/resume/Interest.svelte";
+	import Link from "$lib/components/resume/Link.svelte";
+	import ProfessionalExp from "$lib/components/resume/ProfessionalExp.svelte";
+	import Project from "$lib/components/resume/Project.svelte";
+	import Publication from "$lib/components/resume/Publication.svelte";
+	import Reference from "$lib/components/resume/Reference.svelte";
 	import InputText from "$lib/components/InputText.svelte";
 	import InputCheckBox from "$lib/components/InputCheckBox.svelte";
 	import type { BaseResume } from "$lib/interfaces/resume/Resume";
-	import type PersonalInfo from "$lib/interfaces/resume/PersonalInfo";
-	import type Link from "$lib/interfaces/resume/Link";
-	import type ProfessionalExp from "$lib/interfaces/resume/ProfessionalExp";
-	import type Education from "$lib/interfaces/resume/Education";
-	import type Course from "$lib/interfaces/resume/Course";
-	import type Language from "$lib/interfaces/resume/Language";
-	import type Interest from "$lib/interfaces/resume/Interest";
-	import type Project from "$lib/interfaces/resume/Project";
-	import type Award from "$lib/interfaces/resume/Award";
-	import type Reference from "$lib/interfaces/resume/Reference";
-	import type Skill from "$lib/interfaces/resume/Skill";
-	import type Publication from "$lib/interfaces/resume/Publication";
-	import type Certificate from "$lib/interfaces/resume/Certificate";
-	import { onMount, tick, type ComponentType } from "svelte";
+	import { type ComponentType } from "svelte";
 	import Button from "$lib/components/Button.svelte";
 	import Modal from "../Modal.svelte";
-	import { getRandomId } from "$lib/utils";
+	import ComponentView from "./ComponentView.svelte";
 
 	export const id: number | null = null;
 	export let value: BaseResume;
 
-	type ArrayKeys<type> = {
-		[key in keyof type]: type[key] extends Array<any> ? key : never;
-	}[keyof type];
+	type ArrayKeys<Type> = {
+		[key in keyof Type]: Type[key] extends Array<any> ? key : never;
+	}[keyof Type];
 
 	type ComponentMapping = {
 		key: ArrayKeys<BaseResume>;
+		label: string;
 		component: ComponentType;
 		componentValue: { id?: string | number };
 	};
 
 	let isModalHidden: boolean = false;
-	let currentSection: ComponentMapping | null = null;
+	let currentSectionMap: ComponentMapping | null = null;
 	let backModalClick: (() => void) | null = null;
 
 	const buttons: { [text: string]: ComponentMapping } = {
-		...createButton("Professional Experience", "professional_exps", ProfessionalExpComponent),
-		...createButton("Link", "links", LinkComponent),
-		...createButton("Skill", "skills", SkillComponent),
-		...createButton("Award", "awards", AwardComponent),
-		...createButton("Certificate", "certificates", CertificateComponent),
-		...createButton("Course", "courses", CourseComponent),
-		...createButton("Education", "educations", EducationComponent),
-		...createButton("Interest", "interests", InterestComponent),
-		...createButton("Language", "languages", LanguageComponent),
-		...createButton("Project", "projects", ProjectComponent),
-		...createButton("Publication", "publications", PublicationComponent),
-		...createButton("Reference", "references", ReferenceComponent)
+		...createButton("Professional Experience", "professional_exps", ProfessionalExp),
+		...createButton("Link", "links", Link),
+		...createButton("Skill", "skills", Skill),
+		...createButton("Award", "awards", Award),
+		...createButton("Certificate", "certificates", Certificate),
+		...createButton("Course", "courses", Course),
+		...createButton("Education", "educations", Education),
+		...createButton("Interest", "interests", Interest),
+		...createButton("Language", "languages", Language),
+		...createButton("Project", "projects", Project),
+		...createButton("Publication", "publications", Publication),
+		...createButton("Reference", "references", Reference)
 	};
 
 	function createButton(
@@ -73,6 +61,7 @@
 		return {
 			[text]: {
 				key,
+				label: text,
 				component,
 				componentValue: {}
 			}
@@ -81,25 +70,25 @@
 
 	const addSection = (section: ComponentMapping) => {
 		if (!section || !section.key) return;
-		currentSection = section;
-		value[section.key] = [...value[section.key], currentSection.componentValue];
+		currentSectionMap = section;
+		value[section.key] = [...value[section.key], {}];
 	};
 
 	const addCurrentSection = () => {
-		if (!currentSection || !currentSection.key) return;
+		if (!currentSectionMap || !currentSectionMap.key) return;
 		// Add the next
-		value[currentSection.key] = [...value[currentSection.key], {}];
-		currentSection.componentValue = {};
+		value[currentSectionMap.key] = [...value[currentSectionMap.key], {}];
+		currentSectionMap.componentValue = {};
 	};
 
 	const closeModalClick = (event?: Event) => {
 		if (event instanceof KeyboardEvent && event.key !== "Enter") return;
-		currentSection = null;
+		currentSectionMap = null;
 		isModalHidden = true;
 	};
 
 	const cancelCurrentSection = () => {
-		if (!currentSection || !currentSection.key) return;
+		if (!currentSectionMap || !currentSectionMap.key) return;
 		// Remove the last addition
 		removeLast();
 		resetComponent();
@@ -107,38 +96,39 @@
 	};
 
 	const removeLast = () => {
-		if (currentSection && currentSection.key)
-			value[currentSection.key] = [
-				...value[currentSection.key].splice(0, value[currentSection.key].length - 1)
+		if (currentSectionMap && currentSectionMap.key)
+			value[currentSectionMap.key] = [
+				...value[currentSectionMap.key].splice(0, value[currentSectionMap.key].length - 1)
 			];
 	};
 
 	const resetComponent = () => {
-		if (!currentSection) return;
-		currentSection.componentValue = {};
-		currentSection = null;
+		if (!currentSectionMap) return;
+		currentSectionMap.componentValue = {};
+		currentSectionMap = null;
 	};
 
 	$: {
-		if (currentSection)
+		if (currentSectionMap)
 			backModalClick = () => {
-				if (currentSection && Object.keys(currentSection.componentValue).length === 1) removeLast();
+				if (currentSectionMap && Object.keys(currentSectionMap.componentValue).length === 1)
+					removeLast();
 				resetComponent();
 			};
 		else backModalClick = null;
 	}
 
 	$: {
-		if (currentSection && currentSection.key && currentSection.componentValue) {
+		if (currentSectionMap && currentSectionMap.key && currentSectionMap.componentValue) {
 			// value[currentSection.key] --> value.skills, value.links
-			if (value[currentSection.key].length)
-				value[currentSection.key] = value[currentSection.key].map((section) => {
+			if (value[currentSectionMap.key].length)
+				value[currentSectionMap.key] = value[currentSectionMap.key].map((section) => {
 					if (
-						currentSection &&
-						currentSection.componentValue &&
-						currentSection.componentValue.id == section.id
+						currentSectionMap &&
+						currentSectionMap.componentValue &&
+						currentSectionMap.componentValue.id == section.id
 					)
-						return currentSection.componentValue;
+						return currentSectionMap.componentValue;
 					else return section;
 				});
 		}
@@ -152,18 +142,19 @@
 				<div class="flex justify-center">
 					<h2>Add Section</h2>
 				</div>
-				{#if !currentSection}
+				{#if !currentSectionMap}
 					<div class="flex flex-wrap justify-center gap-5">
-						{#each Object.entries(buttons) as [text, object], index (index)}
-							<Button on:click={() => addSection(object)}>{text}</Button>
+						{#each Object.entries(buttons) as [text, componentMap], index (index)}
+							<Button on:click={() => addSection(componentMap)}>{text}</Button>
 						{/each}
 					</div>
 				{:else}
 					<div class="flex flex-col gap-4">
-						<svelte:component
-							this={currentSection.component}
-							bind:value={currentSection.componentValue}
-						></svelte:component>
+						<ComponentView
+							bind:component={currentSectionMap.component}
+							bind:value={currentSectionMap.componentValue}
+							config={{ unitLabel: currentSectionMap.label }}
+						></ComponentView>
 						<div class="flex justify-between">
 							<Button on:click={addCurrentSection}>Add</Button>
 							<Button on:click={cancelCurrentSection}>Cancel</Button>
@@ -173,12 +164,75 @@
 			</div>
 		</Modal>
 	{/if}
-	<InputText label="Resume Name" bind:value={value.title} />
-	<InputCheckBox label="Share" bind:value={value.is_shareable}></InputCheckBox>
-	<PersonalInfoComponent bind:value={value.personal_info}></PersonalInfoComponent>
-	<SkillComponent bind:value={value.skills} config={{ readOnly: true, listLabel: "Skills" }}
-	></SkillComponent>
-
+	<div class="flex flex-col gap-5">
+		<div class="flex flex-col gap-2">
+			<InputText label="Resume Name" bind:value={value.title} />
+			<InputCheckBox label="Share" bind:value={value.is_shareable}></InputCheckBox>
+		</div>
+		<PersonalInfo bind:value={value.personal_info}></PersonalInfo>
+		<div class="flex flex-wrap gap-5 items-start justify-center">
+			<ComponentView
+				bind:value={value.skills}
+				component={Skill}
+				config={{ readOnly: true, unitLabel: "Skill" }}
+			></ComponentView>
+			<ComponentView
+				bind:value={value.awards}
+				component={Award}
+				config={{ readOnly: true, unitLabel: "Award" }}
+			></ComponentView>
+			<ComponentView
+				bind:value={value.certificates}
+				component={Certificate}
+				config={{ readOnly: true, unitLabel: "Certificate" }}
+			></ComponentView>
+			<ComponentView
+				bind:value={value.courses}
+				component={Course}
+				config={{ readOnly: true, unitLabel: "Course" }}
+			/>
+			<ComponentView
+				bind:value={value.educations}
+				component={Education}
+				config={{ readOnly: true, unitLabel: "Education" }}
+			/>
+			<ComponentView
+				bind:value={value.interests}
+				component={Interest}
+				config={{ readOnly: true, unitLabel: "Interest" }}
+			/>
+			<ComponentView
+				bind:value={value.languages}
+				component={Language}
+				config={{ readOnly: true, unitLabel: "Language" }}
+			/>
+			<ComponentView
+				bind:value={value.links}
+				component={Link}
+				config={{ readOnly: true, unitLabel: "Link" }}
+			/>
+			<ComponentView
+				bind:value={value.professional_exps}
+				component={ProfessionalExp}
+				config={{ readOnly: true, unitLabel: "Professional Experience" }}
+			/>
+			<ComponentView
+				bind:value={value.projects}
+				component={Project}
+				config={{ readOnly: true, unitLabel: "Project" }}
+			/>
+			<ComponentView
+				bind:value={value.publications}
+				component={Publication}
+				config={{ readOnly: true, unitLabel: "Publication" }}
+			/>
+			<ComponentView
+				bind:value={value.references}
+				component={Reference}
+				config={{ readOnly: true, unitLabel: "Reference" }}
+			/>
+		</div>
+	</div>
 
 	<div class="fixed bottom-0 right-0 m-9 rounded-lg border-2 bg-slate-100 p-2">
 		<Button on:click={() => (isModalHidden = false)}>Add Section</Button>

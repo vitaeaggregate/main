@@ -8,7 +8,8 @@
 	import { account } from '$lib/store';
 	import type {Resume} from "$lib/interfaces/resume/Resume"
 	import { writable } from "svelte/store";
-	import type {PersonalInfo} from "$lib/interfaces/resume/PersonalInfo"
+	import type PersonalInfo from "$lib/interfaces/resume/PersonalInfo"
+	import Skill from "$lib/components/resume/Skill.svelte";
   
 	export const id = writable<number | null>(null);
 
@@ -22,7 +23,7 @@
 	let print = false;
 	let resume: Resume | null = null;
 	let resumePersonalInfo: PersonalInfo | null = null;
-	let resumeSkill;
+	let resumeSkill: Skill[] = []
 
   
 	onMount(async () => {
@@ -32,7 +33,8 @@
 	const resumes = await getResumesByMemberId($account.id);
 	resume = resumes.find(r => r.id === resumeId);
 	resumePersonalInfo = resume?.personal_info;
-	resumeSkill = resume?.skills[0];	
+	resumeSkill = resume?.skills
+	console.log(resumeSkill)
 	});
 
 	
@@ -60,14 +62,6 @@
 		<li><strong>Phone Number:</strong>${filteredInfoPersonalInfo.phoneNumber}</li>
 	  </ul>`;
 
-	$: htmlStringSkill = `
-	  <br />
-	  <h2>Skills</h2>
-	  <ul>
-  		<li><strong>Name:</strong> ${filteredInfoSkill.name}</li>
-		<li><strong>Description:</strong> ${filteredInfoSkill.description}</li>
-		<li><strong>Skill Level:</strong> ${filteredInfoSkill.skillLevel}</li>
-      </ul>`
   </script>
   
   <section>
@@ -75,7 +69,16 @@
 	<AppPdf bind:print={print}>
 	  <Page>
 		<h1>Resume</h1>
-		<div style="margin-top: 30px;">{@html htmlStringPersonalInfo} {@html htmlStringSkill}</div>
+		<div style="margin-top: 30px;">{@html htmlStringPersonalInfo} 
+			<br />
+			<h2>Skills</h2>
+			<ul>
+				{#each resumeSkill as item}
+				<strong>Name:</strong> { item.name } <br />
+				<strong>Description:</strong> { item.description } <br />
+				<strong>Skill Level:</strong> { item.skillLevel } <br /> <br />
+			  {/each}
+		  </ul>
 	  </Page>
 	</AppPdf>
   <br />
