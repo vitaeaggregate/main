@@ -2,7 +2,7 @@
 	import type { Comment } from "$lib/interfaces/resume/Comment";
 	import { writable } from "svelte/store";
 	import { getCommentsByMemberIdByResumeId } from "$lib/api/comment";
-	import { getResumesByMemberId, getResumesByResumeId } from "$lib/api/resume";
+	import { getResumesByResumeId } from "$lib/api/resume";
 	import { account, checkAccountAndRedirect } from "$lib/store";
 	import type { Resume } from "$lib/interfaces/resume/Resume";
 	import { page } from "$app/stores";
@@ -18,15 +18,13 @@
 	const loadPage = async () => {
 		if (!$account) return;
 		resumes = await getResumesByResumeId(resumeId);
+		console.log(resumeId)
 
 		for (let resume of resumes) {
 			const comments = await getCommentsByMemberIdByResumeId($account.id, resume.id);
 			resumesComments[resume.id] = comments;
 		}
-
-
 	};
-
 	checkAccountAndRedirect(loadPage);
 </script>
 
@@ -38,8 +36,6 @@
 			{#if resumes}
 				<p>
 					{#each resumes as resume}
-					{console.log(resume.id)}
-					{console.log(resumeId)}
 						{#if resume.id === resumeId}
 							{Object.entries(resume)}
 						{/if}
