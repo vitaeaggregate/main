@@ -5,8 +5,6 @@
   import Page from './Page.svelte';
   import { account } from '$lib/store';
 
-
-
   let print = false;
   let resume: Resume | null = null;
 
