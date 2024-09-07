@@ -6,9 +6,9 @@
 	import AppPdf from '../pdf/AppPdf.svelte';
 	import Page from '../pdf/Page.svelte';
 	import { account } from '$lib/store';
-	import type PersonalInfo from "$lib/interfaces/resume/PersonalInfo";
 	import type {Resume} from "$lib/interfaces/resume/Resume"
 	import { writable } from "svelte/store";
+	import type {PersonalInfo} from "$lib/interfaces/resume/PersonalInfo"
   
 	export const id = writable<number | null>(null);
 
@@ -21,42 +21,64 @@
   
 	let print = false;
 	let resume: Resume | null = null;
+	let resumePersonalInfo: PersonalInfo | null = null;
+	let resumeSkill;
+
   
 	onMount(async () => {
 
-		if (!$account) return;
+	if (!$account) return;
 
 	const resumes = await getResumesByMemberId($account.id);
-	resume = resumes.find(r => r.id === resumeId)?.personal_info;
+	resume = resumes.find(r => r.id === resumeId);
+	resumePersonalInfo = resume?.personal_info;
+	resumeSkill = resume?.skills[0];	
 	});
 
-	$: filteredInfo = {
-    fullName: resume?.full_name || "",
-	jobTitle: resume?.job_title || "",
-	email: resume?.email || "",
-	phoneNumber: resume?.phone_number || ""
+	
+
+	$: filteredInfoPersonalInfo = {
+    fullName: resumePersonalInfo?.full_name || "",
+	jobTitle: resumePersonalInfo?.job_title || "",
+	email: resumePersonalInfo?.email || "",
+	phoneNumber: resumePersonalInfo?.phone_number || ""
   };
+
+  $: filteredInfoSkill = {
+	name: resumeSkill?.name || "",
+	description: resumeSkill?.description || "",
+	skillLevel: resumeSkill?.skill_level || "",
+  }
+  
   
 	$: htmlStringPersonalInfo = `
 	  <h2>Personal Information</h2>
 	  <ul>
-		<li><strong>Full Name:</strong> ${filteredInfo.fullName}</li>
-		<li><strong>Job Title:</strong> ${filteredInfo.jobTitle}</li>
-		<li><strong>Email:</strong> ${filteredInfo.email}</li>
-		<li><strong>Phone Number:</strong>${filteredInfo.phoneNumber}</li>
-	  </ul>
-	`;
+		<li><strong>Full Name:</strong> ${filteredInfoPersonalInfo.fullName}</li>
+		<li><strong>Job Title:</strong> ${filteredInfoPersonalInfo.jobTitle}</li>
+		<li><strong>Email:</strong> ${filteredInfoPersonalInfo.email}</li>
+		<li><strong>Phone Number:</strong>${filteredInfoPersonalInfo.phoneNumber}</li>
+	  </ul>`;
 
+	$: htmlStringSkill = `
+	  <br />
+	  <h2>Skills</h2>
+	  <ul>
+  		<li><strong>Name:</strong> ${filteredInfoSkill.name}</li>
+		<li><strong>Description:</strong> ${filteredInfoSkill.description}</li>
+		<li><strong>Skill Level:</strong> ${filteredInfoSkill.skillLevel}</li>
+      </ul>`
   </script>
   
   <section>
   
 	<AppPdf bind:print={print}>
 	  <Page>
-		<div style="margin-top: 30px;">{@html htmlStringPersonalInfo}</div>
+		<h1>Resume</h1>
+		<div style="margin-top: 30px;">{@html htmlStringPersonalInfo} {@html htmlStringSkill}</div>
 	  </Page>
 	</AppPdf>
-  
+  <br />
 	<button on:click={() => (print = true)}>
 	  Print
 	</button>
