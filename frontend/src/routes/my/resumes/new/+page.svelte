@@ -4,6 +4,7 @@
 	import Resume from "$lib/components/resume/Resume.svelte";
 	import type { BaseResume } from "$lib/interfaces/resume/Resume";
 	import { account, checkAccountAndRedirect } from "$lib/store";
+	import { writable } from "svelte/store";
 
 	let resume: BaseResume = {
 		title: "",
@@ -22,6 +23,8 @@
 		references: [],
 		skills: []
 	};
+
+	const resumeStore = writable(resume);
 
 	const loadPage = () => {};
 

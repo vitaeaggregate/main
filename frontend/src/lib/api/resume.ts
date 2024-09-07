@@ -11,7 +11,6 @@ export const getResumesByMemberId = async (memberId: number): Promise<Resume[]> 
 	}
 
 	const resumes: Resume[] = await response.json();
-
 	return resumes;
 };
 

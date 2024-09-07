@@ -6,6 +6,6 @@ export interface BaseComment {
 	header?: number;
 	member?: number;
 	description?: string;
-	created_at?: string;
-	updated_at?: string;
+	created_at?: string | Date;
+	updated_at?: string | Date;
 }

@@ -1,5 +1,5 @@
 export default interface Interest {
-	id?: number;
+	id?: number | string;
 	header?: number;
 	name?: string;
 	description?: string;
