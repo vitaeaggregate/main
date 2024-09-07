@@ -83,7 +83,7 @@
 								<p><span class="text-xl">{resume.title}</span></p>
 								<p><strong>Resume id:</strong> {resume.id}</p>
 								<p class="hover:italic">
-									<a href={`/community/${resumeId}`}><strong>Title:</strong> {resume.title}</a>
+									<a href={`/my/resumes/${resumeId}`}><strong>Title:</strong> {resume.title}</a>
 								</p>
 								<p><strong>Shared:</strong> {resume.is_shareable ? "Yes" : "No"}</p>
 								<h3>Comments</h3>

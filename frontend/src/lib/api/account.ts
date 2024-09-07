@@ -1,7 +1,7 @@
 import { env } from "$env/dynamic/public";
 
 export async function createOrGetAccount(token: string) {
-	const endPoint = "firebase/accounts/";
+	const endPoint = "/firebase/accounts/";
 	const fetchConfig: RequestInit = {
 		method: "POST",
 		headers: {
@@ -15,5 +15,5 @@ export async function createOrGetAccount(token: string) {
 	if (response.ok) console.log("Token sent successfully");
 	else console.error("Failed to send token");
 
-	return await response.json()
+	return await response.json();
 }
