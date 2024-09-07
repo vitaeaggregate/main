@@ -53,7 +53,7 @@
 	</Modal>
 {/if}
 {#if Array.isArray(value) && value.length}
-	<div class="flex flex-col">
+	<div class="flex flex-col gap-4 border-2 bg-slate-100 rounded-lg p-5">
 		{#if config.unitLabel}
 			<h2>{config.unitLabel + "s"}</h2>
 		{/if}
@@ -61,7 +61,7 @@
 		{#each value as item (item.id)}
 			<svelte:component this={component} bind:value={item} readOnly={config.readOnly}
 			></svelte:component>
-			<div>
+			<div class="flex justify-between">
 				<Button on:click={() => handleEdit(item)}>Edit</Button>
 				<Button
 					on:click={() => {

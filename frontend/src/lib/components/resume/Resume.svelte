@@ -164,69 +164,75 @@
 			</div>
 		</Modal>
 	{/if}
-	<InputText label="Resume Name" bind:value={value.title} />
-	<InputCheckBox label="Share" bind:value={value.is_shareable}></InputCheckBox>
-	<PersonalInfo bind:value={value.personal_info}></PersonalInfo>
-	<ComponentView
-		bind:value={value.skills}
-		component={Skill}
-		config={{ readOnly: true, unitLabel: "Skill" }}
-	></ComponentView>
-	<ComponentView
-		bind:value={value.awards}
-		component={Award}
-		config={{ readOnly: true, unitLabel: "Award" }}
-	></ComponentView>
-	<ComponentView
-		bind:value={value.certificates}
-		component={Certificate}
-		config={{ readOnly: true, unitLabel: "Certificate" }}
-	></ComponentView>
-	<ComponentView
-		bind:value={value.courses}
-		component={Course}
-		config={{ readOnly: true, unitLabel: "Course" }}
-	/>
-	<ComponentView
-		bind:value={value.educations}
-		component={Education}
-		config={{ readOnly: true, unitLabel: "Education" }}
-	/>
-	<ComponentView
-		bind:value={value.interests}
-		component={Interest}
-		config={{ readOnly: true, unitLabel: "Interest" }}
-	/>
-	<ComponentView
-		bind:value={value.languages}
-		component={Language}
-		config={{ readOnly: true, unitLabel: "Language" }}
-	/>
-	<ComponentView
-		bind:value={value.links}
-		component={Link}
-		config={{ readOnly: true, unitLabel: "Link" }}
-	/>
-	<ComponentView
-		bind:value={value.professional_exps}
-		component={ProfessionalExp}
-		config={{ readOnly: true, unitLabel: "Professional Experience" }}
-	/>
-	<ComponentView
-		bind:value={value.projects}
-		component={Project}
-		config={{ readOnly: true, unitLabel: "Project" }}
-	/>
-	<ComponentView
-		bind:value={value.publications}
-		component={Publication}
-		config={{ readOnly: true, unitLabel: "Publication" }}
-	/>
-	<ComponentView
-		bind:value={value.references}
-		component={Reference}
-		config={{ readOnly: true, unitLabel: "Reference" }}
-	/>
+	<div class="flex flex-col gap-5">
+		<div class="flex flex-col gap-2">
+			<InputText label="Resume Name" bind:value={value.title} />
+			<InputCheckBox label="Share" bind:value={value.is_shareable}></InputCheckBox>
+		</div>
+		<PersonalInfo bind:value={value.personal_info}></PersonalInfo>
+		<div class="flex flex-wrap gap-5 items-start justify-center">
+			<ComponentView
+				bind:value={value.skills}
+				component={Skill}
+				config={{ readOnly: true, unitLabel: "Skill" }}
+			></ComponentView>
+			<ComponentView
+				bind:value={value.awards}
+				component={Award}
+				config={{ readOnly: true, unitLabel: "Award" }}
+			></ComponentView>
+			<ComponentView
+				bind:value={value.certificates}
+				component={Certificate}
+				config={{ readOnly: true, unitLabel: "Certificate" }}
+			></ComponentView>
+			<ComponentView
+				bind:value={value.courses}
+				component={Course}
+				config={{ readOnly: true, unitLabel: "Course" }}
+			/>
+			<ComponentView
+				bind:value={value.educations}
+				component={Education}
+				config={{ readOnly: true, unitLabel: "Education" }}
+			/>
+			<ComponentView
+				bind:value={value.interests}
+				component={Interest}
+				config={{ readOnly: true, unitLabel: "Interest" }}
+			/>
+			<ComponentView
+				bind:value={value.languages}
+				component={Language}
+				config={{ readOnly: true, unitLabel: "Language" }}
+			/>
+			<ComponentView
+				bind:value={value.links}
+				component={Link}
+				config={{ readOnly: true, unitLabel: "Link" }}
+			/>
+			<ComponentView
+				bind:value={value.professional_exps}
+				component={ProfessionalExp}
+				config={{ readOnly: true, unitLabel: "Professional Experience" }}
+			/>
+			<ComponentView
+				bind:value={value.projects}
+				component={Project}
+				config={{ readOnly: true, unitLabel: "Project" }}
+			/>
+			<ComponentView
+				bind:value={value.publications}
+				component={Publication}
+				config={{ readOnly: true, unitLabel: "Publication" }}
+			/>
+			<ComponentView
+				bind:value={value.references}
+				component={Reference}
+				config={{ readOnly: true, unitLabel: "Reference" }}
+			/>
+		</div>
+	</div>
 
 	<div class="fixed bottom-0 right-0 m-9 rounded-lg border-2 bg-slate-100 p-2">
 		<Button on:click={() => (isModalHidden = false)}>Add Section</Button>
