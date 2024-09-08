@@ -84,11 +84,12 @@
 			<Page>
 			<ul class=" text-center p-4 font-sans">
 			<div class="text-4xl font-medium">{resumePersonalInfo?.full_name}</div> <br />
-			<div class="text-2xl">	{resumePersonalInfo?.job_title}</div> <br />
+			<div class="text-2xl">	{resumePersonalInfo?.job_title}</div>
 			</ul>
-				<br />
-				<h2>Personal Info</h2>
-				<ul class="text-s leading-8">
+			<hr class="border-solid border-black border-2">
+			<br />
+				<h2 class="print:text-xl">Personal Info</h2>
+				<ul class="text-base leading-8 print:text-sm print:leading-6">
 				{#if resumePersonalInfo?.email}
 				<li><strong>Email:</strong> {resumePersonalInfo?.email}</li>
 				{:else}<br/>{/if}
@@ -116,8 +117,8 @@
 			</ul>
 			<br />
 			{#if resumeSkill.length > 0}
-			<h2>Skills</h2>
-			<ul class="text-s leading-8">
+			<h2 class="print:text-xl">Skills</h2>
+			<ul class="text-base leading-8 print:text-sm print:leading-6">
 			<ul>
 				{#each resumeSkill as skill}
 				{#if skill.name}
@@ -129,12 +130,12 @@
 		  </ul></ul>
 		  {/if}
 		  {#if resumeProfessionalExp.length > 0}
-		  <h2>Professional Experience</h2>
-		  <ul class="text-s leading-8">
+		  <h2 class="print:text-xl">Professional Experience</h2>
+		  <ul class="text-base leading-8 print:text-sm print:leading-6">
 		  <ul>
 			{#each resumeProfessionalExp as exp}
 			{#if exp.job_title}
-			<strong>Job Title:</strong> {exp.job_title} <br />
+			<strong class="text-xl print:text-lg">{exp.job_title}</strong><br />
 			{:else}<br/>{/if}
 			{#if exp.employer}
 			<strong>Employer:</strong> {exp.employer} <br />
@@ -150,8 +151,8 @@
 		  </ul></ul>
 		  {/if}
 		  {#if resumeLink.length > 0}
-		 <h2>Links</h2>
-		 <ul class="text-s leading-8">
+		  <h2 class="print:text-xl">Links</h2>
+		 <ul class="text-base leading-8 print:text-sm print:leading-6">
 		 <ul>
 			{#each resumeLink as link} 
 			<strong>Title:</strong> {link.title} <br />
@@ -160,8 +161,8 @@
 		 </ul></ul>
 		  {/if}
 		  {#if resumeAward.length > 0}
-		  <h2>Awards</h2>
-		  <ul class="text-s leading-8">
+		  <h2 class="print:text-xl">Awards</h2>
+		  <ul class="text-base leading-8 print:text-sm print:leading-6">
 		  <ul>
 			{#each resumeAward as award}
 			{#if award.title}
@@ -180,8 +181,8 @@
 		  </ul></ul>
 		  {/if}
 		  {#if resumeCertificate.length > 0}
-		  <h2>Certificates</h2>
-		  <ul class="text-s leading-8">
+		  <h2 class="print:text-xl">Certificates</h2>
+		  <ul class="text-base leading-8 print:text-sm print:leading-6">
 		  <ul>
 		 	 {#each resumeCertificate as certificate}
 			 {#if certificate.name}
@@ -194,8 +195,8 @@
 		  </ul></ul>
 		  {/if}
 		  {#if resumeCourse.length > 0}
-		  <h2>Courses</h2>
-		  <ul class="text-s leading-8">
+		  <h2 class="print:text-xl">Courses</h2>
+		  <ul class="text-base leading-8 print:text-sm print:leading-6">
 		  <ul>
 			{#each resumeCourse as course}
 			{#if course.degree}
@@ -223,12 +224,12 @@
 		  </ul></ul>
 		  {/if}
 		  {#if resumeEducation}
-		  <h2>Education</h2>
-		  <ul class="text-s leading-8">
+		  <h2 class="print:text-xl">Education</h2>
+		  <ul class="text-base leading-8 print:text-sm print:leading-6">
 		  <ul>
 			{#each resumeEducation as edu}
 			{#if edu.degree}
-			<strong>Degree:</strong> {edu.degree} <br />
+			<strong class="text-xl print:text-lg">{edu.degree}</strong>  <br />
 			{:else}<br/>{/if}
 			{#if edu.institution}
 			<strong>Institution:</strong> {edu.institution} <br />
@@ -252,8 +253,8 @@
 		  </ul></ul>
 		  {/if}
 		  {#if resumeInterest.length > 0}
-		  <h2>Interests</h2>
-		  <ul class="text-s leading-8">
+		  <h2 class="print:text-xl">Interests</h2>
+		  <ul class="text-base leading-8 print:text-sm print:leading-6">
 		  <ul>
 			{#each resumeInterest as interest}
 			<strong>Name:</strong> {interest.name} <br />
@@ -265,8 +266,8 @@
 		</ul>
 		  {/if}
 		  {#if resumeLanguage.length > 0}
-		  <h2>Languages</h2>
-		  <ul class="text-s leading-8">
+		  <h2 class="print:text-xl">Languages</h2>
+		  <ul class="text-base leading-8 print:text-sm print:leading-6">
 		  <ul>
 			{#each resumeLanguage as lang}
 			<strong>Language:</strong> {lang.language} <br />
@@ -276,8 +277,8 @@
 		  </ul></ul>
 		  {/if}
 		  {#if resumeProject.length > 0}
-		  <h2>Projects</h2>
-		  <ul class="text-s leading-8">
+		  <h2 class="print:text-xl">Projects</h2>
+		  <ul class="text-base leading-8 print:text-sm print:leading-6">
 		  <ul>
 			{#each resumeProject as project}
 			<strong>Title:</strong> {project.title} <br />
@@ -298,8 +299,8 @@
 		</ul>
 		  {/if}
 		  {#if resumePublication.length > 0}
-		  <h2>Publications</h2>
-		  <ul class="text-s leading-8">
+		  <h2 class="print:text-xl">Publications</h2>
+		  <ul class="text-base leading-8 print:text-sm print:leading-6">
 		  <ul>
 			{#each resumePublication as publication}
 			<strong>Title:</strong> {publication.title} <br />
@@ -316,8 +317,8 @@
 		  </ul></ul>
 		  {/if}
 		  {#if resumeReference.length > 0}
-		  <h2>References</h2>
-		  <ul class="text-s leading-8">
+		  <h2 class="print:text-xl">References</h2>
+		  <ul class="text-base leading-8 print:text-sm print:leading-6">
 		  <ul>
 			{#each resumeReference as ref}
 			<strong>Name:</strong> {ref.name} <br />
