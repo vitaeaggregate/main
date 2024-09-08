@@ -8,6 +8,9 @@ source env/bin/activate
 # Install all project requirements
 pip install -r requirements.txt
 
+# Start make migrate
+python manage.py makemigrations
+
 # Start the migrate
 python manage.py migrate
 
