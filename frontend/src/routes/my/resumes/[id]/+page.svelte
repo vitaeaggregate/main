@@ -80,7 +80,7 @@
 	  <br />
 	<AppPdf bind:print={print}>
 	  
-		<div class="flex flex-col border-solid border-black border-2 p-4 mb-16 ml-16 mr-16 overflow-y-auto h-screen print:border-none print:overflow-y-hidden print:m-0 ">
+		<div class="flex flex-col border-solid border-black border-2 p-4 mb-16 ml-16 mr-16 overflow-y-auto h-screen print:border-none print:overflow-y-visible print:m-0 print:-ml-12 print:-mr-12">
 			<Page>
 			<ul class=" text-center p-4 font-sans">
 			<div class="text-4xl font-medium">{resumePersonalInfo?.full_name}</div> <br />
