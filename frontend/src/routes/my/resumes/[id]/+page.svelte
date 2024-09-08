@@ -67,22 +67,6 @@
 	resumePublication = resume?.publications;
 	resumeReference = resume?.references;
 	});
-
-	$: filteredInfoPersonalInfo = {
-    fullName: resumePersonalInfo?.full_name || "",
-	jobTitle: resumePersonalInfo?.job_title || "",
-	email: resumePersonalInfo?.email || "",
-	phoneNumber: resumePersonalInfo?.phone_number || ""
-  };
-  
-	$: htmlStringPersonalInfo = `
-	  <h2>Personal Information</h2>
-	  <ul>
-		<li><strong>Full Name:</strong> ${filteredInfoPersonalInfo.fullName}</li>
-		<li><strong>Job Title:</strong> ${filteredInfoPersonalInfo.jobTitle}</li>
-		<li><strong>Email:</strong> ${filteredInfoPersonalInfo.email}</li>
-		<li><strong>Phone Number:</strong>${filteredInfoPersonalInfo.phoneNumber}</li>
-	  </ul>`;
   </script>
   
   <section>
@@ -93,15 +77,46 @@
 	  <h1>Resume</h1>
 	<AppPdf bind:print={print}>
 	  <Page>
-		<div style="margin-top: 30px;">{@html htmlStringPersonalInfo} 
+		<div style="margin-top: 30px;">
+			<h2>Personal Info</h2>
+			<ul>
+				<strong>Full Name:</strong> {resumePersonalInfo?.full_name} <br />
+				<strong>Job Title:</strong> {resumePersonalInfo?.job_title} <br />
+				{#if resumePersonalInfo?.email}
+				<strong>Email:</strong> {resumePersonalInfo?.email} <br />
+				{:else}<br/>{/if}
+				{#if resumePersonalInfo?.phone_number}
+				<strong>Phone:</strong> {resumePersonalInfo?.phone_number} <br />
+				{:else}<br/>{/if}
+				{#if resumePersonalInfo?.address}
+				<strong>Address:</strong> {resumePersonalInfo?.address} <br />
+				{:else}<br/>{/if}
+				{#if resumePersonalInfo?.date_of_birth}
+				<strong>Date of Birth:</strong> {resumePersonalInfo?.date_of_birth} <br />
+				{:else}<br/>{/if}
+				{#if resumePersonalInfo?.driving_license}
+				<strong>Driving License:</strong> {resumePersonalInfo?.driving_license} <br />
+				{:else}<br/>{/if}
+				{#if resumePersonalInfo?.gender_pronoun}
+				<strong>Gender Pronouns:</strong> {resumePersonalInfo?.gender_pronoun} <br />
+				{:else}<br/>{/if}
+				{#if resumePersonalInfo?.marital_status}
+				<strong>Marital Status:</strong> {resumePersonalInfo?.marital_status} <br />
+				{:else}<br/>{/if}
+				{#if resumePersonalInfo?.nationality}
+				<strong>Nationality:</strong> {resumePersonalInfo?.nationality} <br />
+				{:else}<br/>{/if}
+			</ul>
 			<br />
 			{#if resumeSkill.length > 0}
 			<h2>Skills</h2>
 			<ul>
 				{#each resumeSkill as skill}
+				{#if skill.name}
 				<strong>Name:</strong> {skill.name} <br />
+				{:else}<br/>{/if}
 				<strong>Description:</strong> {skill.description} <br />
-				<strong>Skill Level:</strong> {skill.skillLevel} <br /><br />
+				<strong>Skill Level:</strong> {skill.skill_level} <br /><br />
 			  {/each}
 		  </ul>
 		  {/if}
@@ -109,13 +124,19 @@
 		  <h2>Professional Experience</h2>
 		  <ul>
 			{#each resumeProfessionalExp as exp}
-			<strong>Job Title</strong> {exp.job_title} <br />
-			<strong>Employer</strong> {exp.employer} <br />
-			<strong>City</strong> {exp.city} <br />
-			<strong>Country</strong> {exp.country} <br />
-			<strong>Start Date</strong> {exp.start_date} <br />
-			<strong>End Date</strong> {exp.end_date} <br />
-			<strong>Description</strong> {exp.description} <br /><br />
+			{#if exp.job_title}
+			<strong>Job Title:</strong> {exp.job_title} <br />
+			{:else}<br/>{/if}
+			{#if exp.employer}
+			<strong>Employer:</strong> {exp.employer} <br />
+			{:else}<br/>{/if}
+			<strong>City:</strong> {exp.city} <br />
+			<strong>Country:</strong> {exp.country} <br />
+			<strong>Start Date:</strong> {exp.start_date} <br />
+			<strong>End Date:</strong> {exp.end_date} <br />
+			{#if exp.description}
+			<strong>Description:</strong> {exp.description} <br /><br />
+			{:else}<br/>{/if}
 			{/each}
 		  </ul>
 		  {/if}
@@ -123,8 +144,8 @@
 		 <h2>Links</h2>
 		 <ul>
 			{#each resumeLink as link} 
-			<strong>Title</strong> {link.title} <br />
-			<strong>URL</strong> {link.url} <br /><br />
+			<strong>Title:</strong> {link.title} <br />
+			<strong>URL:</strong> {link.url} <br /><br />
 			{/each}
 		 </ul> 
 		  {/if}
@@ -132,10 +153,18 @@
 		  <h2>Awards</h2>
 		  <ul>
 			{#each resumeAward as award}
-			<strong>Title</strong> {award.title} <br />
-			<strong>Issuer</strong> {award.issuer} <br />
-			<strong>Date</strong> {award.date} <br />
-			<strong>Description</strong> {award.description} <br /><br />
+			{#if award.title}
+			<strong>Title:</strong> {award.title} <br />
+			{:else}<br/>{/if}
+			{#if award.issuer}
+			<strong>Issuer:</strong> {award.issuer} <br />
+			{:else}<br/>{/if}
+			{#if award.date}
+			<strong>Date:</strong> {award.date} <br />
+			{:else}<br/>{/if}
+			{#if award.description}
+			<strong>Description:</strong> {award.description} <br /><br />
+			{:else}<br/>{/if}
 			{/each}
 		  </ul>
 		  {/if}
@@ -143,8 +172,12 @@
 		  <h2>Certificates</h2>
 		  <ul>
 		 	 {#each resumeCertificate as certificate}
-		 	 <strong>Name</strong> {certificate.name} <br />
-		 	 <strong>Description</strong> {certificate.description} <br /><br />
+			 {#if certificate.name}
+		 	 <strong>Name:</strong> {certificate.name} <br />
+			  {:else}<br/>{/if}
+			  {#if certificate.description}
+		 	 <strong>Description:</strong> {certificate.description} <br /><br />
+			  {:else}<br/>{/if}
 			  {/each}
 		  </ul>
 		  {/if}
@@ -152,13 +185,27 @@
 		  <h2>Courses</h2>
 		  <ul>
 			{#each resumeCourse as course}
-			<strong>Degree</strong> {course.degree} <br />
-			<strong>Institution</strong> {course.institution} <br />
-			<strong>City</strong> {course.city} <br />
-			<strong>Country</strong> {course.country} <br />
-			<strong>Start Date</strong> {course.start_date} <br />
-			<strong>End Date</strong> {course.end_date} <br />
-			<strong>Description</strong> {course.description} <br /><br />
+			{#if course.degree}
+			<strong>Degree:</strong> {course.degree} <br />
+			{:else}<br/>{/if}
+			{#if course.institution}
+			<strong>Institution:</strong> {course.institution} <br />
+			{:else}<br/>{/if}
+			{#if course.city}
+			<strong>City:</strong> {course.city} <br />
+			{:else}<br/>{/if}
+			{#if course.country}
+			<strong>Country:</strong> {course.country} <br />
+			{:else}<br/>{/if}
+			{#if course.start_date}
+			<strong>Start Date:</strong> {course.start_date} <br />
+			{:else}<br/>{/if}
+			{#if course.end_date}
+			<strong>End Date:</strong> {course.end_date} <br />
+			{:else}<br/>{/if}
+			{#if course.description}
+			<strong>Description:</strong> {course.description} <br /><br />
+			{:else}<br/>{/if}
 			{/each}
 		  </ul>
 		  {/if}
@@ -166,13 +213,27 @@
 		  <h2>Education</h2>
 		  <ul>
 			{#each resumeEducation as edu}
-			<strong>Degree</strong> {edu.degree} <br />
-			<strong>Institution</strong> {edu.institution} <br />
-			<strong>City</strong> {edu.city} <br />
-			<strong>Country</strong> {edu.country} <br />
-			<strong>Start Date</strong> {edu.start_date} <br />
-			<strong>End Date</strong> {edu.end_date} <br />
-			<strong>Description</strong> {edu.description} <br /><br />
+			{#if edu.degree}
+			<strong>Degree:</strong> {edu.degree} <br />
+			{:else}<br/>{/if}
+			{#if edu.institution}
+			<strong>Institution:</strong> {edu.institution} <br />
+			{:else}<br/>{/if}
+			{#if edu.city}
+			<strong>City:</strong> {edu.city} <br />
+			{:else}<br/>{/if}
+			{#if edu.country}
+			<strong>Country:</strong> {edu.country} <br />
+			{:else}<br/>{/if}
+			{#if edu.start_date}
+			<strong>Start Date:</strong> {edu.start_date} <br />
+			{:else}<br/>{/if}
+			{#if edu.end_date}
+			<strong>End Date:</strong> {edu.end_date} <br />
+			{:else}<br/>{/if}
+			{#if edu.description}
+			<strong>Description:</strong> {edu.description} <br /><br />
+			{:else}<br/>{/if}
 			{/each}
 		  </ul>
 		  {/if}
@@ -180,8 +241,10 @@
 		  <h2>Interests</h2>
 		  <ul>
 			{#each resumeInterest as interest}
-			<strong>Name</strong> {interest.name} <br />
-			<strong>Description</strong> {interest.description} <br /><br />
+			<strong>Name:</strong> {interest.name} <br />
+			{#if interest.description}
+			<strong>Description:</strong> {interest.description} <br /><br />
+			{:else}<br/>{/if}
 			{/each}
 		  </ul>
 		  {/if}
@@ -191,7 +254,7 @@
 			{#each resumeLanguage as lang}
 			<strong>Language:</strong> {lang.language} <br />
 			<strong>Description:</strong> {lang.description} <br />
-			<strong>Skill Level:</strong> {lang.skillLevel} <br /><br />
+			<strong>Skill Level:</strong> {lang.skill_level} <br /><br />
 			{/each}
 		  </ul>
 		  {/if}
@@ -200,10 +263,18 @@
 		  <ul>
 			{#each resumeProject as project}
 			<strong>Title:</strong> {project.title} <br />
-			<strong>Subtitle:</strong> project.subtitle} <br />
-			<strong>Start Date</strong> {project.start_date} <br />
-			<strong>End Date</strong> {project.end_date} <br />
+			{#if project.subtitle}
+			<strong>Subtitle:</strong> {project.subtitle} <br />
+			{:else}<br/>{/if}
+			{#if project.start_date}
+			<strong>Start Date:</strong> {project.start_date} <br />
+			{:else}<br/>{/if}
+			{#if project.end_date}
+			<strong>End Date:</strong> {project.end_date} <br />
+			{:else}<br/>{/if}
+			{#if project.description}
 			<strong>Description:</strong> {project.description} <br /><br />
+			{:else}<br/>{/if}
 			{/each}
 		  </ul>
 		  {/if}
@@ -212,9 +283,15 @@
 		  <ul>
 			{#each resumePublication as publication}
 			<strong>Title:</strong> {publication.title} <br />
+			{#if publication.publisher}
 			<strong>Publisher:</strong> {publication.publisher} <br />
+			{:else}<br/>{/if}
+			{#if publication.date}
 			<strong>Date:</strong> {publication.date} <br />
+			{:else}<br/>{/if}
+			{#if publication.description}
 			<strong>Description</strong> {publication.description} <br /><br />
+			{:else}<br/>{/if}
 			{/each}
 		  </ul>
 		  {/if}
@@ -223,10 +300,18 @@
 		  <ul>
 			{#each resumeReference as ref}
 			<strong>Name:</strong> {ref.name} <br />
+			{#if ref.job_title}
 			<strong>Job Title:</strong> {ref.job_title} <br />
+			{:else}<br/>{/if}
+			{#if ref.organization}
 			<strong>Organization:</strong> {ref.organization} <br />
+			{:else}<br/>{/if}
+			{#if ref.email}
 			<strong>Email:</strong> {ref.email} <br />
+			{:else}<br/>{/if}
+			{#if ref.phone}
 			<strong>Phone:</strong> {ref.phone} <br /><br />
+			{:else}<br/>{/if}
 			{/each}
 		  </ul>
 		  {/if}
