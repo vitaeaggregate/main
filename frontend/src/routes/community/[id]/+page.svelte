@@ -76,6 +76,7 @@
 		if (!$account) return;
 
 		const resume = await getResumesByMemberId($account.id);
+		
         resumes = resume[resumeId] || null;
 
 		for (let resume of resumes) {

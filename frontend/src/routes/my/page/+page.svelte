@@ -72,6 +72,7 @@
 				<ul class="flex flex-col gap-5 p-5">
 					<li class="rounded-lg border-2 p-2">
 						<p><strong>Welcome Back! </strong> {$account.email}</p>
+						<p>{$account.id}</p>
 						<!-- <p><strong>Email: </strong>{$account.email}</p> -->
 					</li>
 				</ul>

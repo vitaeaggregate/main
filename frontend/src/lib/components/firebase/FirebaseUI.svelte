@@ -29,8 +29,12 @@
 		firebaseAuth.onAuthStateChanged(async (user) => {
 			if (!user) return;
 
+			console.log(user);
+			
 			const token = await user.getIdToken();
 			const account = await createOrGetAccount(token);
+		
+			console.log(account)
 		});
 	});
 
