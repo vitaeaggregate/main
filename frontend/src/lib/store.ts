@@ -14,9 +14,10 @@ export const loadedResumes = writable<{
 	};
 }>({});
 
-export const checkAccountAndRedirect = (loadPage: () => void) => {
+export const checkAccountAndRedirect = (loadPage?: () => void) => {
 	account.subscribe(($account) => {
-		if ($account) loadPage();
-		else if ($account === null) goto("/login/test", { replaceState: false });
+		if ($account && loadPage) loadPage();
+		else if ($account === null || !Object.keys($account).length)
+			goto("/login", { replaceState: false });
 	});
 };
