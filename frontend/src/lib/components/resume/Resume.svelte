@@ -34,7 +34,7 @@
 		componentValue: { id?: string | number };
 	};
 
-	let isModalHidden: boolean = false;
+	let isModalHidden: boolean = true;
 	let currentSectionMap: ComponentMapping | null = null;
 	let backModalClick: (() => void) | null = null;
 
@@ -170,7 +170,7 @@
 			<InputCheckBox label="Share" bind:value={value.is_shareable}></InputCheckBox>
 		</div>
 		<PersonalInfo bind:value={value.personal_info}></PersonalInfo>
-		<div class="flex flex-wrap gap-5 items-start justify-center">
+		<div class="flex flex-col items-start justify-center gap-5">
 			<ComponentView
 				bind:value={value.skills}
 				component={Skill}

@@ -1,6 +1,6 @@
 export default interface Award {
 	id?: number | string;
-	header?: number;
+	// header?: number;
 	title?: string;
 	issuer?: string;
 	date?: string | Date;

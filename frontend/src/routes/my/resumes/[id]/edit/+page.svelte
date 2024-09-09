@@ -1,15 +1,36 @@
 <script lang="ts">
 	import { page } from "$app/stores";
-	import { getResumesByResumeId } from "$lib/api/resume";
-	import { checkAccountAndRedirect } from "$lib/store";
+	import {
+		getResumeByMemberIdByResumeId,
+		getResumesByResumeId,
+		updateResume
+	} from "$lib/api/resume";
+	import Button from "$lib/components/Button.svelte";
+	import ResumeComponent from "$lib/components/resume/Resume.svelte";
+	import type { Resume } from "$lib/interfaces/resume/Resume";
+	import { account, checkAccountAndRedirect } from "$lib/store";
 
-	$: resumeId = Number($page.params.id);
+	let resume: Resume | null = null;
 
-	const loadPage = async () => {
-		const resume = await getResumesByResumeId(resumeId);
-
-		console.log(resume);
+	const loadResume = async () => {
+		if (!$account || !$page.params.id) return;
+		resume = await getResumeByMemberIdByResumeId($account.id, Number($page.params.id));
 	};
 
-	checkAccountAndRedirect(loadPage);
+	const handleSaveClick = async () => {
+		if (!$account || !resume) return;
+		const updatedResume: Resume = await updateResume($account.id, resume);
+		resume = updatedResume;
+	};
+
+	$: if ($page.params.id && $account) loadResume();
+
+	checkAccountAndRedirect();
 </script>
+
+<section>
+	{#if resume}
+		<ResumeComponent bind:value={resume}></ResumeComponent>
+		<Button on:click={handleSaveClick}>Save</Button>
+	{/if}
+</section>

@@ -1,6 +1,6 @@
 export default interface ProfessionalExp {
 	id?: number | string;
-	header?: number;
+	// header?: number;
 	job_title?: string;
 	employer?: string;
 	city?: string;
