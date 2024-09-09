@@ -32,8 +32,8 @@
 	checkAccountAndRedirect(loadPage);
   
 	let print = false;
-	let resume: Resume | null = null;
-	let resumePersonalInfo: PersonalInfo | null = null;
+	let resume: Resume | undefined = undefined;
+	let resumePersonalInfo: PersonalInfo | undefined = undefined;
 	let resumeSkill: Skill[] = [];
 	let resumeProfessionalExp: ProfessionalExp[] = [];
 	let resumeLink: Link[] = [];
@@ -65,7 +65,7 @@
 	resumeLanguage = resume?.languages;
 	resumeProject = resume?.projects;
 	resumePublication = resume?.publications;
-	resumeReference = resume?.references;
+	resumeReference = resume?.references;undefined
 	});
 
 	
