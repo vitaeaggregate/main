@@ -135,21 +135,22 @@ class HeaderSerializer(serializers.ModelSerializer):
 
         for model, data_list in model_data_mapping.items():
             objects = model.objects.filter(header_id=instance.id)
-            if objects:
-                for object in objects:
-                    for data in data_list:
-                        if data.get("id") and object.id == int(data.get("id")):
-                            continue
-                        else:
-                            object.delete()
+            for object in objects:
+                is_included = False
+                for data in data_list:
+                    if data.get("id") and int(data.get("id")) == object.id:
+                        is_included = True
+                        break
+                if not is_included:
+                    object.delete()
 
             for data in data_list:
                 if (isinstance(data.get("id"), int)):
                     data_id = int(data.get("id"))
-                object = model.objects.filter(id=data_id).first()
-                if object:
-                    model.objects.update_or_create(
-                        id=data_id, header=instance, defaults=data)
+                    object = model.objects.filter(id=data_id).first()
+                    if object:
+                        model.objects.update_or_create(
+                            id=data_id, header=instance, defaults=data)
                 else:
                     model.objects.create(header_id=instance.id, **data)
 

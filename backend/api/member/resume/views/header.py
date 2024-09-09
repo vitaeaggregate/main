@@ -24,6 +24,12 @@ class HeaderViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         if self.is_owner(request, Action.CREATE):
+            for key in request.data:
+                if isinstance(request.data[key], list):
+                    for item in request.data[key]:
+                        if not isinstance(item.get("id"), int):
+                            item.pop("id")
+
             return super().create(request, *args, **kwargs)
 
     def partial_update(self, request, *args, **kwargs):
