@@ -36,7 +36,7 @@
 
 		firebaseUi.start(firebaseUiContainer, {
 			signInFlow: "popup",
-			signInOptions: [googleAuthProvider.providerId, emailAuthProvider.providerId]
+			signInOptions: [googleAuthProvider.providerId, {provider: emailAuthProvider.providerId, fullLabel: 'Sign up with email'}]
 		});
 
 		firebaseAuth.onAuthStateChanged(async (user) => {
