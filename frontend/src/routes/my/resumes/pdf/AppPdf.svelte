@@ -70,9 +70,11 @@
         #AppPdf-neuversity-kami-adalah-agen-untuk-development {
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
+            
         }
         :global(table, img, svg, p) {
             page-break-inside: auto;
         }
+        
     }
 </style>
