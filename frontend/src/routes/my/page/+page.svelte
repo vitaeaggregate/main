@@ -10,6 +10,7 @@
 	export const id = writable<number | null>(null);
 	export const resumeId = writable<number | null>(null);
 	let token: string | null = null;
+	let email: string | null = null;
 
 	let memberComments: Comment[] = [];
 
@@ -17,6 +18,7 @@
 		if (!$account) return;
 
 		token = sessionStorage.getItem("token");
+		email = sessionStorage.getItem("email")
 
 		const resumes = await getResumesByMemberId($account.id);
 
@@ -66,10 +68,14 @@
 			<div>
 				<h2>User Info</h2>
 				<ul class="flex flex-col gap-5 p-5">
-					<li class="rounded-lg border-2 p-2">
+					<li class="rounded-lg border-2 p-2 overflow-x-auto v-screen">
 						<p><strong>Id: </strong>{$account.id}</p>
-						<p><strong>Token: </strong>{token}</p>
+						<p class="break-all"><strong>Token: </strong>{token}</p>
+						{#if email}
+						<p><strong>Email: </strong>{email}</p>
+						{:else}
 						<p><strong>Email: </strong>{$account.email}</p>
+						{/if}
 					</li>
 				</ul>
 			</div>

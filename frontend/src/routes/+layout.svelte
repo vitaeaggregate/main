@@ -5,8 +5,8 @@
 	import { goto } from "$app/navigation";
 	import { onMount } from "svelte";
 	import { account } from "$lib/store";
-
-
+	import { firebaseAuth } from "$lib/configs/firebase";
+	
 	onMount(() => {
 		const accountSessionStorage = sessionStorage.getItem("account") || null;
 		if (accountSessionStorage) account.set(JSON.parse(accountSessionStorage));
@@ -14,8 +14,10 @@
 	});
 
 	const handleLogout = async () => {
+		await firebaseAuth.signOut()
 		account.set(null);
-		await logout();
+		sessionStorage.removeItem("token");
+		logout();
 	};
 </script>
 <div class="flex w-full flex-col gap-10">
@@ -23,10 +25,10 @@
 	  <div class="container">
 		<div class="flex justify-between">
 			{#if $account}
-		  <nav class="flex justify-start gap-10 uppercase">
-			<a href="/my/page">my page</a>
-			<a href="/my/dashboard">dashboard</a>
-			<a href="/community">community</a>
+		  <nav class="flex justify-start gap-10">
+			<a href="/my/page">My Page</a>
+			<a href="/my/dashboard">Dashboard</a>
+			<a href="/community">Community</a>
 		  </nav>
 		{:else}
 		<nav></nav>
