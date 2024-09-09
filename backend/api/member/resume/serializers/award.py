@@ -3,6 +3,8 @@ from ..models.award import Award
 
 
 class AwardSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=False)
+    
     class Meta:
         model = Award
-        fields = "__all__"
+        exclude = ["header"]

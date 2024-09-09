@@ -1,6 +1,6 @@
 export default interface Education {
 	id?: number | string;
-	header?: number;
+	// header?: number;
 	degree?: string;
 	institution?: string;
 	city?: string;

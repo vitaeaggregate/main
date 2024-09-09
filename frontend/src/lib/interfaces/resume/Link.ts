@@ -1,6 +1,6 @@
 export default interface Link {
 	id?: number | string;
-	header?: number;
+	// header?: number;
 	title?: string;
 	url?: string;
 }

@@ -6,9 +6,7 @@ import { error } from "@sveltejs/kit";
 export const getResumesByMemberId = async (memberId: number): Promise<Resume[]> => {
 	const response = await fetchData(PUBLIC_SERVER + "/members/" + memberId + "/resumes");
 
-	if (!response.ok) {
-		throw error(response.status, response.statusText);
-	}
+	if (!response.ok) throw error(response.status, response.statusText);
 
 	const resumes: Resume[] = await response.json();
 	return resumes;
@@ -18,16 +16,18 @@ export const getResumesByMemberId = async (memberId: number): Promise<Resume[]> 
 export const getResumesByResumeId = async (resumeId: number): Promise<Resume[]> => {
 	const response = await fetchData(PUBLIC_SERVER + "/resumes/" + resumeId + "/");
 
-	if (!response.ok) {
-		throw error(response.status, response.statusText);
-	}
+	if (!response.ok) throw error(response.status, response.statusText);
+
 	const resumes: Resume[] = await response.json();
 
 	return resumes;
 };
 
-export const getResumeById = async (resumeId: number): Promise<Resume> => {
-	const response = await fetchData(PUBLIC_SERVER + "/resumes/" + resumeId);
+export const getResumeByMemberIdByResumeId = async (
+	memberId: number,
+	resumeId: number
+): Promise<Resume> => {
+	const response = await fetchData(PUBLIC_SERVER + "/members/" + memberId + "/resumes/" + resumeId);
 
 	if (!response.ok) throw error(response.status, response.statusText);
 
@@ -39,9 +39,8 @@ export const getResumeById = async (resumeId: number): Promise<Resume> => {
 export const getAllResumes = async (): Promise<Resume[]> => {
 	const response = await fetchData(PUBLIC_SERVER + "/members/resumes");
 
-	if (!response.ok) {
-		throw error(response.status, response.statusText);
-	}
+	if (!response.ok) throw error(response.status, response.statusText);
+
 	const resumes: Resume[] = await response.json();
 
 	return resumes;
@@ -63,16 +62,32 @@ export const createResume = async (memberId: number, resume: BaseResume): Promis
 	return resumeData;
 };
 
-export const deleteResume = async (memberID: number, resume: number): Promise<boolean> => {
+export const updateResume = async (memberId: number, resume: Resume): Promise<Resume> => {
+	const requestInit: RequestInit = {
+		method: "PATCH",
+		body: JSON.stringify(resume)
+	};
+	
+	const response = await fetchData(
+		PUBLIC_SERVER + "/members/" + memberId + "/resumes/" + resume.id + "/",
+		requestInit
+	);
+	if (!response.ok) throw error(response.status, response.statusText);
+
+	const resumeUpdated: Resume = await response.json();
+
+	return resumeUpdated;
+};
+
+export const deleteResume = async (memberId: number, resumeId: number): Promise<boolean> => {
 	const requestInit: RequestInit = {
 		method: "DELETE"
 	};
 	const response = await fetchData(
-		PUBLIC_SERVER + "/members/" + memberID + "/resumes/" + resume + "/",
+		PUBLIC_SERVER + "/members/" + memberId + "/resumes/" + resumeId + "/",
 		requestInit
 	);
-	if (!response.ok) {
-		throw error(response.status, response.statusText);
-	}
+	if (!response.ok) throw error(response.status, response.statusText);
+
 	return true;
 };

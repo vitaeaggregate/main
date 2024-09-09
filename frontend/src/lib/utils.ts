@@ -46,11 +46,11 @@ export const logout = async () => {
 		method: "DELETE"
 	};
 
+	clearSessionStorage();
+
 	const response = await fetchData(PUBLIC_SERVER + "/sessions/", requestInit);
 
 	if (!response.ok) return error(response.status, response.statusText);
-
-	clearSessionStorage();
 
 	return goto("/");
 };

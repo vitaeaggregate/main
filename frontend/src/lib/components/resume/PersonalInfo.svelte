@@ -3,43 +3,30 @@
 	import InputDate from "$lib/components/InputDate.svelte";
 	import type PersonalInfo from "$lib/interfaces/resume/PersonalInfo";
 
-	export let value: PersonalInfo = {};
-
-	let inputFullName = "";
-	let inputJobTitle = "";
-	let inputEmail = "";
-	let inputPhoneNumber = "";
-	let inputAddress = "";
-	let inputDateOfBirth: Date;
-	let inputDrivingLicense = "";
-	let inputGenderPronoun = "";
-	let inputMaritalStatus = "";
-	let inputNationality = "";
-
-	$: value = {
-		full_name: inputFullName,
-		job_title: inputJobTitle,
-		email: inputEmail,
-		phone_number: inputPhoneNumber,
-		address: inputAddress,
-		date_of_birth: inputDateOfBirth,
-		driving_license: inputDrivingLicense,
-		gender_pronoun: inputGenderPronoun,
-		marital_status: inputMaritalStatus,
-		nationality: inputNationality
+	export let value: PersonalInfo = {
+		full_name: "",
+		job_title: "",
+		email: "",
+		phone_number: "",
+		address: "",
+		date_of_birth: "",
+		driving_license: "",
+		gender_pronoun: "",
+		marital_status: "",
+		nationality: ""
 	};
 </script>
 
 <div class="flex flex-col">
 	<h2>Personal Info</h2>
-	<InputText label="Full Name" bind:value={inputFullName} />
-	<InputText label="Job Title" bind:value={inputJobTitle} />
-	<InputText label="Email" bind:value={inputEmail} />
-	<InputText label="Phone Number" bind:value={inputPhoneNumber} />
-	<InputText label="Address" bind:value={inputAddress} />
-	<InputDate label="Date of Birth" bind:value={inputDateOfBirth} />
-	<InputText label="Driving License" bind:value={inputDrivingLicense} />
-	<InputText label="Gender Pronouns" bind:value={inputGenderPronoun} />
-	<InputText label="Marital Status" bind:value={inputMaritalStatus} />
-	<InputText label="Nationality" bind:value={inputNationality} />
+	<InputText label="Full Name" bind:value={value.full_name} />
+	<InputText label="Job Title" bind:value={value.job_title} />
+	<InputText label="Email" bind:value={value.email} />
+	<InputText label="Phone Number" bind:value={value.phone_number} />
+	<InputText label="Address" bind:value={value.address} />
+	<InputDate label="Date of Birth" bind:value={value.date_of_birth} />
+	<InputText label="Driving License" bind:value={value.driving_license} />
+	<InputText label="Gender Pronouns" bind:value={value.gender_pronoun} />
+	<InputText label="Marital Status" bind:value={value.marital_status} />
+	<InputText label="Nationality" bind:value={value.nationality} />
 </div>

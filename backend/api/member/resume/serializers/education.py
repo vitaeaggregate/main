@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from ..models.skill import Skill
+from ..models.education import Education
 
 
-class SkillSerializer(serializers.ModelSerializer):
+class EducationSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=False)
 
     class Meta:
-        model = Skill
+        model = Education
         exclude = ["header"]

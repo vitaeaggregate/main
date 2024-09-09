@@ -3,6 +3,8 @@ from ..models.link import Link
 
 
 class LinkSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=False)
+
     class Meta:
         model = Link
-        fields = "__all__"
+        exclude = ["header"]

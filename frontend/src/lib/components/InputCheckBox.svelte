@@ -4,6 +4,6 @@
 </script>
 
 <label class="flex">
-	<input type="checkbox" bind:value class="mt-0.5" id="hs-default-checkbox" />
+	<input type="checkbox" bind:checked={value} class="mt-0.5" />
 	<span class="mx-2">{label ? label : ""}</span>
 </label>

@@ -3,9 +3,14 @@
 	import { writable } from "svelte/store";
 	import { account, loadedResumes, checkAccountAndRedirect } from "$lib/store";
 	import { getResumesByMemberId } from "$lib/api/resume";
-	import { deleteComment, getCommentsByMemberId, getCommentsByMemberIdByResumeId } from "$lib/api/comment";
+	import {
+		deleteComment,
+		getCommentsByMemberId,
+		getCommentsByMemberIdByResumeId
+	} from "$lib/api/comment";
 	import { deleteResume } from "$lib/api/resume";
 	import type { Comment } from "$lib/interfaces/resume/Comment";
+	import Resume from "$lib/components/resume/Resume.svelte";
 
 	export const id = writable<number | null>(null);
 	export const resumeId = writable<number | null>(null);
@@ -18,7 +23,7 @@
 		if (!$account) return;
 
 		token = sessionStorage.getItem("token");
-		email = sessionStorage.getItem("email")
+		email = sessionStorage.getItem("email");
 
 		const resumes = await getResumesByMemberId($account.id);
 
@@ -49,13 +54,17 @@
 		goto(`/community/${resumeId}`);
 	}
 
-	function handleDelete(id: number, resumeId: number) {
+	function handleResumeEdit(resumeId: number) {
+		goto(`/my/resumes/${resumeId}/edit`);
+	}
+
+	function handleResumeDelete(id: number, resumeId: number) {
 		deleteResume(id, resumeId);
 		delete $loadedResumes[id];
 	}
 
 	function handleDeleteComment(id: number, resumeId: number, commentId: number) {
-		deleteComment(id, resumeId, commentId)
+		deleteComment(id, resumeId, commentId);
 	}
 
 	checkAccountAndRedirect(loadPage);
@@ -68,13 +77,13 @@
 			<div>
 				<h2>User Info</h2>
 				<ul class="flex flex-col gap-5 p-5">
-					<li class="rounded-lg border-2 p-2 overflow-x-auto v-screen">
+					<li class="v-screen overflow-x-auto rounded-lg border-2 p-2">
 						<p><strong>Id: </strong>{$account.id}</p>
 						<p class="break-all"><strong>Token: </strong>{token}</p>
 						{#if email}
-						<p><strong>Email: </strong>{email}</p>
+							<p><strong>Email: </strong>{email}</p>
 						{:else}
-						<p><strong>Email: </strong>{$account.email}</p>
+							<p><strong>Email: </strong>{$account.email}</p>
 						{/if}
 					</li>
 				</ul>
@@ -100,21 +109,28 @@
 												<p><strong>Member id:</strong> {comment.member}</p>
 												<p><strong>Comment:</strong> {comment.description}</p>
 												<button
-												on:click={() => {
-													handleDeleteComment($account.id, resume.id, comment.id);
-												}}>Delete</button
-											>
+													on:click={() => {
+														handleDeleteComment($account.id, resume.id, comment.id);
+													}}>Delete</button
+												>
 											</li>
 										{/each}
 									</ul>
 								{:else}
 									<p><strong>No Comments</strong></p>
 								{/if}
-								<button
-									on:click={() => {
-										handleDelete($account.id, resume.id);
-									}}>Delete Resume</button
-								>
+								<div class="flex gap-5">
+									<button
+										on:click={() => {
+											handleResumeEdit(resume.id);
+										}}>Edit Resume</button
+									>
+									<button
+										on:click={() => {
+											handleResumeDelete($account.id, resume.id);
+										}}>Delete Resume</button
+									>
+								</div>
 							</li>
 						{/each}
 					</ul>

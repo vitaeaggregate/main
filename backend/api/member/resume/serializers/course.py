@@ -3,6 +3,8 @@ from ..models.course import Course
 
 
 class CourseSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=False)
+
     class Meta:
         model = Course
-        fields = "__all__"
+        exclude = ["header"]

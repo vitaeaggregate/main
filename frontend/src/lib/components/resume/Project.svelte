@@ -4,6 +4,7 @@
 	import type Project from "$lib/interfaces/resume/Project";
 	import { getRandomId } from "$lib/utils";
 	import { onMount } from "svelte";
+	import TextArea from "$lib/components/TextArea.svelte";
 
 	export let value: Project = {
 		title: "",
@@ -34,6 +35,6 @@
 		<InputText label="Subtitle" bind:value={value.sub_title} />
 		<InputDate label="Start Date" bind:value={value.start_date} />
 		<InputDate label="End Date" bind:value={value.end_date} />
-		<InputText label="Description" bind:value={value.description} />
+		<TextArea label="Description" bind:value={value.description} />
 	</div>
 {/if}
