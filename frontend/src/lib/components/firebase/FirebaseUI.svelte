@@ -70,7 +70,7 @@
 		account.set(response);
 		sessionStorage.setItem("account", JSON.stringify(response));
 		sessionStorage.setItem("token", token);
-		if ($account) goto("/");
+		if ($account) goto("/my/page");
 	};
 </script>
 
