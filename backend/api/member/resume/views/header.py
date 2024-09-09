@@ -1,4 +1,5 @@
 from enum import Enum
+import json
 from django.http import JsonResponse
 from rest_framework import viewsets, status
 from ..models.header import Header
@@ -25,9 +26,15 @@ class HeaderViewSet(viewsets.ModelViewSet):
         if self.is_owner(request, Action.CREATE):
             return super().create(request, *args, **kwargs)
 
-    def update(self, request, *args, **kwargs):
+    def partial_update(self, request, *args, **kwargs):
         if self.is_owner(request, Action.UPDATE):
-            return super().update(request, *args, **kwargs)
+            for key in request.data:
+                if isinstance(request.data[key], list):
+                    for item in request.data[key]:
+                        if not isinstance(item.get("id"), int):
+                            item.pop("id")
+
+            return super().partial_update(request, *args, **kwargs)
 
     def destroy(self, request, *args, **kwargs):
         if self.is_owner(request, Action.DELETE):

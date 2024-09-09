@@ -3,6 +3,8 @@ from ..models.language import Language
 
 
 class LanguageSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=False)
+
     class Meta:
         model = Language
-        fields = "__all__"
+        exclude = ["header"]
