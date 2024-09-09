@@ -1,20 +1,38 @@
 <script lang="ts">
-	import { browser } from "$app/environment";
 	import { goto } from "$app/navigation";
 	import { createResume } from "$lib/api/resume";
 	import Resume from "$lib/components/resume/Resume.svelte";
 	import type { BaseResume } from "$lib/interfaces/resume/Resume";
 	import { account, checkAccountAndRedirect } from "$lib/store";
+	import { writable } from "svelte/store";
 
-	let resume: BaseResume = {};
+	let resume: BaseResume = {
+		title: "",
+		personal_info: {},
+		is_shareable: false,
+		awards: [],
+		certificates: [],
+		courses: [],
+		educations: [],
+		interests: [],
+		languages: [],
+		links: [],
+		professional_exps: [],
+		projects: [],
+		publications: [],
+		references: [],
+		skills: []
+	};
+
+	const resumeStore = writable(resume);
 
 	const loadPage = () => {};
 
 	const handleCreate = async () => {
-		if (!$account) return;
+		if (!$account || !resume) return;
 		resume.member = $account.id;
 		resume = await createResume($account.id, resume);
-		if (resume) goto("/my/dashboard");
+		if (resume) goto("/my/page");
 	};
 
 	checkAccountAndRedirect(loadPage);

@@ -1,23 +1,33 @@
 <script lang="ts">
 	import InputText from "$lib/components/InputText.svelte";
 	import TextArea from "$lib/components/TextArea.svelte";
+	import type Language from "$lib/interfaces/resume/Language";
+	import { getRandomId } from "$lib/utils";
+	import { onMount } from "svelte";
 
-	export let value = {};
-
-	let inputLanguage: string = "";
-	let inputDescription: string = "";
-	let inputSkillLevel: string = "";
-
-	$: value = {
-		language: inputLanguage,
-		description: inputDescription,
-		skill_level: inputSkillLevel
+	export let value: Language = {
+		language: "",
+		description: "",
+		skill_level: ""
 	};
+	export let readOnly: boolean = false;
+
+	onMount(() => {
+		if (value.id) return;
+		value.id = getRandomId();
+	});
 </script>
 
-<div class="flex flex-col">
-	<h2>Language</h2>
-	<InputText label="Language" bind:value={inputLanguage} />
-	<TextArea label="Description" bind:value={inputDescription} />
-	<InputText label="Skill Level" bind:value={inputSkillLevel} />
-</div>
+{#if readOnly}
+	<div>
+		<p><strong>Language:</strong> {value.language ? value.language : ""}</p>
+		<p><strong>Description:</strong> {value.description ? value.description : ""}</p>
+		<p><strong>Skill Level:</strong> {value.skill_level ? value.skill_level : ""}</p>
+	</div>
+{:else}
+	<div>
+		<InputText label="Language" bind:value={value.language} />
+		<TextArea label="Description" bind:value={value.description} />
+		<InputText label="Skill Level" bind:value={value.skill_level} />
+	</div>
+{/if}

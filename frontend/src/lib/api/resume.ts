@@ -11,6 +11,38 @@ export const getResumesByMemberId = async (memberId: number): Promise<Resume[]> 
 	}
 
 	const resumes: Resume[] = await response.json();
+	return resumes;
+};
+
+// TODO Remove this
+export const getResumesByResumeId = async (resumeId: number): Promise<Resume[]> => {
+	const response = await fetchData(PUBLIC_SERVER + "/resumes/" + resumeId + "/");
+
+	if (!response.ok) {
+		throw error(response.status, response.statusText);
+	}
+	const resumes: Resume[] = await response.json();
+
+	return resumes;
+};
+
+export const getResumeById = async (resumeId: number): Promise<Resume> => {
+	const response = await fetchData(PUBLIC_SERVER + "/resumes/" + resumeId);
+
+	if (!response.ok) throw error(response.status, response.statusText);
+
+	const resume: Resume = await response.json();
+
+	return resume;
+};
+
+export const getAllResumes = async (): Promise<Resume[]> => {
+	const response = await fetchData(PUBLIC_SERVER + "/members/resumes");
+
+	if (!response.ok) {
+		throw error(response.status, response.statusText);
+	}
+	const resumes: Resume[] = await response.json();
 
 	return resumes;
 };

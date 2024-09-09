@@ -2,26 +2,36 @@
     import TextArea from "$lib/components/TextArea.svelte";
     import InputText from "$lib/components/InputText.svelte";
     import InputDate from "$lib/components/InputDate.svelte";
+    import type Publication from "$lib/interfaces/resume/Publication";
+    import { getRandomId } from "$lib/utils";
+    import { onMount } from "svelte";
 
-    export let value = {};
+    export let value: Publication = {
+        title: "",
+        publisher: "",
+        date: undefined,
+        description: ""
+    };
+    export let readOnly: boolean = false;
 
-	let inputTitle: string = "";
-	let inputPublisher: string = "";
-	let inputDate: Date;
-	let inputDescription: string = "";
-
-    $: value = {
-        title: inputTitle,
-        publisher: inputPublisher,
-        date: inputDate,
-        description: inputDescription,
-    }
+    onMount(() => {
+        if (value.id) return;
+        value.id = getRandomId();
+    });
 </script>
 
-<div class="flex flex-col">
-    <h2>Publications</h2>
-    <InputText label="Title" bind:value={inputTitle}/>
-    <InputText label="Publisher" bind:value={inputPublisher}/>
-    <InputDate label="Date" bind:value={inputDate}/>
-    <TextArea label="Description" bind:value={inputDescription}/>
-</div>
+{#if readOnly}
+    <div>
+        <p><strong>Title:</strong> {value.title ? value.title : ""}</p>
+        <p><strong>Publisher:</strong> {value.publisher ? value.publisher : ""}</p>
+        <p><strong>Date:</strong> {value.date ? value.date : ""}</p>
+        <p><strong>Description:</strong> {value.description ? value.description : ""}</p>
+    </div>
+{:else}
+    <div>
+        <InputText label="Title" bind:value={value.title} />
+        <InputText label="Publisher" bind:value={value.publisher} />
+        <InputDate label="Date" bind:value={value.date} />
+        <TextArea label="Description" bind:value={value.description} />
+    </div>
+{/if}
