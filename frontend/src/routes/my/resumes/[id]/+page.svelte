@@ -32,8 +32,8 @@
 	checkAccountAndRedirect(loadPage);
   
 	let print = false;
-	let resume: Resume | null = null;
-	let resumePersonalInfo: PersonalInfo | null = null;
+	let resume: Resume | undefined = undefined;
+	let resumePersonalInfo: PersonalInfo | undefined = undefined;
 	let resumeSkill: Skill[] = [];
 	let resumeProfessionalExp: ProfessionalExp[] = [];
 	let resumeLink: Link[] = [];
@@ -53,19 +53,22 @@
 
 	const resumes = await getResumesByMemberId($account.id);
 	resume = resumes.find(r => r.id === resumeId);
+
+	if (resume){
 	resumePersonalInfo = resume?.personal_info;
-	resumeSkill = resume?.skills
-	resumeProfessionalExp = resume?.professional_exps;
-	resumeLink = resume?.links;
-	resumeAward = resume?.awards;
-	resumeCertificate = resume?.certificates;
-	resumeCourse = resume?.courses;
-	resumeEducation = resume?.educations;
-	resumeInterest = resume?.interests;
-	resumeLanguage = resume?.languages;
-	resumeProject = resume?.projects;
-	resumePublication = resume?.publications;
-	resumeReference = resume?.references;
+	resumeSkill = resume?.skills as Skill[];
+	resumeProfessionalExp = resume?.professional_exps as ProfessionalExp[];
+	resumeLink = resume?.links as Link[];
+	resumeAward = resume?.awards as Award[];
+	resumeCertificate = resume?.certificates as Certificate[];
+	resumeCourse = resume?.courses as Course[];
+	resumeEducation = resume?.educations as Education[];
+	resumeInterest = resume?.interests as Interest[];
+	resumeLanguage = resume?.languages as Language[];
+	resumeProject = resume?.projects as Project[];
+	resumePublication = resume?.publications as Publication[];
+	resumeReference = resume?.references as Reference[];
+}
 	});
 
 	
