@@ -29,6 +29,7 @@
     </div>
 {:else}
     <div>
+        <p class='req'>*</p>
         <InputText label="Title" bind:value={value.title} />
         <InputText label="Publisher" bind:value={value.publisher} />
         <InputDate label="Date" bind:value={value.date} />

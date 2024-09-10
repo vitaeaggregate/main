@@ -21,3 +21,23 @@ export const checkAccountAndRedirect = (loadPage?: () => void) => {
 			goto("/login", { replaceState: false });
 	});
 };
+
+export const toasts = writable([]);
+export const addToast = (toast) => {
+	const id = Math.floor(Math.random() * 10000);
+	console.log(toast);
+
+	const defaults = {
+		id,
+		type: "info",
+		dismissible: true,
+		timeout: 3000
+	};
+
+	toasts.update((all) => [{ ...defaults, ...toast }, ...all]);
+
+	if (toast.timeout) setTimeout(() => dismissToast(id), toast.timeout);
+};
+export const dismissToast = (id: number) => {
+	toasts.update((all) => all.filter((t) => t.id !== id));
+};

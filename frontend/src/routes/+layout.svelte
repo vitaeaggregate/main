@@ -13,6 +13,7 @@
 	});
 
 </script>
+
 <div class="flex w-full flex-col gap-10">
 	<header class="flex justify-center bg-slate-200 p-5 px-10">
 	  <div class="container">
