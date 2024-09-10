@@ -19,10 +19,8 @@
 
 <div class="flex flex-col">
 	<h2>Personal Info</h2>
-	<p class='req'>*</p>
-	<InputText label="Full Name" bind:value={value.full_name} />
-	<p class='req'>*</p>
-	<InputText label="Job Title" bind:value={value.job_title} />
+	<InputText label="Full Name" required={true} bind:value={value.full_name} />
+	<InputText label="Job Title" required={true} bind:value={value.job_title} />
 	<InputText label="Email" bind:value={value.email} />
 	<InputText label="Phone Number" bind:value={value.phone_number} />
 	<InputText label="Address" bind:value={value.address} />
