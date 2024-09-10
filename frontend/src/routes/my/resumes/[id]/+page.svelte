@@ -23,6 +23,7 @@
 	import Reference from "$lib/components/resume/Reference.svelte";
 	import { deleteComment } from "$lib/api/comment";
 	import { goto } from "$app/navigation";
+	import EditModal from "$lib/components/resume/EditModal.svelte";
   
 	export const id = writable<number | null>(null);
 
@@ -78,7 +79,9 @@
 		goto("/my/page");
 	}
 
-
+	function handleResumeEdit(resumeId: number) {
+		goto(`/my/resumes/${resumeId}/edit`);
+	}
   </script>
   
   <section>
@@ -86,7 +89,9 @@
 	  <br /><br />
 	  <h1>Resume</h1>
 	  <br />
-	  <button class="border-2 bg-slate-200 p-2 mr-1">Edit</button>
+	  <button class="border-2 bg-slate-200 p-2 mr-1" on:click={() => {
+		handleResumeEdit(resumeId);
+	}}>Edit</button>
 	  <button on:click={() => handleResumeDelete($account.id, resumeId)} class="border-2 bg-slate-200 p-2 ml-1 mr-1">Delete</button>
 	  <button on:click={() => (print = true)} class="border-2 bg-slate-200 p-2 ml-1">
 		Print
