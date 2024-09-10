@@ -9,6 +9,7 @@
 	} from "$lib/api/comment";
 	import { deleteResume } from "$lib/api/resume";
 	import type { Comment } from "$lib/interfaces/resume/Comment";
+	import MainButton from "$lib/components/MainButton.svelte";
 
 	export const id = writable<number | null>(null);
 	export const resumeId = writable<number | null>(null);
@@ -83,7 +84,7 @@
 			<div>
 				<h2>Resumes</h2>
 				<div class="border-2 bg-slate-200 p-2 mb-2">
-				<a href="/my/resumes/new">Add Resume</a> || <a href="/my/resumes">Full list</a>
+				<MainButton><a href="/my/resumes/new">Add Resume</a></MainButton> <MainButton><a href="/my/resumes">Full list</a></MainButton>
 				{#if Object.keys($loadedResumes).length}
 					<ul class="flex flex-col gap-5 p-5">
 						{#each Object.entries($loadedResumes).reverse() as [resumeId, { resume, comments }]}

@@ -6,6 +6,7 @@
 	import { writable } from "svelte/store";
 	import InputText from "../InputText.svelte";
 	import TextArea from "../TextArea.svelte";
+	import MainButton from "../MainButton.svelte";
 	let description: string = "";
 
 	export const id: number | null = null;
@@ -30,5 +31,5 @@
 <div class="bg-gray-200 p-4 mb-4 w-6/12 mx-auto">
 	<TextArea label="Description" bind:value={description} />
 	<br />
-	<button class="border-solid border-2 border-white p-2" on:click={handleCreate}>Submit</button>
+	<MainButton on:click={handleCreate}>Submit</MainButton>
 </div>

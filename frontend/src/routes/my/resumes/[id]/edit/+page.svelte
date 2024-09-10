@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
 	import {
 		getResumeByMemberIdByResumeId,
@@ -6,6 +7,7 @@
 		updateResume
 	} from "$lib/api/resume";
 	import Button from "$lib/components/Button.svelte";
+	import MainButton from "$lib/components/MainButton.svelte";
 	import ResumeComponent from "$lib/components/resume/Resume.svelte";
 	import type { Resume } from "$lib/interfaces/resume/Resume";
 	import { account, checkAccountAndRedirect } from "$lib/store";
@@ -23,14 +25,20 @@
 		resume = updatedResume;
 	};
 
+	const handleCancelClick = () => {
+		goto(`/my/resumes/${resume?.id}`)
+	}
+
 	$: if ($page.params.id && $account) loadResume();
 
 	checkAccountAndRedirect();
 </script>
 
 <section>
+	<h1>Edit Resume</h1><br />
 	{#if resume}
-		<ResumeComponent bind:value={resume}></ResumeComponent>
-		<Button on:click={handleSaveClick}>Save</Button>
+		<ResumeComponent bind:value={resume}></ResumeComponent><br />
+		<MainButton on:click={handleCancelClick}>Cancel</MainButton>
+		<MainButton on:click={handleSaveClick}>Save</MainButton>
 	{/if}
 </section>
