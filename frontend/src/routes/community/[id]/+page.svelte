@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Comment } from "$lib/interfaces/resume/Comment";
 	import { writable } from "svelte/store";
-	import { getCommentsByMemberIdByResumeId } from "$lib/api/comment";
+	import { deleteComment, getCommentsByMemberIdByResumeId } from "$lib/api/comment";
 	import { getResumesByResumeId } from "$lib/api/resume";
 	import { account, checkAccountAndRedirect } from "$lib/store";
 	import { page } from "$app/stores";
@@ -40,6 +40,11 @@
 			resumesComments[resume.id] = comments;
 		}
 	};
+
+	function handleDeleteComment(id: number, resumeId: number, commentId: number) {
+		deleteComment(id, resumeId, commentId);
+	}
+	
 	checkAccountAndRedirect(loadPage);
 
 </script>
@@ -48,7 +53,7 @@
 	<h1>Community</h1>
 	<br />
 	<div class="test-div flex justify-center">
-		<div class="h-3/5 w-4/5 flex flex-col border-solid border-black border-2 p-4 mb-16 ml-16 mr-16 overflow-y-auto h-screen">
+		<div class="h-screen w-4/5 flex flex-col border-solid border-black border-2 p-4 mb-16 ml-16 mr-16 overflow-y-auto">
 			{#if resumes}
 				{#each resumes as resume}
 					{#if resume.id == resumeId}
@@ -313,6 +318,10 @@
 <ul>
 {#each comments as comment, index}
   <li class="bg-gray-200 p-4">{index + 1}: {comment.description}</li><br/>
+  <button
+on:click={() => {
+	handleDeleteComment($account.id, resumeId, comment.id);
+}}>Delete</button>
 {/each}
 </ul>{/if}
 {/each}
