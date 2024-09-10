@@ -3,6 +3,7 @@
 	import { goto } from "$app/navigation";
 	import { getCommentsByMemberIdByResumeId } from "$lib/api/comment";
 	import { getResumesByMemberId } from "$lib/api/resume";
+	import MainButton from "$lib/components/MainButton.svelte";
 	import { account, checkAccountAndRedirect, loadedResumes } from "$lib/store";
 
 	
@@ -32,18 +33,24 @@
 		}
 	};
 
+const handleGoBack = () => {
+	goto("/my/page")
+}
+
 	checkAccountAndRedirect(loadPage);
 </script>
 
 <section>
 	<h1>My Resumes</h1>
+	<br />
+	<MainButton on:click="{handleGoBack}">Back</MainButton>
 	{#if $account}
 		<div>
 			{#if Object.keys($loadedResumes).length}
 				<ul class="flex flex-col gap-5 p-5">
 					{#each Object.entries($loadedResumes) as [resumeId, { resume, comments }]}
 						<li class="rounded-lg border-2 p-2">
-							<h2>{resume.title}</h2>
+							<h2><a href={`/my/resumes/${resumeId}`}>{resume.title}</a></h2>
 							<hr class="my-3" />
 							<p><strong>Resume Id:</strong> {resumeId}</p>
 							<p><strong>Created at:</strong> {new Date(resume.created_at).toLocaleDateString()}</p>

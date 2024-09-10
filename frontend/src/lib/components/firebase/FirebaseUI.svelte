@@ -19,7 +19,7 @@
 	let firebaseui: any = null;
 	let firebaseUi: auth.AuthUI | null = null;
 	let firebaseUiContainer: HTMLDivElement | null = null;
-	let email: string | null = "";
+	let email: string = "";
 	let password: string = "";
 
 	onMount(async () => {
@@ -36,6 +36,7 @@
 
 		firebaseUi.start(firebaseUiContainer, {
 			signInFlow: "popup",
+			signInSuccessUrl: "/my/page",
 			signInOptions: [googleAuthProvider.providerId, {provider: emailAuthProvider.providerId, fullLabel: 'Sign up with email'}]
 		});
 
@@ -66,13 +67,11 @@
 
 	const saveUser = async (user: User) => {
 		const token = await user.getIdToken();
-		const email = user.email;
 		const response: Account = await createOrGetAccount(token);
 		account.set(response);
 		sessionStorage.setItem("account", JSON.stringify(response));
 		sessionStorage.setItem("token", token);
-		sessionStorage.setItem("email", email);
-		if ($account) goto("/my/page");
+		goto("/my/page");
 	};
 </script>
 
