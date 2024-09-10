@@ -11,7 +11,11 @@ class DjangoMiddleware:
         if request.path.startswith("/admin") or request.path.startswith("/sessions"):
             return self.get_response(request)
 
-        token_key = request.headers.get("Authorization")
+        auth_header = request.headers.get("Authorization")
+
+        auth_header = auth_header.split(" ")
+
+        token_key = auth_header[1]
 
         if not token_key:
             return JsonResponse({'status': 'error', 'message': 'Token is missing'}, status=status.HTTP_400_BAD_REQUEST)
