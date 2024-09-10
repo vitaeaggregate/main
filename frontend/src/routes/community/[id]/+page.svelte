@@ -10,6 +10,8 @@
 	// import { getResumesByMemberId } from "$lib/api/resume";
 	
 	import type { Resume } from "$lib/interfaces/resume/Resume";
+	import MainButton from "$lib/components/MainButton.svelte";
+	import { goto } from "$app/navigation";
 	// import Skill from "$lib/components/resume/Skill.svelte";
 	// import ProfessionalExp from "$lib/components/resume/ProfessionalExp.svelte";
 	// import Link from "$lib/components/resume/Link.svelte";
@@ -44,6 +46,10 @@
 	function handleDeleteComment(id: number, resumeId: number, commentId: number) {
 		deleteComment(id, resumeId, commentId);
 	}
+
+	const handleGoBack = () => {
+		goto("/my/dashboard")
+	};
 	
 	checkAccountAndRedirect(loadPage);
 
@@ -52,6 +58,7 @@
 <main>
 	<h1>Community</h1>
 	<br />
+	<MainButton on:click={handleGoBack}>Back</MainButton><br /><br />
 	<div class="test-div flex justify-center">
 		<div class="h-screen w-4/5 flex flex-col border-solid border-black border-2 p-4 mb-16 ml-16 mr-16 overflow-y-auto">
 			{#if resumes}
