@@ -6,5 +6,5 @@
 
 <label class="flex flex-col">
 	{label}:
-	<textarea {placeholder} bind:value class="border-2"></textarea>
-</label>
+	<textarea {placeholder} bind:value class="border-2 p-1 h-3/6"></textarea>
+  </label>

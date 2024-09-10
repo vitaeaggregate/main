@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { checkAccountAndRedirect } from "$lib/store";
+	import { checkAccountAndRedirect, loadedResumes } from "$lib/store";
 	import { page } from "$app/stores";
-	import { getResumesByMemberId} from '$lib/api/resume';
+	import { deleteResume, getResumesByMemberId} from '$lib/api/resume';
 	import { onMount } from 'svelte';
 	import AppPdf from '../pdf/AppPdf.svelte';
 	import Page from '../pdf/Page.svelte';
@@ -21,6 +21,10 @@
 	import Project from "$lib/components/resume/Project.svelte";
 	import Publication from "$lib/components/resume/Publication.svelte";
 	import Reference from "$lib/components/resume/Reference.svelte";
+	import { deleteComment } from "$lib/api/comment";
+	import { goto } from "$app/navigation";
+	import EditModal from "$lib/components/resume/EditModal.svelte";
+	import MainButton from "$lib/components/MainButton.svelte";
   
 	export const id = writable<number | null>(null);
 
@@ -71,18 +75,29 @@
 }
 	});
 
-	
+	function handleResumeDelete(id: number, resumeId: number) {
+		deleteResume(id, resumeId);
+		goto("/my/page");
+	}
+
+	function handleResumeEdit(resumeId: number) {
+		goto(`/my/resumes/${resumeId}/edit`);
+	}
   </script>
   
   <section>
-	<button on:click={() => (print = true)} class="">
-		Print
-	  </button>
-	  <br /><br />
 	  <h1>Resume</h1>
 	  <br />
+	  <MainButton on:click={() => {
+		handleResumeEdit(resumeId);
+	}}>Edit</MainButton>
+	  <MainButton on:click={() => handleResumeDelete($account.id, resumeId)}>Delete</MainButton>
+	  <MainButton on:click={() => (print = true)}>
+		Print
+	  </MainButton>
+	  <br />
+	  <br />
 	<AppPdf bind:print={print}>
-	  
 		<div class="flex flex-col border-solid border-black border-2 p-4 mb-16 ml-16 mr-16 overflow-y-auto h-screen print:border-none print:overflow-y-visible print:m-0 print:-ml-12 print:-mr-12">
 			<Page>
 			<ul class=" text-center p-4 font-sans">
@@ -226,7 +241,7 @@
 			{/each}
 		  </ul></ul>
 		  {/if}
-		  {#if resumeEducation}
+		  {#if resumeEducation.length > 0}
 		  <h2 class="print:text-xl">Education</h2>
 		  <ul class="text-base leading-8 print:text-sm print:leading-6">
 		  <ul>

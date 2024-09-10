@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Comment } from "$lib/interfaces/resume/Comment";
 	import { writable } from "svelte/store";
-	import { getCommentsByMemberIdByResumeId } from "$lib/api/comment";
+	import { deleteComment, getCommentsByMemberIdByResumeId } from "$lib/api/comment";
 	import { getResumesByResumeId } from "$lib/api/resume";
 	import { account, checkAccountAndRedirect } from "$lib/store";
 	import { page } from "$app/stores";
@@ -10,6 +10,8 @@
 	// import { getResumesByMemberId } from "$lib/api/resume";
 	
 	import type { Resume } from "$lib/interfaces/resume/Resume";
+	import MainButton from "$lib/components/MainButton.svelte";
+	import { goto } from "$app/navigation";
 	// import Skill from "$lib/components/resume/Skill.svelte";
 	// import ProfessionalExp from "$lib/components/resume/ProfessionalExp.svelte";
 	// import Link from "$lib/components/resume/Link.svelte";
@@ -40,6 +42,15 @@
 			resumesComments[resume.id] = comments;
 		}
 	};
+
+	function handleDeleteComment(id: number, resumeId: number, commentId: number) {
+		deleteComment(id, resumeId, commentId);
+	}
+
+	const handleGoBack = () => {
+		goto("/my/dashboard")
+	};
+	
 	checkAccountAndRedirect(loadPage);
 
 </script>
@@ -47,8 +58,9 @@
 <main>
 	<h1>Community</h1>
 	<br />
+	<MainButton on:click={handleGoBack}>Back</MainButton><br /><br />
 	<div class="test-div flex justify-center">
-		<div class="h-3/5 w-4/5 flex flex-col border-solid border-black border-2 p-4 mb-16 ml-16 mr-16 overflow-y-auto h-screen">
+		<div class="h-screen w-4/5 flex flex-col border-solid border-black border-2 p-4 mb-16 ml-16 mr-16 overflow-y-auto">
 			{#if resumes}
 				{#each resumes as resume}
 					{#if resume.id == resumeId}
@@ -303,22 +315,26 @@
 			{/if}
 		</div>
 	</div>
-	<br /><br />
 	<h2>Comments</h2>
 	<div class="flex justify-center">
 	<div class="w-4/5 h-3/5 overflow-y-auto p-6"><ul class="flex flex-col gap-5 p-5">
 		{#each Object.entries(resumesComments) as [id, comments]}
 		{#if +id === resumeId}
-<h2>Resume ID: {id}</h2>
+<!-- <h2>Resume ID: {id}</h2> -->
 <ul>
 {#each comments as comment, index}
-  <li class="bg-gray-200 p-4">{index + 1}: {comment.description}</li><br/>
+  <li class="bg-gray-200 p-4">{comment.description}</li><br/>
+  <button class="float-right"
+on:click={() => {
+	handleDeleteComment($account.id, resumeId, comment.id);
+} }>Delete</button>
+<br/><br/>
 {/each}
 </ul>{/if}
 {/each}
 			</ul>
 		</div>
 	</div>
-	<h3>New comment</h3>
+	<h3 class="mb-2">New Comment</h3>
 	<NewComment></NewComment>
 </main>
