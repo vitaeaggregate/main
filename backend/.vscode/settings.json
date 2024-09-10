@@ -4,6 +4,7 @@
         "corsheaders",
         "firestore",
         "kwards",
-        "viewsets"
+        "viewsets",
+        "whitenoise"
     ]
 }

@@ -3,6 +3,7 @@ from .models import CustomToken
 from django.http import JsonResponse
 from rest_framework import status
 
+
 class DjangoMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
@@ -12,6 +13,9 @@ class DjangoMiddleware:
             return self.get_response(request)
 
         auth_header = request.headers.get("Authorization")
+
+        if not auth_header:
+            return JsonResponse({'status': 'error', 'message': 'Token is missing'}, status=status.HTTP_400_BAD_REQUEST)
 
         auth_header = auth_header.split(" ")
 

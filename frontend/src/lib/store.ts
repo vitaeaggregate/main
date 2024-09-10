@@ -3,6 +3,7 @@ import type Account from "$lib/interfaces/member/Account";
 import type { Resume } from "$lib/interfaces/resume/Resume";
 import type { Comment } from "$lib/interfaces/resume/Comment";
 import { goto } from "$app/navigation";
+import type CommentNotification from "./interfaces/member/CommentNotification";
 
 export const account = writable<Account | null>();
 
@@ -14,6 +15,8 @@ export const loadedResumes = writable<{
 	};
 }>({});
 
+export const commentNotifications = writable<CommentNotification[] | null>();
+
 export const checkAccountAndRedirect = (loadPage?: () => void) => {
 	account.subscribe(($account) => {
 		if ($account && Object.keys($account).length && loadPage) loadPage();
@@ -23,6 +26,7 @@ export const checkAccountAndRedirect = (loadPage?: () => void) => {
 };
 
 export const toasts = writable([]);
+
 export const addToast = (toast) => {
 	const id = Math.floor(Math.random() * 10000);
 	console.log(toast);
@@ -38,6 +42,7 @@ export const addToast = (toast) => {
 
 	if (toast.timeout) setTimeout(() => dismissToast(id), toast.timeout);
 };
+
 export const dismissToast = (id: number) => {
 	toasts.update((all) => all.filter((t) => t.id !== id));
 };
