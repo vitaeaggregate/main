@@ -23,7 +23,9 @@
 	</div>
 {:else}
 	<div>
+		<p class='req'>*</p>
 		<InputText label="Title" bind:value={value.title} />
+		<p class='req'>*</p>
 		<InputText label="URL" bind:value={value.url} />
 	</div>
 {/if}

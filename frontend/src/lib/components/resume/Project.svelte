@@ -31,10 +31,12 @@
 	</div>
 {:else}
 	<div>
+		<p class='req'>*</p>
 		<InputText label="Title" bind:value={value.title} />
 		<InputText label="Subtitle" bind:value={value.sub_title} />
 		<InputDate label="Start Date" bind:value={value.start_date} />
 		<InputDate label="End Date" bind:value={value.end_date} />
+		<p class='req'>*</p>
 		<TextArea label="Description" bind:value={value.description} />
 	</div>
 {/if}

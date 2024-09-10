@@ -6,6 +6,9 @@
 	import { onMount } from "svelte";
 	import { account } from "$lib/store";
 	import { firebaseAuth } from "$lib/configs/firebase";
+	import { SvelteToast } from '@zerodevx/svelte-toast'
+
+	const options = {}
 	
 	onMount(() => {
 		const accountSessionStorage = sessionStorage.getItem("account") || null;
@@ -20,6 +23,8 @@
 		logout();
 	};
 </script>
+
+<SvelteToast {options}/>
 <div class="flex w-full flex-col gap-10">
 	<header class="flex justify-center bg-slate-200 p-5 px-10">
 	  <div class="container">

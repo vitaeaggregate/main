@@ -5,6 +5,14 @@
 	import type { BaseResume } from "$lib/interfaces/resume/Resume";
 	import { account, checkAccountAndRedirect } from "$lib/store";
 	import { writable } from "svelte/store";
+	import Toasts from "$lib/components/Toasts.svelte";
+	import { addToast } from "$lib/store";
+
+	let message = "Fields marked * are required";
+	let type = "error";
+	let dismissible = true;
+	let timeout = 10000;
+
 
 	let resume: BaseResume = {
 		title: "",
@@ -29,17 +37,29 @@
 	const loadPage = () => {};
 
 	const handleCreate = async () => {
-		if (!$account || !resume) return;
-		resume.member = $account.id;
-		resume = await createResume($account.id, resume);
-		if (resume) goto("/my/page");
+		try {
+			if (!$account || !resume) return;
+			resume.member = $account.id;
+			resume = await createResume($account.id, resume);
+			if (resume) goto("/my/page");
+		} catch {
+			addToast(
+				{
+					message, 
+					type, 
+					dismissible, 
+					timeout
+				});
+		}
 	};
 
 	checkAccountAndRedirect(loadPage);
 </script>
 
 <section>
+	<Toasts/>
 	<h1>New Resume</h1>
+	<h5>Fields marked with (*) are required</h5>
 	{#if $account}
 		<form class="flex flex-col gap-10">
 			<Resume bind:value={resume}></Resume>

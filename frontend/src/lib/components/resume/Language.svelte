@@ -26,8 +26,11 @@
 	</div>
 {:else}
 	<div>
+		<p class='req'>*</p>
 		<InputText label="Language" bind:value={value.language} />
+		<p class='req'>*</p>
 		<TextArea label="Description" bind:value={value.description} />
+		<p class='req'>*</p>
 		<InputText label="Skill Level" bind:value={value.skill_level} />
 	</div>
 {/if}

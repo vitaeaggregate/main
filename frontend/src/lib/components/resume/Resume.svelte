@@ -166,6 +166,7 @@
 	{/if}
 	<div class="flex flex-col gap-5">
 		<div class="flex flex-col gap-2">
+			<p class='req'>*</p>
 			<InputText label="Resume Name" bind:value={value.title} />
 			<InputCheckBox label="Share" bind:value={value.is_shareable}></InputCheckBox>
 		</div>

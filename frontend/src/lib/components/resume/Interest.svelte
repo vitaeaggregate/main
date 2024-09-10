@@ -24,6 +24,7 @@
 	</div>
 {:else}
 	<div>
+		<p class='req'>*</p>
 		<InputText label="Name" bind:value={value.name} />
 		<TextArea label="Description" bind:value={value.description} />
 	</div>
