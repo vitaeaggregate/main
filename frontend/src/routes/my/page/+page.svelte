@@ -10,7 +10,6 @@
 	} from "$lib/api/comment";
 	import { deleteResume } from "$lib/api/resume";
 	import type { Comment } from "$lib/interfaces/resume/Comment";
-	import Resume from "$lib/components/resume/Resume.svelte";
 
 	export const id = writable<number | null>(null);
 	export const resumeId = writable<number | null>(null);
@@ -23,7 +22,7 @@
 		if (!$account) return;
 
 		token = sessionStorage.getItem("token");
-		email = sessionStorage.getItem("email");
+		email = $account.email;
 
 		const resumes = await getResumesByMemberId($account.id);
 

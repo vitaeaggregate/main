@@ -5,7 +5,6 @@
 	import { goto } from "$app/navigation";
 	import { onMount } from "svelte";
 	import { account } from "$lib/store";
-	import { firebaseAuth } from "$lib/configs/firebase";
 	
 	onMount(() => {
 		const accountSessionStorage = sessionStorage.getItem("account") || null;
@@ -13,12 +12,6 @@
 		else account.set(null);
 	});
 
-	const handleLogout = async () => {
-		await firebaseAuth.signOut()
-		account.set(null);
-		sessionStorage.removeItem("token");
-		logout();
-	};
 </script>
 <div class="flex w-full flex-col gap-10">
 	<header class="flex justify-center bg-slate-200 p-5 px-10">
@@ -36,7 +29,7 @@
 		  {#if !$account}
 			<button on:click={() => goto("/login/test")}>Login</button>
 		  {:else}
-			<button on:click={handleLogout}>Logout</button>
+			<button on:click={logout}>Logout</button>
 		  {/if}
 		</div>
 	  </div>
