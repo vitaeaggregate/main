@@ -19,7 +19,7 @@
 	let firebaseui: any = null;
 	let firebaseUi: auth.AuthUI | null = null;
 	let firebaseUiContainer: HTMLDivElement | null = null;
-	let email: string | null = "";
+	let email: string = "";
 	let password: string = "";
 
 	onMount(async () => {
@@ -66,12 +66,10 @@
 
 	const saveUser = async (user: User) => {
 		const token = await user.getIdToken();
-		const email = user.email;
 		const response: Account = await createOrGetAccount(token);
 		account.set(response);
 		sessionStorage.setItem("account", JSON.stringify(response));
 		sessionStorage.setItem("token", token);
-		sessionStorage.setItem("email", email);
 		if ($account) goto("/my/page");
 	};
 </script>

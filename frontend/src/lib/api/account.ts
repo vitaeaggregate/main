@@ -1,8 +1,8 @@
-import { env } from "$env/dynamic/public";
+import { PUBLIC_SERVER } from "$env/static/public";
 import type Account from "$lib/interfaces/member/Account";
+import { error } from "@sveltejs/kit";
 
 export async function createOrGetAccount(token: string) {
-	const endPoint = "/firebase/accounts/";
 	const fetchConfig: RequestInit = {
 		method: "POST",
 		headers: {
@@ -11,10 +11,12 @@ export async function createOrGetAccount(token: string) {
 		}
 	};
 
-	const response = await fetch(env.PUBLIC_SERVER + endPoint, fetchConfig);
+	const response = await fetch(PUBLIC_SERVER + "/firebase/accounts/", fetchConfig);
+
+	console.log(response);
 
 	if (response.ok) console.log("Token sent successfully");
-	else console.error("Failed to send token");
+	else throw error(response.status, response.statusText);
 
 	const account: Account = await response.json();
 
