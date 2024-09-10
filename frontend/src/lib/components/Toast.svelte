@@ -1,7 +1,7 @@
 <script>
     import { createEventDispatcher } from "svelte";
     import { fade } from "svelte/transition";
-	import CloseIcon from "./CloseIcon.svelte";
+    import CloseIcon from "./CloseIcon.svelte";
 
     const dispatch = createEventDispatcher();
 
