@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { checkAccountAndRedirect } from "$lib/store";
+	import { checkAccountAndRedirect, loadedResumes } from "$lib/store";
 	import { page } from "$app/stores";
-	import { getResumesByMemberId} from '$lib/api/resume';
+	import { deleteResume, getResumesByMemberId} from '$lib/api/resume';
 	import { onMount } from 'svelte';
 	import AppPdf from '../pdf/AppPdf.svelte';
 	import Page from '../pdf/Page.svelte';
@@ -21,6 +21,8 @@
 	import Project from "$lib/components/resume/Project.svelte";
 	import Publication from "$lib/components/resume/Publication.svelte";
 	import Reference from "$lib/components/resume/Reference.svelte";
+	import { deleteComment } from "$lib/api/comment";
+	import { goto } from "$app/navigation";
   
 	export const id = writable<number | null>(null);
 
@@ -71,15 +73,25 @@
 }
 	});
 
-	
+	function handleResumeDelete(id: number, resumeId: number) {
+		deleteResume(id, resumeId);
+		goto("/my/page");
+	}
+
+
   </script>
   
   <section>
-	<button on:click={() => (print = true)} class="">
-		Print
-	  </button>
+	
 	  <br /><br />
 	  <h1>Resume</h1>
+	  <br />
+	  <button class="border-2 bg-slate-200 p-2 mr-1">Edit</button>
+	  <button on:click={() => handleResumeDelete($account.id, resumeId)} class="border-2 bg-slate-200 p-2 ml-1 mr-1">Delete</button>
+	  <button on:click={() => (print = true)} class="border-2 bg-slate-200 p-2 ml-1">
+		Print
+	  </button>
+	  <br />
 	  <br />
 	<AppPdf bind:print={print}>
 	  

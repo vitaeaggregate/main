@@ -308,26 +308,26 @@
 			{/if}
 		</div>
 	</div>
-	<br /><br />
 	<h2>Comments</h2>
 	<div class="flex justify-center">
 	<div class="w-4/5 h-3/5 overflow-y-auto p-6"><ul class="flex flex-col gap-5 p-5">
 		{#each Object.entries(resumesComments) as [id, comments]}
 		{#if +id === resumeId}
-<h2>Resume ID: {id}</h2>
+<!-- <h2>Resume ID: {id}</h2> -->
 <ul>
 {#each comments as comment, index}
-  <li class="bg-gray-200 p-4">{index + 1}: {comment.description}</li><br/>
-  <button
+  <li class="bg-gray-200 p-4">{comment.description}</li><br/>
+  <button class="float-right"
 on:click={() => {
 	handleDeleteComment($account.id, resumeId, comment.id);
-}}>Delete</button>
+} }>Delete</button>
+<br/><br/>
 {/each}
 </ul>{/if}
 {/each}
 			</ul>
 		</div>
 	</div>
-	<h3>New comment</h3>
+	<h3 class="mb-2">New Comment</h3>
 	<NewComment></NewComment>
 </main>
