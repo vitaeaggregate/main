@@ -35,15 +35,12 @@
 	</div>
 {:else}
 	<div>
-		<p class='req'>*</p>
-		<InputText label="Job Title" bind:value={value.job_title} />
-		<p class='req'>*</p>
-		<InputText label="Employer" bind:value={value.employer} />
+		<InputText label="Job Title" required={true} bind:value={value.job_title} />
+		<InputText label="Employer" required={true} bind:value={value.employer} />
 		<InputText label="City" bind:value={value.city} />
 		<InputText label="Country" bind:value={value.country} />
 		<InputDate label="Start Date" bind:value={value.start_date} />
 		<InputDate label="End Date" bind:value={value.end_date} />
-		<p class='req'>*</p>
-		<TextArea label="Description" bind:value={value.description} />
+		<TextArea label="Description" required={true} bind:value={value.description} />
 	</div>
 {/if}

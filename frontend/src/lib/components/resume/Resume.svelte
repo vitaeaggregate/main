@@ -166,8 +166,7 @@
 	{/if}
 	<div class="flex flex-col gap-5">
 		<div class="flex flex-col gap-2">
-			<p class='req'>*</p>
-			<InputText label="Resume Name" bind:value={value.title} />
+			<InputText label="Resume Name" required={true} bind:value={value.title} />
 			<InputCheckBox label="Share" bind:value={value.is_shareable}></InputCheckBox>
 		</div>
 		<PersonalInfo bind:value={value.personal_info}></PersonalInfo>
@@ -234,7 +233,6 @@
 			/>
 		</div>
 	</div>
-
 	<div class="fixed bottom-0 right-0 m-9 border-2 bg-slate-200 p-2">
 		<Button on:click={() => (isModalHidden = false)}>Add Section</Button>
 	</div>

@@ -1,1 +1,3 @@
-<button type="button" class="size-fit" on:click><slot></slot></button>
+<button type="button" on:click class="size-fit">
+	<slot></slot>
+</button>
