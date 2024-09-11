@@ -234,7 +234,6 @@
 			/>
 		</div>
 	</div>
-
 	<div class="fixed bottom-0 right-0 m-9 border-2 bg-slate-200 p-2">
 		<Button on:click={() => (isModalHidden = false)}>Add Section</Button>
 	</div>

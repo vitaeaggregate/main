@@ -40,6 +40,7 @@
 		"firebase": "^10.13.1",
 		"firebaseui": "^6.1.0",
 		"html2pdf.js": "^0.10.2",
+		"javascript-time-ago": "^2.5.11",
 		"jspdf": "^2.5.1",
 		"pdf-lib": "^1.17.1",
 		"pspdfkit": "^2024.5.1",

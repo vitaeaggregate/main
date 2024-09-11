@@ -5,6 +5,7 @@
 	import { getAllResumes } from "$lib/api/resume";
 	import type { Resume } from "$lib/interfaces/resume/Resume"
 	import Search from "svelte-search";
+	import MainButton from "$lib/components/MainButton.svelte";
 
 	export const id = writable<number | null>(null);
 	export const resumeId = writable<number | null>(null);
@@ -35,8 +36,8 @@
 	checkAccountAndRedirect(loadPage);
 </script>
 
-<section class="flex flex-col items-center justify-center h-screen">
-	<button on:click={handleCreateResumeClick}>Create Resume</button>
+<section class="flex flex-col items-center m-auto h-screen">
+	<MainButton on:click={handleCreateResumeClick}>Create Resume</MainButton>
 	<br />
 	<br />
 	<h1>Community Resumes</h1>
@@ -52,7 +53,7 @@
 	  {#each slicedResumes as resume}
 		<ul>
 		  <li>
-			<a href='/community/{resume.id}'>{resume.title}</a>
+			<a href='/community/{resume.id}'>{resume?.title}</a>
 		  </li>
 		</ul>
 	  {/each}
