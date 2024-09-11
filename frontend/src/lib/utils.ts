@@ -51,7 +51,7 @@ export const logout = async () => {
 	// const response = await fetchData(PUBLIC_SERVER + "/sessions/", requestInit);
 	// if (!response.ok) return error(response.status, response.statusText);
 
-	return goto("/");
+	return goto("/login");
 };
 
 export const login = async (email: string) => {

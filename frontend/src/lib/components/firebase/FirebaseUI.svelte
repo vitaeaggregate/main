@@ -15,12 +15,20 @@
 	import { error } from "@sveltejs/kit";
 	import Button from "$lib/components/Button.svelte";
 	import { goto } from "$app/navigation";
+	import Logo from "$lib/Logo.png";
+	import Toasts from "../Toasts.svelte";
+	import { addToast } from "$lib/store";
 
 	let firebaseui: any = null;
 	let firebaseUi: auth.AuthUI | null = null;
 	let firebaseUiContainer: HTMLDivElement | null = null;
 	let email: string = "";
 	let password: string = "";
+
+	let message = "";
+	let type = "error";
+	let dismissible = true;
+	let timeout = 3000;
 
 	onMount(async () => {
 		if (!firebaseUiContainer) return;
@@ -61,6 +69,14 @@
 			.catch((err) => {
 				const errorCode = err.code;
 				const errorMessage = err.message;
+				message = errorCode;
+				addToast(
+				{
+					message, 
+					type, 
+					dismissible, 
+					timeout
+				});
 				throw error(err.code, err.message);
 			});
 	};
@@ -75,22 +91,29 @@
 	};
 </script>
 
-<div class="flex justify-center">
-	<div class="flex w-fit flex-col items-center gap-4">
-		<h1>Login</h1>
-		<form action="">
-			<div class="flex flex-col gap-5">
-				<InputText placeholder="Email" bind:value={email}></InputText>
-				<InputText type="password" placeholder="Password" bind:value={password}></InputText>
-				<Button on:click={handleLoginClick}>Login</Button>
+<div class="flex justify-center h-full items-center">
+	<div class="relative">
+		<Toasts/>
+		<div class="flex w-fit flex-col items-center gap-4 mt-8 z-50">
+			<img src="{Logo}" alt="Logo" class="h-24 w-auto opacity-30" />
+			<h1>Vitae Aggregate</h1>
+			<!-- <div class="absolute top-0 md:mt-8 md:order-first z-1 opacity-25 size-full">
+			</div> -->
+			<h2>Welcome!</h2>
+			<form action="">
+				<div class="flex flex-col gap-5">
+					<InputText placeholder="Email" bind:value={email}></InputText>
+					<InputText type="password" placeholder="Password" bind:value={password}></InputText>
+					<Button on:click={handleLoginClick} style="submit">Login</Button>
+				</div>
+			</form>
+			<div class="relative flex w-full items-center p-4">
+				<div class="flex-grow border-t border-gray-400"></div>
+				<span class="mx-4 flex-shrink text-gray-400">Or</span>
+				<div class="flex-grow border-t border-gray-400"></div>
 			</div>
-		</form>
-		<div class="relative flex w-full items-center">
-			<div class="flex-grow border-t border-gray-400"></div>
-			<span class="mx-4 flex-shrink text-gray-400">Or</span>
-			<div class="flex-grow border-t border-gray-400"></div>
+			<div bind:this={firebaseUiContainer} class="flex w-full items-center justify-center"></div>
 		</div>
-		<div bind:this={firebaseUiContainer} class="flex w-full items-center justify-center"></div>
 	</div>
 </div>
 
