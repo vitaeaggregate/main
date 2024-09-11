@@ -11,7 +11,7 @@
 	  {#if !$account}
 		<button class="w-20 h-10 bg-slate-200 mt-5" on:click={() => goto("/login/test")}>Login</button>
 	  {:else}
-		<button class="w-28 h-10 bg-slate-200 mt-5" on:click={() => goto("/my/dashboard")}>Dashboard</button>
+		<button class="w-28 h-10 bg-slate-200 mt-5" on:click={() => goto("/my/page")}>My Page</button>
 	  {/if}
 	</div>
   
