@@ -26,7 +26,7 @@
 	}
 </script>
 
-<div class="flex w-full flex-col gap-10">
+<div class="flex w-full flex-col gap-10 grow">
 	<header class="flex justify-center bg-slate-200 p-5 px-10">
 		<div class="container">
 			<div class="flex justify-between">
