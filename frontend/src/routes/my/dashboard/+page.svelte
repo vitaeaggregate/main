@@ -42,7 +42,7 @@
 	<br />
 	<h1>Community Resumes</h1>
 	<br />
-	<Search bind:value={searchTerm} label="Search"/>
+	<Search bind:value={searchTerm} label="Search:" class="text-m p-2 m-2, border-1, border-solid"/>
 <br />
 	{#if searchTerm}
 	<h2>Search Results</h2>
@@ -59,14 +59,3 @@
 	  {/each}
 	</div>
   </section>
-
-<style>
-	:global([data-svelte-search] input) {
-  width: 100%;
-  font-size: 1rem;
-  padding: 0.5rem;
-  margin: 0.5rem 0;
-  border: 1px solid #e0e0e0;
-  border-radius: 0.25rem;
-}
-</style>
