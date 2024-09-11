@@ -10,6 +10,7 @@
 	import { deleteResume } from "$lib/api/resume";
 	import type { Comment } from "$lib/interfaces/resume/Comment";
 	import MainButton from "$lib/components/MainButton.svelte";
+	import CommentView from "$lib/components/CommentView.svelte";
 
 	export const id = writable<number | null>(null);
 	export const resumeId = writable<number | null>(null);
@@ -67,77 +68,75 @@
 		<div class="">
 			<div>
 				<h2>User Info</h2>
-				<div class="border-2 bg-slate-200 p-2 mb-2">
-				<ul class="flex flex-col gap-5 p-5">
-					<li class="v-screen overflow-x-auto rounded-lg border-2 p-2">
-						<p><strong>Id: </strong>{$account.id}</p>
-						<p class="break-all"><strong>Token: </strong>{token}</p>
-						{#if email}
-							<p><strong>Email: </strong>{email}</p>
-						{:else}
-							<p><strong>Email: </strong>{$account.email}</p>
-						{/if}
-					</li>
-				</ul>
-			</div>
+				<div class="mb-2 border-2 bg-slate-200 p-2">
+					<ul class="flex flex-col gap-5 p-5">
+						<li class="v-screen overflow-x-auto rounded-lg border-2 p-2">
+							<p><strong>Id: </strong>{$account.id}</p>
+							<p class="break-all"><strong>Token: </strong>{token}</p>
+							{#if email}
+								<p><strong>Email: </strong>{email}</p>
+							{:else}
+								<p><strong>Email: </strong>{$account.email}</p>
+							{/if}
+						</li>
+					</ul>
+				</div>
 			</div>
 			<div>
 				<h2>Resumes</h2>
-				<div class="border-2 bg-slate-200 p-2 mb-2">
-				<MainButton><a href="/my/resumes/new">Add Resume</a></MainButton> <MainButton><a href="/my/resumes">Full list</a></MainButton>
-				{#if Object.keys($loadedResumes).length}
-					<ul class="flex flex-col gap-5 p-5">
-						{#each Object.entries($loadedResumes).reverse() as [resumeId, { resume, comments }]}
-							<li class="rounded-lg border-2 p-2">
-								<p><span class="text-xl hover:font-medium"><a href={`/my/resumes/${resumeId}`}>{resume.title}</a></span></p>
-								<p><strong>Resume id:</strong> {resume.id}</p>
-								<!-- <p><strong>Title:</strong> {resume.title}
+				<div class="mb-2 border-2 bg-slate-200 p-2">
+					<MainButton><a href="/my/resumes/new">Add Resume</a></MainButton>
+					<MainButton><a href="/my/resumes">Full list</a></MainButton>
+					{#if Object.keys($loadedResumes).length}
+						<ul class="flex flex-col gap-5 p-5">
+							{#each Object.entries($loadedResumes).reverse() as [resumeId, { resume, comments }]}
+								<li class="rounded-lg border-2 p-2">
+									<p>
+										<span class="text-xl hover:font-medium"
+											><a href={`/my/resumes/${resumeId}`}>{resume.title}</a></span
+										>
+									</p>
+									<p><strong>Resume id:</strong> {resume.id}</p>
+									<!-- <p><strong>Title:</strong> {resume.title}
 								</p> -->
-								<p><strong>Shared:</strong> {resume.is_shareable ? "Yes" : "No"}</p>
-								<h3>Comments</h3>
-								{#if Object.keys(comments).length}
-									<ul class="flex flex-col gap-5 p-5">
-										{#each Object.entries(comments) as [commentId, comment]}
-											<li class="rounded-lg border-2 p-2">
-												<p><strong>Member id:</strong> {comment.member}</p>
-												<p><strong>Comment:</strong> {comment.description}</p>
-												<button
-													on:click={() => {
-														handleDeleteComment($account.id, resume.id, comment.id);
-													}}>Delete</button
-												>
-											</li>
-										{/each}
-									</ul>
-								{:else}
-									<p><strong>No Comments</strong></p>
-								{/if}
-							</li>
-						{/each}
-					</ul>
-				{:else}
-					<p><strong>No Resumes</strong></p>
-				{/if}
+									<p><strong>Shared:</strong> {resume.is_shareable ? "Yes" : "No"}</p>
+									<h3>Comments</h3>
+									{#if Object.keys(comments).length}
+										<ul class="flex flex-col gap-5 p-5">
+											{#each Object.entries(comments) as [commentId, comment]}
+												<li class="rounded-lg border-2 p-2">
+													<p><strong>Member id:</strong> {comment.member}</p>
+													<p><strong>Comment:</strong> {comment.description}</p>
+													<button
+														on:click={() => {
+															handleDeleteComment($account.id, resume.id, comment.id);
+														}}>Delete</button
+													>
+												</li>
+											{/each}
+										</ul>
+									{:else}
+										<p><strong>No Comments</strong></p>
+									{/if}
+								</li>
+							{/each}
+						</ul>
+					{:else}
+						<p><strong>No Resumes</strong></p>
+					{/if}
+				</div>
 			</div>
-		</div>
 			<div>
 				<h2>Community</h2>
-				<div class="border-2 bg-slate-200 p-2 mb-2">
-				<h3>Your Comments</h3>
-				{#if memberComments.length}
-					<ul class="flex flex-col gap-5 p-5">
-						{#each memberComments as comment}
-							<li class="rounded-lg border-2 p-2">
-								<p><strong>Resume id:</strong> {comment.header}</p>
-								<p><strong>Comment:</strong> {comment.description}</p>
-							</li>
-						{/each}
-					</ul>
-				{:else}
-					<p class="p-5"><strong>No Comments</strong></p>
-				{/if}
+				<div class="mb-2 border-2 bg-slate-200 p-2">
+					<h3>Your Comments</h3>
+					{#if memberComments.length}
+						<CommentView bind:value={memberComments}></CommentView>
+					{:else}
+						<p class="p-5"><strong>No Comments</strong></p>
+					{/if}
+				</div>
 			</div>
 		</div>
-	</div>
 	</section>
 {/if}
