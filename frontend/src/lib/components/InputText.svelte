@@ -14,8 +14,8 @@
 	{required ? "*" : ""}
 	{label ? label + ":" : ""}
 	{#if type === "text"}
-		<input bind:value type="text" {placeholder} class="rounded-md border-2 p-1" />
+		<input bind:value type="text" {placeholder} class="rounded-md border-2 p-1 pl-3" />
 	{:else if type === "password"}
-		<input bind:value type="password" {placeholder} class="rounded-md border-2 p-1" />
+		<input bind:value type="password" {placeholder} class="rounded-md border-2 p-1 pl-3" />
 	{/if}
 </label>
