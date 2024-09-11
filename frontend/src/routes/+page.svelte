@@ -7,6 +7,3 @@
 	checkAccountAndRedirect(() => goto("/my/page"));
 
   </script>
-  
-  <section class="flex md:flex-row flex-col justify-center lg:items-center md:items-center px-10">
-  </section>

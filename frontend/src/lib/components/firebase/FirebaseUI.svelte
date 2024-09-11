@@ -104,7 +104,7 @@
 				<div class="flex flex-col gap-5">
 					<InputText placeholder="Email" bind:value={email}></InputText>
 					<InputText type="password" placeholder="Password" bind:value={password}></InputText>
-					<Button on:click={handleLoginClick}>Login</Button>
+					<Button on:click={handleLoginClick} style="submit">Login</Button>
 				</div>
 			</form>
 			<div class="relative flex w-full items-center p-4">

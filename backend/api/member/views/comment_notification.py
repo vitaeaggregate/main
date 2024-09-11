@@ -11,7 +11,7 @@ class CommentNotificationViewSet(viewsets.ModelViewSet):
         is_read = self.request.query_params.get("is_read")
         if receiver_pk:
             notifications = CommentNotification.objects.filter(
-                receiver_id=receiver_pk)
+                receiver_id=receiver_pk).order_by("-created_at")
             if is_read == "false":
                 notifications = notifications.filter(is_read=False)
             return notifications
