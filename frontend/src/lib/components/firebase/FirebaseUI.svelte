@@ -77,7 +77,7 @@
 					dismissible, 
 					timeout
 				});
-				throw error(err.code, err.message);
+				// throw error(err.code, err.message);
 			});
 	};
 

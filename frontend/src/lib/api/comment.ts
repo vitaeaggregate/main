@@ -73,8 +73,7 @@ export const deleteComment = async (
 			"/",
 		requestInit
 	);
-	if (!response.ok) {
-		throw error(response.status, response.statusText);
-	}
+	if (!response.ok) throw error(response.status, response.statusText);
+
 	return true;
 };

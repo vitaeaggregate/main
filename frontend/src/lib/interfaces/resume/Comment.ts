@@ -1,16 +1,13 @@
-import type { Header } from "$lib/interfaces/resume/Header";
-
-export interface CommentHeader extends Header {
-	
+export interface CommentHeader {
+	id: number;
+	title: string;
 }
 export interface Comment extends BaseComment {
 	id: number;
 }
 
-
-
 export interface BaseComment {
-
+	header?: CommentHeader;
 	member?: number;
 	description?: string;
 	created_at?: string | Date;

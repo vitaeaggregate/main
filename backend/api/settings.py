@@ -64,9 +64,9 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     # TODO Uncomment this for firebase
-    # "api.firebase_admin.middleware.FirebaseMiddleware",
+    "api.firebase_admin.middleware.FirebaseMiddleware",
     # TODO Remove this for production
-    "api.login.middleware.DjangoMiddleware",
+    # "api.login.middleware.DjangoMiddleware",
 ]
 
 CORS_ALLOWED_ORIGINS = [
