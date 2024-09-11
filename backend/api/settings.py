@@ -64,13 +64,15 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     # TODO Uncomment this for firebase
-    # "api.firebase_admin.middleware.FirebaseMiddleware",
+    "api.firebase_admin.middleware.FirebaseMiddleware",
     # TODO Remove this for production
-    "api.login.middleware.DjangoMiddleware",
+    # "api.login.middleware.DjangoMiddleware",
 ]
 
 CORS_ALLOWED_ORIGINS = [
     config("FRONT_END"),
+    # TODO remove this after changing the .env on Heroku
+    "https://main-two-tan.vercel.app"
 ]
 
 ROOT_URLCONF = "api.urls"
