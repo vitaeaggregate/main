@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { checkAccountAndRedirect } from "$lib/store";
+	import { checkAccountAndRedirect, loadedResumes } from "$lib/store";
 	import { page } from "$app/stores";
-	import { getResumesByMemberId} from '$lib/api/resume';
-	import { onMount } from 'svelte';
-	import AppPdf from '../pdf/AppPdf.svelte';
-	import Page from '../pdf/Page.svelte';
-	import { account } from '$lib/store';
-	import type {Resume} from "$lib/interfaces/resume/Resume"
+	import { deleteResume, getResumesByMemberId } from "$lib/api/resume";
+	import { onMount } from "svelte";
+	import AppPdf from "../pdf/AppPdf.svelte";
+	import Page from "../pdf/Page.svelte";
+	import { account } from "$lib/store";
+	import type { Resume } from "$lib/interfaces/resume/Resume";
 	import { writable } from "svelte/store";
-	import type PersonalInfo from "$lib/interfaces/resume/PersonalInfo"
+	import type PersonalInfo from "$lib/interfaces/resume/PersonalInfo";
 	import Skill from "$lib/components/resume/Skill.svelte";
 	import ProfessionalExp from "$lib/components/resume/ProfessionalExp.svelte";
 	import Link from "$lib/components/resume/Link.svelte";
@@ -21,19 +21,12 @@
 	import Project from "$lib/components/resume/Project.svelte";
 	import Publication from "$lib/components/resume/Publication.svelte";
 	import Reference from "$lib/components/resume/Reference.svelte";
-  
-	export const id = writable<number | null>(null);
+	import { goto } from "$app/navigation";
+	import MainButton from "$lib/components/MainButton.svelte";
 
-	$: resumeId = Number($page.params.id);
-  
-	const loadPage = () => {
-	};
-  
-	checkAccountAndRedirect(loadPage);
-  
 	let print = false;
-	let resume: Resume | null = null;
-	let resumePersonalInfo: PersonalInfo | null = null;
+	let resume: Resume | undefined = undefined;
+	let resumePersonalInfo: PersonalInfo | undefined = undefined;
 	let resumeSkill: Skill[] = [];
 	let resumeProfessionalExp: ProfessionalExp[] = [];
 	let resumeLink: Link[] = [];
@@ -47,189 +40,345 @@
 	let resumePublication: Publication[] = [];
 	let resumeReference: Reference[] = [];
 
-  
-	onMount(async () => {
-	if (!$account) return;
+	const loadPage = async () => {
+		if (!$account) return;
 
-	const resumes = await getResumesByMemberId($account.id);
-	resume = resumes.find(r => r.id === resumeId);
-	resumePersonalInfo = resume?.personal_info;
-	resumeSkill = resume?.skills
-	resumeProfessionalExp = resume?.professional_exps;
-	resumeLink = resume?.links;
-	resumeAward = resume?.awards;
-	resumeCertificate = resume?.certificates;
-	resumeCourse = resume?.courses;
-	resumeEducation = resume?.educations;
-	resumeInterest = resume?.interests;
-	resumeLanguage = resume?.languages;
-	resumeProject = resume?.projects;
-	resumePublication = resume?.publications;
-	resumeReference = resume?.references;
-	});
+		const resumes = await getResumesByMemberId($account.id);
+		resume = resumes.find((r) => r.id === resumeId);
 
-	$: filteredInfoPersonalInfo = {
-    fullName: resumePersonalInfo?.full_name || "",
-	jobTitle: resumePersonalInfo?.job_title || "",
-	email: resumePersonalInfo?.email || "",
-	phoneNumber: resumePersonalInfo?.phone_number || ""
-  };
-  
-	$: htmlStringPersonalInfo = `
-	  <h2>Personal Information</h2>
-	  <ul>
-		<li><strong>Full Name:</strong> ${filteredInfoPersonalInfo.fullName}</li>
-		<li><strong>Job Title:</strong> ${filteredInfoPersonalInfo.jobTitle}</li>
-		<li><strong>Email:</strong> ${filteredInfoPersonalInfo.email}</li>
-		<li><strong>Phone Number:</strong>${filteredInfoPersonalInfo.phoneNumber}</li>
-	  </ul>`;
-  </script>
-  
-  <section>
-	<button on:click={() => (print = true)}>
-		Print
-	  </button>
-	  <br /><br />
-	  <h1>Resume</h1>
-	<AppPdf bind:print={print}>
-	  <Page>
-		<div style="margin-top: 30px;">{@html htmlStringPersonalInfo} 
-			<br />
-			{#if resumeSkill.length > 0}
-			<h2>Skills</h2>
-			<ul>
-				{#each resumeSkill as skill}
-				<strong>Name:</strong> {skill.name} <br />
-				<strong>Description:</strong> {skill.description} <br />
-				<strong>Skill Level:</strong> {skill.skillLevel} <br /><br />
-			  {/each}
-		  </ul>
-		  {/if}
-		  {#if resumeProfessionalExp.length > 0}
-		  <h2>Professional Experience</h2>
-		  <ul>
-			{#each resumeProfessionalExp as exp}
-			<strong>Job Title</strong> {exp.job_title} <br />
-			<strong>Employer</strong> {exp.employer} <br />
-			<strong>City</strong> {exp.city} <br />
-			<strong>Country</strong> {exp.country} <br />
-			<strong>Start Date</strong> {exp.start_date} <br />
-			<strong>End Date</strong> {exp.end_date} <br />
-			<strong>Description</strong> {exp.description} <br /><br />
-			{/each}
-		  </ul>
-		  {/if}
-		  {#if resumeLink.length > 0}
-		 <h2>Links</h2>
-		 <ul>
-			{#each resumeLink as link} 
-			<strong>Title</strong> {link.title} <br />
-			<strong>URL</strong> {link.url} <br /><br />
-			{/each}
-		 </ul> 
-		  {/if}
-		  {#if resumeAward.length > 0}
-		  <h2>Awards</h2>
-		  <ul>
-			{#each resumeAward as award}
-			<strong>Title</strong> {award.title} <br />
-			<strong>Issuer</strong> {award.issuer} <br />
-			<strong>Date</strong> {award.date} <br />
-			<strong>Description</strong> {award.description} <br /><br />
-			{/each}
-		  </ul>
-		  {/if}
-		  {#if resumeCertificate.length > 0}
-		  <h2>Certificates</h2>
-		  <ul>
-		 	 {#each resumeCertificate as certificate}
-		 	 <strong>Name</strong> {certificate.name} <br />
-		 	 <strong>Description</strong> {certificate.description} <br /><br />
-			  {/each}
-		  </ul>
-		  {/if}
-		  {#if resumeCourse.length > 0}
-		  <h2>Courses</h2>
-		  <ul>
-			{#each resumeCourse as course}
-			<strong>Degree</strong> {course.degree} <br />
-			<strong>Institution</strong> {course.institution} <br />
-			<strong>City</strong> {course.city} <br />
-			<strong>Country</strong> {course.country} <br />
-			<strong>Start Date</strong> {course.start_date} <br />
-			<strong>End Date</strong> {course.end_date} <br />
-			<strong>Description</strong> {course.description} <br /><br />
-			{/each}
-		  </ul>
-		  {/if}
-		  {#if resumeEducation}
-		  <h2>Education</h2>
-		  <ul>
-			{#each resumeEducation as edu}
-			<strong>Degree</strong> {edu.degree} <br />
-			<strong>Institution</strong> {edu.institution} <br />
-			<strong>City</strong> {edu.city} <br />
-			<strong>Country</strong> {edu.country} <br />
-			<strong>Start Date</strong> {edu.start_date} <br />
-			<strong>End Date</strong> {edu.end_date} <br />
-			<strong>Description</strong> {edu.description} <br /><br />
-			{/each}
-		  </ul>
-		  {/if}
-		  {#if resumeInterest.length > 0}
-		  <h2>Interests</h2>
-		  <ul>
-			{#each resumeInterest as interest}
-			<strong>Name</strong> {interest.name} <br />
-			<strong>Description</strong> {interest.description} <br /><br />
-			{/each}
-		  </ul>
-		  {/if}
-		  {#if resumeLanguage.length > 0}
-		  <h2>Languages</h2>
-		  <ul>
-			{#each resumeLanguage as lang}
-			<strong>Language:</strong> {lang.language} <br />
-			<strong>Description:</strong> {lang.description} <br />
-			<strong>Skill Level:</strong> {lang.skillLevel} <br /><br />
-			{/each}
-		  </ul>
-		  {/if}
-		  {#if resumeProject.length > 0}
-		  <h2>Projects</h2>
-		  <ul>
-			{#each resumeProject as project}
-			<strong>Title:</strong> {project.title} <br />
-			<strong>Subtitle:</strong> project.subtitle} <br />
-			<strong>Start Date</strong> {project.start_date} <br />
-			<strong>End Date</strong> {project.end_date} <br />
-			<strong>Description:</strong> {project.description} <br /><br />
-			{/each}
-		  </ul>
-		  {/if}
-		  {#if resumePublication.length > 0}
-		  <h2>Publications</h2>
-		  <ul>
-			{#each resumePublication as publication}
-			<strong>Title:</strong> {publication.title} <br />
-			<strong>Publisher:</strong> {publication.publisher} <br />
-			<strong>Date:</strong> {publication.date} <br />
-			<strong>Description</strong> {publication.description} <br /><br />
-			{/each}
-		  </ul>
-		  {/if}
-		  {#if resumeReference.length > 0}
-		  <h2>References</h2>
-		  <ul>
-			{#each resumeReference as ref}
-			<strong>Name:</strong> {ref.name} <br />
-			<strong>Job Title:</strong> {ref.job_title} <br />
-			<strong>Organization:</strong> {ref.organization} <br />
-			<strong>Email:</strong> {ref.email} <br />
-			<strong>Phone:</strong> {ref.phone} <br /><br />
-			{/each}
-		  </ul>
-		  {/if}
-	  </Page>
-	</AppPdf>
-  </section>
+		if (resume) {
+			resumePersonalInfo = resume?.personal_info;
+			resumeSkill = resume?.skills as Skill[];
+			resumeProfessionalExp = resume?.professional_exps as ProfessionalExp[];
+			resumeLink = resume?.links as Link[];
+			resumeAward = resume?.awards as Award[];
+			resumeCertificate = resume?.certificates as Certificate[];
+			resumeCourse = resume?.courses as Course[];
+			resumeEducation = resume?.educations as Education[];
+			resumeInterest = resume?.interests as Interest[];
+			resumeLanguage = resume?.languages as Language[];
+			resumeProject = resume?.projects as Project[];
+			resumePublication = resume?.publications as Publication[];
+			resumeReference = resume?.references as Reference[];
+		}
+	};
+
+	function handleResumeDelete(id: number, resumeId: number) {
+		deleteResume(id, resumeId);
+		goto("/my/page");
+	}
+
+	function handleResumeEdit(resumeId: number) {
+		goto(`/my/resumes/${resumeId}/edit`);
+	}
+
+	$: resumeId = Number($page.params.id);
+
+	$: if ($account && $page.params.id) loadPage();
+</script>
+
+{#if $account && $page.params.id}
+	<section>
+		<h1>Resume</h1>
+
+		<br />
+		<MainButton
+			on:click={() => {
+				handleResumeEdit(resumeId);
+			}}>Edit</MainButton
+		>
+		<MainButton on:click={() => handleResumeDelete($account.id, resumeId)}>Delete</MainButton>
+		<MainButton on:click={() => (print = true)}>Print</MainButton>
+		<br />
+		<br />
+		<AppPdf bind:print>
+			<div
+				class="mb-16 ml-16 mr-16 flex h-screen flex-col overflow-y-auto border-2 border-solid border-black p-4 print:m-0 print:-ml-12 print:-mr-12 print:overflow-y-visible print:border-none"
+			>
+				<Page>
+					<ul class=" p-4 text-center font-sans">
+						<div class="text-4xl font-medium">{resumePersonalInfo?.full_name}</div>
+						<br />
+						<div class="text-2xl">{resumePersonalInfo?.job_title}</div>
+					</ul>
+					<hr class="border-2 border-solid border-black" />
+					<br />
+					<h2 class="print:text-xl">Personal Info</h2>
+					<ul class="text-base leading-8 print:text-sm print:leading-6">
+						{#if resumePersonalInfo?.email}
+							<li><strong>Email:</strong> {resumePersonalInfo?.email}</li>
+						{:else}<br />{/if}
+						{#if resumePersonalInfo?.phone_number}
+							<li><strong>Phone:</strong> {resumePersonalInfo?.phone_number}</li>
+						{:else}<br />{/if}
+						{#if resumePersonalInfo?.address}
+							<li><strong>Address:</strong> {resumePersonalInfo?.address}</li>
+						{:else}<br />{/if}
+						{#if resumePersonalInfo?.date_of_birth}
+							<li><strong>Date of Birth:</strong> {resumePersonalInfo?.date_of_birth}</li>
+						{:else}<br />{/if}
+						{#if resumePersonalInfo?.driving_license}
+							<li><strong>Driving License:</strong> {resumePersonalInfo?.driving_license}</li>
+						{:else}<br />{/if}
+						{#if resumePersonalInfo?.gender_pronoun}
+							<li><strong>Gender Pronouns:</strong> {resumePersonalInfo?.gender_pronoun}</li>
+						{:else}<br />{/if}
+						{#if resumePersonalInfo?.marital_status}
+							<li><strong>Marital Status:</strong> {resumePersonalInfo?.marital_status}</li>
+						{:else}<br />{/if}
+						{#if resumePersonalInfo?.nationality}
+							<li><strong>Nationality:</strong> {resumePersonalInfo?.nationality}</li>
+						{:else}<br />{/if}
+					</ul>
+					<br />
+					{#if resumeSkill.length > 0}
+						<h2 class="print:text-xl">Skills</h2>
+						<ul class="text-base leading-8 print:text-sm print:leading-6">
+							<ul>
+								{#each resumeSkill as skill}
+									{#if skill.name}
+										<strong>Name:</strong> {skill.name} <br />
+									{:else}<br />{/if}
+									<strong>Description:</strong>
+									{skill.description} <br />
+									<strong>Skill Level:</strong>
+									{skill.skill_level} <br /><br />
+								{/each}
+							</ul>
+						</ul>
+					{/if}
+					{#if resumeProfessionalExp.length > 0}
+						<h2 class="print:text-xl">Professional Experience</h2>
+						<ul class="text-base leading-8 print:text-sm print:leading-6">
+							<ul>
+								{#each resumeProfessionalExp as exp}
+									{#if exp.job_title}
+										<strong class="text-xl print:text-lg">{exp.job_title}</strong><br />
+									{:else}<br />{/if}
+									{#if exp.employer}
+										<strong>Employer:</strong> {exp.employer} <br />
+									{:else}<br />{/if}
+									<strong>City:</strong>
+									{exp.city} <br />
+									<strong>Country:</strong>
+									{exp.country} <br />
+									<strong>Start Date:</strong>
+									{exp.start_date} <br />
+									<strong>End Date:</strong>
+									{exp.end_date} <br />
+									{#if exp.description}
+										<strong>Description:</strong> {exp.description} <br /><br />
+									{:else}<br />{/if}
+								{/each}
+							</ul>
+						</ul>
+					{/if}
+					{#if resumeLink.length > 0}
+						<h2 class="print:text-xl">Links</h2>
+						<ul class="text-base leading-8 print:text-sm print:leading-6">
+							<ul>
+								{#each resumeLink as link}
+									<strong>Title:</strong>
+									{link.title} <br />
+									<strong>URL:</strong>
+									{link.url} <br /><br />
+								{/each}
+							</ul>
+						</ul>
+					{/if}
+					{#if resumeAward.length > 0}
+						<h2 class="print:text-xl">Awards</h2>
+						<ul class="text-base leading-8 print:text-sm print:leading-6">
+							<ul>
+								{#each resumeAward as award}
+									{#if award.title}
+										<strong>Title:</strong> {award.title} <br />
+									{:else}<br />{/if}
+									{#if award.issuer}
+										<strong>Issuer:</strong> {award.issuer} <br />
+									{:else}<br />{/if}
+									{#if award.date}
+										<strong>Date:</strong> {award.date} <br />
+									{:else}<br />{/if}
+									{#if award.description}
+										<strong>Description:</strong> {award.description} <br /><br />
+									{:else}<br />{/if}
+								{/each}
+							</ul>
+						</ul>
+					{/if}
+					{#if resumeCertificate.length > 0}
+						<h2 class="print:text-xl">Certificates</h2>
+						<ul class="text-base leading-8 print:text-sm print:leading-6">
+							<ul>
+								{#each resumeCertificate as certificate}
+									{#if certificate.name}
+										<strong>Name:</strong> {certificate.name} <br />
+									{:else}<br />{/if}
+									{#if certificate.description}
+										<strong>Description:</strong> {certificate.description} <br /><br />
+									{:else}<br />{/if}
+								{/each}
+							</ul>
+						</ul>
+					{/if}
+					{#if resumeCourse.length > 0}
+						<h2 class="print:text-xl">Courses</h2>
+						<ul class="text-base leading-8 print:text-sm print:leading-6">
+							<ul>
+								{#each resumeCourse as course}
+									{#if course.degree}
+										<strong>Degree:</strong> {course.degree} <br />
+									{:else}<br />{/if}
+									{#if course.institution}
+										<strong>Institution:</strong> {course.institution} <br />
+									{:else}<br />{/if}
+									{#if course.city}
+										<strong>City:</strong> {course.city} <br />
+									{:else}<br />{/if}
+									{#if course.country}
+										<strong>Country:</strong> {course.country} <br />
+									{:else}<br />{/if}
+									{#if course.start_date}
+										<strong>Start Date:</strong> {course.start_date} <br />
+									{:else}<br />{/if}
+									{#if course.end_date}
+										<strong>End Date:</strong> {course.end_date} <br />
+									{:else}<br />{/if}
+									{#if course.description}
+										<strong>Description:</strong> {course.description} <br /><br />
+									{:else}<br />{/if}
+								{/each}
+							</ul>
+						</ul>
+					{/if}
+					{#if resumeEducation.length > 0}
+						<h2 class="print:text-xl">Education</h2>
+						<ul class="text-base leading-8 print:text-sm print:leading-6">
+							<ul>
+								{#each resumeEducation as edu}
+									{#if edu.degree}
+										<strong class="text-xl print:text-lg">{edu.degree}</strong> <br />
+									{:else}<br />{/if}
+									{#if edu.institution}
+										<strong>Institution:</strong> {edu.institution} <br />
+									{:else}<br />{/if}
+									{#if edu.city}
+										<strong>City:</strong> {edu.city} <br />
+									{:else}<br />{/if}
+									{#if edu.country}
+										<strong>Country:</strong> {edu.country} <br />
+									{:else}<br />{/if}
+									{#if edu.start_date}
+										<strong>Start Date:</strong> {edu.start_date} <br />
+									{:else}<br />{/if}
+									{#if edu.end_date}
+										<strong>End Date:</strong> {edu.end_date} <br />
+									{:else}<br />{/if}
+									{#if edu.description}
+										<strong>Description:</strong> {edu.description} <br /><br />
+									{:else}<br />{/if}
+								{/each}
+							</ul>
+						</ul>
+					{/if}
+					{#if resumeInterest.length > 0}
+						<h2 class="print:text-xl">Interests</h2>
+						<ul class="text-base leading-8 print:text-sm print:leading-6">
+							<ul>
+								{#each resumeInterest as interest}
+									<strong>Name:</strong>
+									{interest.name} <br />
+									{#if interest.description}
+										<strong>Description:</strong> {interest.description} <br /><br />
+									{:else}<br />{/if}
+								{/each}
+							</ul>
+						</ul>
+					{/if}
+					{#if resumeLanguage.length > 0}
+						<h2 class="print:text-xl">Languages</h2>
+						<ul class="text-base leading-8 print:text-sm print:leading-6">
+							<ul>
+								{#each resumeLanguage as lang}
+									<strong>Language:</strong>
+									{lang.language} <br />
+									<strong>Description:</strong>
+									{lang.description} <br />
+									<strong>Skill Level:</strong>
+									{lang.skill_level} <br /><br />
+								{/each}
+							</ul>
+						</ul>
+					{/if}
+					{#if resumeProject.length > 0}
+						<h2 class="print:text-xl">Projects</h2>
+						<ul class="text-base leading-8 print:text-sm print:leading-6">
+							<ul>
+								{#each resumeProject as project}
+									<strong>Title:</strong>
+									{project.title} <br />
+									{#if project.subtitle}
+										<strong>Subtitle:</strong> {project.subtitle} <br />
+									{:else}<br />{/if}
+									{#if project.start_date}
+										<strong>Start Date:</strong> {project.start_date} <br />
+									{:else}<br />{/if}
+									{#if project.end_date}
+										<strong>End Date:</strong> {project.end_date} <br />
+									{:else}<br />{/if}
+									{#if project.description}
+										<strong>Description:</strong> {project.description} <br /><br />
+									{:else}<br />{/if}
+								{/each}
+							</ul>
+						</ul>
+					{/if}
+					{#if resumePublication.length > 0}
+						<h2 class="print:text-xl">Publications</h2>
+						<ul class="text-base leading-8 print:text-sm print:leading-6">
+							<ul>
+								{#each resumePublication as publication}
+									<strong>Title:</strong>
+									{publication.title} <br />
+									{#if publication.publisher}
+										<strong>Publisher:</strong> {publication.publisher} <br />
+									{:else}<br />{/if}
+									{#if publication.date}
+										<strong>Date:</strong> {publication.date} <br />
+									{:else}<br />{/if}
+									{#if publication.description}
+										<strong>Description</strong> {publication.description} <br /><br />
+									{:else}<br />{/if}
+								{/each}
+							</ul>
+						</ul>
+					{/if}
+					{#if resumeReference.length > 0}
+						<h2 class="print:text-xl">References</h2>
+						<ul class="text-base leading-8 print:text-sm print:leading-6">
+							<ul>
+								{#each resumeReference as ref}
+									<strong>Name:</strong>
+									{ref.name} <br />
+									{#if ref.job_title}
+										<strong>Job Title:</strong> {ref.job_title} <br />
+									{:else}<br />{/if}
+									{#if ref.organization}
+										<strong>Organization:</strong> {ref.organization} <br />
+									{:else}<br />{/if}
+									{#if ref.email}
+										<strong>Email:</strong> {ref.email} <br />
+									{:else}<br />{/if}
+									{#if ref.phone}
+										<strong>Phone:</strong> {ref.phone} <br /><br />
+									{:else}<br />{/if}
+								{/each}
+							</ul>
+						</ul>
+					{/if}
+				</Page>
+			</div>
+		</AppPdf>
+	</section>
+{/if}

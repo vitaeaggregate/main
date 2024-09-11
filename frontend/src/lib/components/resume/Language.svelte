@@ -26,8 +26,8 @@
 	</div>
 {:else}
 	<div>
-		<InputText label="Language" bind:value={value.language} />
-		<TextArea label="Description" bind:value={value.description} />
-		<InputText label="Skill Level" bind:value={value.skill_level} />
+		<InputText label="Language" required={true} bind:value={value.language} />
+		<TextArea label="Description" required={true} bind:value={value.description} />
+		<InputText label="Skill Level" required={true} bind:value={value.skill_level} />
 	</div>
 {/if}

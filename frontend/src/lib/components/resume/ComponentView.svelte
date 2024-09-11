@@ -53,24 +53,26 @@
 	</Modal>
 {/if}
 {#if Array.isArray(value) && value.length}
-	<div class="flex flex-col gap-4 border-2 bg-slate-100 rounded-lg p-5">
+	<div class="flex w-full flex-col rounded-lg border-2 bg-slate-100 p-5">
 		{#if config.unitLabel}
 			<h2>{config.unitLabel + "s"}</h2>
 		{/if}
-
-		{#each value as item (item.id)}
-			<svelte:component this={component} bind:value={item} readOnly={config.readOnly}
-			></svelte:component>
-			<div class="flex justify-between">
-				<Button on:click={() => handleEdit(item)}>Edit</Button>
-				<Button
-					on:click={() => {
-						if (item.id) handleRemove(item.id);
-					}}>Remove</Button
-				>
-			</div>
-			<hr />
-		{/each}
+		<div class="flex flex-col divide-y">
+			{#each value as item (item.id)}
+				<div class="flex flex-col p-2 gap-3">
+					<svelte:component this={component} bind:value={item} readOnly={config.readOnly}
+					></svelte:component>
+					<div class="flex gap-10">
+						<Button on:click={() => handleEdit(item)}>Edit</Button>
+						<Button
+							on:click={() => {
+								if (item.id) handleRemove(item.id);
+							}}>Remove</Button
+						>
+					</div>
+				</div>
+			{/each}
+		</div>
 	</div>
 {:else if !Array.isArray(value)}
 	<div class="flex flex-col">

@@ -3,6 +3,8 @@ from ..models.project import Project
 
 
 class ProjectSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=False)
+
     class Meta:
         model = Project
-        fields = "__all__"
+        exclude = ["header"]

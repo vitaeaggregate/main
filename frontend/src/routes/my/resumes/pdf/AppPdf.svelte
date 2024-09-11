@@ -1,22 +1,22 @@
-<script>
+<script lang="ts">
     export let print = false;
     // manual edit in style tag
-    const appId = "AppPdf-neuversity-kami-adalah-agen-untuk-development";
+    const appId = "AppPdf_id";
 
     // 		storing display computed
-    let displays = [];
+    let displays: never[] = [];
 
     const selectorNotApp = `:not(#${appId}):not(#${appId} *):not(script):not(link)`;
 
     // temporary element store when find element
-    let stackElements = [];
+    let stackElements: any[] = [];
     const findElementIsNotAppPdf = (
         el,
-        selector,
-        callback,
+        selector: string,
+        callback: { (el: Element, i: string | number): void; (el: any, i: any): void; (arg0: any, arg1: number): void; },
         _props = { i: 0 } // need reference object
     ) => {
-        el.querySelectorAll(selector).forEach((el) => {
+        el.querySelectorAll(selector).forEach((el: { querySelector: (arg0: string) => any; }) => {
             if (el.querySelector("#" + appId)) {
                 findElementIsNotAppPdf(el, selectorNotApp, callback, _props);
             } else {
@@ -33,7 +33,7 @@
         findElementIsNotAppPdf(
             document.body,
             `body > ${selectorNotApp}`,
-            (el, i) => {
+            (el: Element, i: string | number) => {
                 displays[i] = window.getComputedStyle(el).display;
                 el.style.display = "none";
             }
@@ -67,12 +67,14 @@
 
 <style>
     @media print {
-        #AppPdf-neuversity-kami-adalah-agen-untuk-development {
+        #AppPdf_id {
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
+            
         }
         :global(table, img, svg, p) {
             page-break-inside: auto;
         }
+        
     }
 </style>

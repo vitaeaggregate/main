@@ -1,0 +1,1 @@
+<button type="button" class="border-2 bg-lime p-2 mr-1" on:click><slot></slot></button>

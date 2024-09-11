@@ -34,7 +34,7 @@
 		componentValue: { id?: string | number };
 	};
 
-	let isModalHidden: boolean = false;
+	let isModalHidden: boolean = true;
 	let currentSectionMap: ComponentMapping | null = null;
 	let backModalClick: (() => void) | null = null;
 
@@ -166,11 +166,11 @@
 	{/if}
 	<div class="flex flex-col gap-5">
 		<div class="flex flex-col gap-2">
-			<InputText label="Resume Name" bind:value={value.title} />
+			<InputText label="Resume Name" required={true} bind:value={value.title} />
 			<InputCheckBox label="Share" bind:value={value.is_shareable}></InputCheckBox>
 		</div>
 		<PersonalInfo bind:value={value.personal_info}></PersonalInfo>
-		<div class="flex flex-wrap gap-5 items-start justify-center">
+		<div class="flex flex-col items-start justify-center gap-5">
 			<ComponentView
 				bind:value={value.skills}
 				component={Skill}
@@ -233,8 +233,7 @@
 			/>
 		</div>
 	</div>
-
-	<div class="fixed bottom-0 right-0 m-9 rounded-lg border-2 bg-slate-100 p-2">
+	<div class="fixed bottom-0 right-0 m-9 border-2 bg-slate-200 p-2">
 		<Button on:click={() => (isModalHidden = false)}>Add Section</Button>
 	</div>
 </section>

@@ -3,6 +3,8 @@ from ..models.professional_exp import ProfessionalExp
 
 
 class ProfessionalExpSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=False)
+
     class Meta:
         model = ProfessionalExp
-        fields = "__all__"
+        exclude = ["header"]

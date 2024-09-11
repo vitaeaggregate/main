@@ -1,15 +1,20 @@
 <script lang="ts">
-	import { goto } from "$app/navigation";
 	import { writable } from "svelte/store";
 	import { account, loadedResumes, checkAccountAndRedirect } from "$lib/store";
 	import { getResumesByMemberId } from "$lib/api/resume";
-	import { deleteComment, getCommentsByMemberId, getCommentsByMemberIdByResumeId } from "$lib/api/comment";
+	import {
+		deleteComment,
+		getCommentsByMemberId,
+		getCommentsByMemberIdByResumeId
+	} from "$lib/api/comment";
 	import { deleteResume } from "$lib/api/resume";
 	import type { Comment } from "$lib/interfaces/resume/Comment";
+	import MainButton from "$lib/components/MainButton.svelte";
 
 	export const id = writable<number | null>(null);
 	export const resumeId = writable<number | null>(null);
 	let token: string | null = null;
+	let email: string | null = null;
 
 	let memberComments: Comment[] = [];
 
@@ -17,6 +22,7 @@
 		if (!$account) return;
 
 		token = sessionStorage.getItem("token");
+		email = $account.email;
 
 		const resumes = await getResumesByMemberId($account.id);
 
@@ -43,17 +49,13 @@
 		}
 	};
 
-	function handleResumeClick(resumeId: number) {
-		goto(`/community/${resumeId}`);
-	}
-
-	function handleDelete(id: number, resumeId: number) {
+	function handleResumeDelete(id: number, resumeId: number) {
 		deleteResume(id, resumeId);
 		delete $loadedResumes[id];
 	}
 
 	function handleDeleteComment(id: number, resumeId: number, commentId: number) {
-		deleteComment(id, resumeId, commentId)
+		deleteComment(id, resumeId, commentId);
 	}
 
 	checkAccountAndRedirect(loadPage);
@@ -65,26 +67,32 @@
 		<div class="">
 			<div>
 				<h2>User Info</h2>
+				<div class="border-2 bg-slate-200 p-2 mb-2">
 				<ul class="flex flex-col gap-5 p-5">
-					<li class="rounded-lg border-2 p-2">
+					<li class="v-screen overflow-x-auto rounded-lg border-2 p-2">
 						<p><strong>Id: </strong>{$account.id}</p>
-						<p><strong>Token: </strong>{token}</p>
-						<p><strong>Email: </strong>{$account.email}</p>
+						<p class="break-all"><strong>Token: </strong>{token}</p>
+						{#if email}
+							<p><strong>Email: </strong>{email}</p>
+						{:else}
+							<p><strong>Email: </strong>{$account.email}</p>
+						{/if}
 					</li>
 				</ul>
 			</div>
+			</div>
 			<div>
-				<h2 class="mb-3"><a href="/my/resumes">Resumes</a></h2>
-				<a href="/my/resumes/new">Add Resume</a>
+				<h2>Resumes</h2>
+				<div class="border-2 bg-slate-200 p-2 mb-2">
+				<MainButton><a href="/my/resumes/new">Add Resume</a></MainButton> <MainButton><a href="/my/resumes">Full list</a></MainButton>
 				{#if Object.keys($loadedResumes).length}
 					<ul class="flex flex-col gap-5 p-5">
 						{#each Object.entries($loadedResumes).reverse() as [resumeId, { resume, comments }]}
 							<li class="rounded-lg border-2 p-2">
-								<p><span class="text-xl">{resume.title}</span></p>
+								<p><span class="text-xl hover:font-medium"><a href={`/my/resumes/${resumeId}`}>{resume.title}</a></span></p>
 								<p><strong>Resume id:</strong> {resume.id}</p>
-								<p class="hover:italic">
-									<a href={`/my/resumes/${resumeId}`}><strong>Title:</strong> {resume.title}</a>
-								</p>
+								<!-- <p><strong>Title:</strong> {resume.title}
+								</p> -->
 								<p><strong>Shared:</strong> {resume.is_shareable ? "Yes" : "No"}</p>
 								<h3>Comments</h3>
 								{#if Object.keys(comments).length}
@@ -94,21 +102,16 @@
 												<p><strong>Member id:</strong> {comment.member}</p>
 												<p><strong>Comment:</strong> {comment.description}</p>
 												<button
-												on:click={() => {
-													handleDeleteComment($account.id, resume.id, comment.id);
-												}}>Delete</button
-											>
+													on:click={() => {
+														handleDeleteComment($account.id, resume.id, comment.id);
+													}}>Delete</button
+												>
 											</li>
 										{/each}
 									</ul>
 								{:else}
 									<p><strong>No Comments</strong></p>
 								{/if}
-								<button
-									on:click={() => {
-										handleDelete($account.id, resume.id);
-									}}>Delete Resume</button
-								>
 							</li>
 						{/each}
 					</ul>
@@ -116,8 +119,10 @@
 					<p><strong>No Resumes</strong></p>
 				{/if}
 			</div>
+		</div>
 			<div>
 				<h2>Community</h2>
+				<div class="border-2 bg-slate-200 p-2 mb-2">
 				<h3>Your Comments</h3>
 				{#if memberComments.length}
 					<ul class="flex flex-col gap-5 p-5">
@@ -129,9 +134,10 @@
 						{/each}
 					</ul>
 				{:else}
-					<p><strong>No Comments</strong></p>
+					<p class="p-5"><strong>No Comments</strong></p>
 				{/if}
 			</div>
 		</div>
+	</div>
 	</section>
 {/if}

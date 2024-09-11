@@ -1,6 +1,6 @@
 export default interface Project {
 	id?: number | string;
-	header?: number;
+	// header?: number;
 	title?: string;
 	sub_title?: string;
 	start_date?: string | Date;

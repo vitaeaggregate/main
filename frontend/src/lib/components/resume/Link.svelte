@@ -23,7 +23,7 @@
 	</div>
 {:else}
 	<div>
-		<InputText label="Title" bind:value={value.title} />
-		<InputText label="URL" bind:value={value.url} />
+		<InputText label="Title" required={true} bind:value={value.title} />
+		<InputText label="URL" required={true} bind:value={value.url} />
 	</div>
 {/if}

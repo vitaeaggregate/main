@@ -1,6 +1,6 @@
 export default interface PersonalInfo {
 	id?: number | string;
-	header?: number;
+	// header?: number;
 	full_name?: string;
 	job_title?: string;
 	email?: string;

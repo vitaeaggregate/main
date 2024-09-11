@@ -1,16 +1,15 @@
 import { goto } from "$app/navigation";
 import { PUBLIC_SERVER } from "$env/static/public";
 import { error } from "@sveltejs/kit";
-import { account } from "./store";
+import { account } from "$lib/store";
+import { firebaseAuth } from "$lib/configs/firebase";
 
 export const fetchData = async (url: string, requestInit?: RequestInit) => {
 	if (!sessionStorage.getItem("token")) return error(400, "No token");
 
 	const token = sessionStorage.getItem("token") || "";
 
-	if (token === "") {
-		return error(400, "No token");
-	}
+	if (token === "") throw error(400, "No token");
 
 	if (!requestInit) requestInit = {};
 
@@ -18,11 +17,11 @@ export const fetchData = async (url: string, requestInit?: RequestInit) => {
 		? {
 				...requestInit.headers,
 				"Content-Type": "application/JSON",
-				Authorization: token
+				Authorization: "Bearer " + token
 			}
 		: {
 				"Content-Type": "application/JSON",
-				Authorization: token
+				Authorization: "Bearer " + token
 			};
 
 	const response = await fetch(url, requestInit);
@@ -42,17 +41,17 @@ const handleError = async (response: Response) => {
 };
 
 export const logout = async () => {
-	const requestInit: RequestInit = {
-		method: "DELETE"
-	};
-
-	const response = await fetchData(PUBLIC_SERVER + "/sessions/", requestInit);
-
-	if (!response.ok) return error(response.status, response.statusText);
+	await firebaseAuth.signOut();
 
 	clearSessionStorage();
 
-	return goto("/");
+	// const requestInit: RequestInit = {
+	// 	method: "DELETE"
+	// };
+	// const response = await fetchData(PUBLIC_SERVER + "/sessions/", requestInit);
+	// if (!response.ok) return error(response.status, response.statusText);
+
+	return goto("/login");
 };
 
 export const login = async (email: string) => {

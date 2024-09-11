@@ -30,7 +30,7 @@
 	</div>
 {:else}
 	<div>
-		<InputText label="Name" bind:value={value.name} />
+		<InputText label="Name" required={true} bind:value={value.name} />
 		<InputText label="Job Title" bind:value={value.job_title} />
 		<InputText label="Organization" bind:value={value.organization} />
 		<InputText label="Email" bind:value={value.email} />
