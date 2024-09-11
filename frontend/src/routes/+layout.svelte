@@ -44,7 +44,6 @@
 								{/if}
 							</a>
 						</div>
-						<a href="/my/dashboard">Dashboard</a>
 						<a href="/community">Community</a>
 					</nav>
 				{:else}
