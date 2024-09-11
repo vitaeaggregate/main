@@ -69,7 +69,6 @@
 								</div>
 							</Button>
 						</div>
-						<a href="/my/dashboard">Dashboard</a>
 						<a href="/community">Community</a>
 						{#if !isNotificationsViewHidden}
 							<div class="item absolute top-full rounded-lg border-2 bg-slate-50 p-5">
