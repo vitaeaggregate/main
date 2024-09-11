@@ -48,7 +48,7 @@
 	}
 
 	const handleGoBack = () => {
-		goto("/my/dashboard")
+		goto("/community")
 	};
 	
 	checkAccountAndRedirect(loadPage);
