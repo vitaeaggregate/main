@@ -36,7 +36,7 @@
   checkAccountAndRedirect(loadPage);
 </script>
 
-<section class="m-auto flex h-screen flex-col items-center">
+<section class="flex flex-col items-center gap-3">
   <Button on:click={handleCreateResumeClick}>Create Resume</Button>
   <h1>Community Resumes</h1>
   <Search bind:value={searchTerm} label="Search:" class="text-m m-2, border-1, border-solid p-2" />
@@ -47,11 +47,9 @@
   {/if}
   <div class="text-center">
     {#each slicedResumes as resume}
-      <ul>
-        <li>
-          <a href="/community/{resume.id}">{resume?.title}</a>
-        </li>
-      </ul>
+      <div>
+        <a href="/community/{resume.id}">{resume?.title}</a>
+      </div>
     {/each}
   </div>
 </section>
