@@ -8,6 +8,7 @@
 	import type { Resume } from "$lib/interfaces/resume/Resume";
 	import Button from "$lib/components/Button.svelte";
 	import { goto } from "$app/navigation";
+	import { onMount } from "svelte";
 
 	export const id = writable<number | null>(null);
 	export const resumeId = writable<number | null>(null);
