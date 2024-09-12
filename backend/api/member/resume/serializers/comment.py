@@ -37,11 +37,12 @@ class CommentSerializer(serializers.ModelSerializer):
         return comment
 
     def create_notification(self, comment, validated_data):
-
         request = self.context.get("request")
-
         sender_id = request.account.get("id")
         receiver = validated_data.get("header").member
+
+        if request.account.get("id") == receiver.id:
+            return
 
         CommentNotification.objects.create(
             comment=comment, receiver=receiver, sender_id=sender_id)
