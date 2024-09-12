@@ -71,6 +71,8 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     config("FRONT_END"),
+    # TODO remove this after changing the .env on Heroku
+    "https://main-two-tan.vercel.app"
 ]
 
 ROOT_URLCONF = "api.urls"
