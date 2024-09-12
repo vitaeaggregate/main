@@ -1,38 +1,38 @@
 <script context="module" lang="ts">
-	export interface Config {
-		isHidden?: boolean;
-	}
+  export interface Config {
+    isHidden?: boolean;
+  }
 </script>
 
 <script lang="ts">
-	import Button from "$lib/components/Button.svelte";
+  import Button from "$lib/components/Button.svelte";
 
-	export let backClick: ((event: Event) => void) | null = null;
-	export let closeClick: ((event: Event) => void) | null;
-	export let config: {
-		closeText?: string;
-	} = {
-		closeText: "Close"
-	};
+  export let backClick: ((event: Event) => void) | null = null;
+  export let closeClick: ((event: Event) => void) | null;
+  export let config: {
+    closeText?: string;
+  } = {
+    closeText: "Close"
+  };
 
-	let modal: HTMLDivElement | null = null;
+  let modal: HTMLDivElement | null = null;
 </script>
 
 <div bind:this={modal} class="fixed left-0 top-0 z-10 flex size-full items-center justify-center">
-	<div
-		role="button"
-		on:keyup={closeClick}
-		tabindex={0}
-		class="absolute -z-10 size-full bg-slate-100 bg-opacity-65"
-		on:click={closeClick}
-	></div>
-	<div class="m-5 rounded-lg border-2 bg-slate-100 p-3">
-		<div class="flex justify-end gap-5">
-			{#if backClick}
-				<Button on:click={backClick}>Back</Button>
-			{/if}
-			<Button on:click={closeClick}>{config.closeText}</Button>
-		</div>
-		<slot></slot>
-	</div>
+  <div
+    role="button"
+    on:keyup={closeClick}
+    tabindex={0}
+    class="absolute -z-10 size-full bg-slate-100 bg-opacity-65"
+    on:click={closeClick}
+  ></div>
+  <div class="m-5 rounded-lg border-2 bg-slate-100 p-3">
+    <div class="flex justify-end gap-5">
+      {#if backClick}
+        <Button on:click={backClick}>Back</Button>
+      {/if}
+      <Button on:click={closeClick}>{config.closeText}</Button>
+    </div>
+    <slot></slot>
+  </div>
 </div>
