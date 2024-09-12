@@ -4,71 +4,71 @@ import { fetchData } from "$lib/utils";
 import { error } from "@sveltejs/kit";
 
 export const getResumesByMemberId = async (memberId: number): Promise<Resume[]> => {
-	const response = await fetchData(PUBLIC_SERVER + "/members/" + memberId + "/resumes");
+  const response = await fetchData(PUBLIC_SERVER + "/members/" + memberId + "/resumes");
 
-	if (!response.ok) throw error(response.status, response.statusText);
+  if (!response.ok) throw error(response.status, response.statusText);
 
-	const resumes: Resume[] = await response.json();
+  const resumes: Resume[] = await response.json();
 
-	return resumes;
+  return resumes;
 };
 
 export const getResumeById = async (resumeId: number): Promise<Resume> => {
-	const response = await fetchData(PUBLIC_SERVER + "/resumes/" + resumeId);
+  const response = await fetchData(PUBLIC_SERVER + "/resumes/" + resumeId);
 
-	if (!response.ok) throw error(response.status, response.statusText);
+  if (!response.ok) throw error(response.status, response.statusText);
 
-	const resume: Resume = await response.json();
+  const resume: Resume = await response.json();
 
-	return resume;
+  return resume;
 };
 
 export const getAllResumes = async (): Promise<Resume[]> => {
-	const response = await fetchData(PUBLIC_SERVER + "/resumes");
+  const response = await fetchData(PUBLIC_SERVER + "/resumes");
 
-	if (!response.ok) throw error(response.status, response.statusText);
+  if (!response.ok) throw error(response.status, response.statusText);
 
-	const resumes: Resume[] = await response.json();
+  const resumes: Resume[] = await response.json();
 
-	return resumes;
+  return resumes;
 };
 
 export const createResume = async (resume: BaseResume): Promise<Resume> => {
-	const requestInit: RequestInit = {
-		method: "POST",
-		body: JSON.stringify(resume)
-	};
+  const requestInit: RequestInit = {
+    method: "POST",
+    body: JSON.stringify(resume)
+  };
 
-	const response = await fetchData(PUBLIC_SERVER + "/resumes/", requestInit);
+  const response = await fetchData(PUBLIC_SERVER + "/resumes/", requestInit);
 
-	const resumeData: Resume = await response.json();
+  const resumeData: Resume = await response.json();
 
-	return resumeData;
+  return resumeData;
 };
 
 export const updateResume = async (resume: Resume): Promise<Resume> => {
-	const requestInit: RequestInit = {
-		method: "PATCH",
-		body: JSON.stringify(resume)
-	};
+  const requestInit: RequestInit = {
+    method: "PATCH",
+    body: JSON.stringify(resume)
+  };
 
-	const response = await fetchData(PUBLIC_SERVER + "/resumes/" + resume.id + "/", requestInit);
+  const response = await fetchData(PUBLIC_SERVER + "/resumes/" + resume.id + "/", requestInit);
 
-	if (!response.ok) throw error(response.status, response.statusText);
+  if (!response.ok) throw error(response.status, response.statusText);
 
-	const resumeUpdated: Resume = await response.json();
+  const resumeUpdated: Resume = await response.json();
 
-	return resumeUpdated;
+  return resumeUpdated;
 };
 
 export const deleteResume = async (resumeId: number | string): Promise<boolean> => {
-	const requestInit: RequestInit = {
-		method: "DELETE"
-	};
+  const requestInit: RequestInit = {
+    method: "DELETE"
+  };
 
-	const response = await fetchData(PUBLIC_SERVER + "/resumes/" + resumeId + "/", requestInit);
+  const response = await fetchData(PUBLIC_SERVER + "/resumes/" + resumeId + "/", requestInit);
 
-	if (!response.ok) throw error(response.status, response.statusText);
+  if (!response.ok) throw error(response.status, response.statusText);
 
-	return true;
+  return true;
 };

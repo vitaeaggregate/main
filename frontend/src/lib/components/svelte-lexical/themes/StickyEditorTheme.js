@@ -6,13 +6,13 @@
  *
  */
 
-import './StickyEditorTheme.css';
+import "./StickyEditorTheme.css";
 
-import baseTheme from './PlaygroundEditorTheme';
+import baseTheme from "./PlaygroundEditorTheme";
 
 const theme = {
   ...baseTheme,
-  paragraph: 'StickyEditorTheme__paragraph',
+  paragraph: "StickyEditorTheme__paragraph"
 };
 
 export default theme;

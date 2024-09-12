@@ -14,23 +14,23 @@ import type ProfessionalExp from "$lib/interfaces/resume/ProfessionalExp";
 import type Publication from "$lib/interfaces/resume/Publication";
 
 export interface Resume extends BaseResume {
-	id: number;
+  id: number;
 }
 
 export interface BaseResume extends BaseHeader {
-	title: string;
-	personal_info: PersonalInfo;
-	is_shareable: boolean;
-	awards: Award[];
-	certificates: Certificate[];
-	courses: Course[];
-	educations: Education[];
-	interests: Interest[];
-	languages: Language[];
-	links: Link[];
-	professional_exps: ProfessionalExp[];
-	projects: Project[];
-	references: Reference[];
-	skills: Skill[];
-	publications: Publication[];
+  title: string;
+  personal_info: PersonalInfo;
+  is_shareable: boolean;
+  awards: Award[];
+  certificates: Certificate[];
+  courses: Course[];
+  educations: Education[];
+  interests: Interest[];
+  languages: Language[];
+  links: Link[];
+  professional_exps: ProfessionalExp[];
+  projects: Project[];
+  references: Reference[];
+  skills: Skill[];
+  publications: Publication[];
 }
