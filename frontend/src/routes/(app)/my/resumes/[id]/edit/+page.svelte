@@ -4,7 +4,7 @@
   import { getResumeById, updateResume } from "$lib/api/resume";
   import ResumeComponent from "$lib/components/resume/Resume.svelte";
   import type { Resume } from "$lib/interfaces/resume/Resume";
-  import { account, checkAccountAndRedirect } from "$lib/store";
+  import { account } from "$lib/store";
   import Toasts from "$lib/components/Toasts.svelte";
   import { addToast } from "$lib/store";
   import Button from "$lib/components/Button.svelte";
@@ -44,8 +44,6 @@
   };
 
   $: if ($page.params.id && $account) loadResume();
-
-  checkAccountAndRedirect();
 </script>
 
 <section>

@@ -5,7 +5,7 @@
   import CommentView from "$lib/components/resume/CommentView.svelte";
   import type { Resume } from "$lib/interfaces/resume/Resume";
   import type { Comment } from "$lib/interfaces/resume/Comment";
-  import { account, checkAccountAndRedirect } from "$lib/store";
+  import { account } from "$lib/store";
   import { getCommentsByResumeId } from "$lib/api/comment";
 
   let resumes: {
@@ -28,8 +28,6 @@
   };
 
   const handleGoBack = () => goto("/my/page");
-
-  checkAccountAndRedirect();
 
   $: if ($account) loadPage();
 </script>

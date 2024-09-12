@@ -12,9 +12,7 @@
 
   let email = "";
 
-  $: {
-    if ($account) goto("/my/page", { replaceState: true });
-  }
+  $: if ($account) goto("/my/page", { replaceState: true });
 
   let handleSubmit = async () => {
     const response = await login(email);

@@ -3,7 +3,7 @@
   import { writable } from "svelte/store";
   import { createComment, deleteComment, getCommentsByResumeId } from "$lib/api/comment";
   import { getResumeById } from "$lib/api/resume";
-  import { account, checkAccountAndRedirect } from "$lib/store";
+  import { account } from "$lib/store";
   import { page } from "$app/stores";
   import type { Resume } from "$lib/interfaces/resume/Resume";
   import { goto } from "$app/navigation";
@@ -35,7 +35,6 @@
     newComment = {};
   };
 
-  checkAccountAndRedirect();
   $: resumeId = Number($page.params.id);
 
   $: if (resumeId && $account) loadPage();

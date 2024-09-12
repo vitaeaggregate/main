@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { checkAccountAndRedirect } from "$lib/store";
-  import { page } from "$app/stores";
+   import { page } from "$app/stores";
   import { deleteResume, getResumesByMemberId } from "$lib/api/resume";
   import AppPdf from "../pdf/AppPdf.svelte";
   import Page from "../pdf/Page.svelte";

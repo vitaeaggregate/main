@@ -1,6 +1,6 @@
 <script lang="ts">
   import { writable } from "svelte/store";
-  import { account, checkAccountAndRedirect } from "$lib/store";
+  import { account } from "$lib/store";
   import { getResumesByMemberId, deleteResume } from "$lib/api/resume";
   import { getCommentsByMemberId, getCommentsByResumeId } from "$lib/api/comment";
   import type { Comment } from "$lib/interfaces/resume/Comment";
@@ -43,7 +43,7 @@
     deleteResume(resumeKey);
   }
 
-  checkAccountAndRedirect(loadPage);
+  $: if ($account) loadPage();
 </script>
 
 {#if $account}

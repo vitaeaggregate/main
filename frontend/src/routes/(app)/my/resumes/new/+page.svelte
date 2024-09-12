@@ -3,7 +3,7 @@
   import { createResume } from "$lib/api/resume";
   import Resume from "$lib/components/resume/Resume.svelte";
   import type { BaseResume } from "$lib/interfaces/resume/Resume";
-  import { account, checkAccountAndRedirect } from "$lib/store";
+  import { account } from "$lib/store";
   import { writable } from "svelte/store";
   import Toasts from "$lib/components/Toasts.svelte";
   import { addToast } from "$lib/store";
@@ -52,19 +52,20 @@
     }
   };
 
-  checkAccountAndRedirect(loadPage);
+  $: if ($account) loadPage();
 </script>
 
-<section>
-  <Toasts />
-  <div>
-    <h1>New Resume</h1>
-    <p>Fields marked with (*) are required</p>
-  </div>
-  {#if $account}
+{#if $account}
+  <section>
+    <Toasts />
+    <div>
+      <h1>New Resume</h1>
+      <p>Fields marked with (*) are required</p>
+    </div>
+
     <form class="flex flex-col gap-10">
       <Resume bind:value={resume}></Resume>
       <Button on:click={handleCreate}>Add Resume</Button>
     </form>
-  {/if}
-</section>
+  </section>
+{/if}

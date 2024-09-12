@@ -77,6 +77,12 @@ export const getRandomId = () => {
   return `${timestamp.toString(16)}-${randomNumber.toString(16)}`;
 };
 
+export const getSessionStorage = () => {
+  const accountSessionStorage = sessionStorage.getItem("account") || null;
+  if (accountSessionStorage) account.set(JSON.parse(accountSessionStorage));
+  else account.set(null);
+};
+
 const clearSessionStorage = () => {
   account.set(null);
   sessionStorage.removeItem("account");

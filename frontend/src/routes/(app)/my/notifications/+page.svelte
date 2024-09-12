@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getAllNotifications, readNotification } from "$lib/api/commentNotification";
-  import { account, checkAccountAndRedirect } from "$lib/store";
+  import { account } from "$lib/store";
   import CommentNotificationComponent from "$lib/components/CommentNotificationView.svelte";
   import type CommentNotification from "$lib/interfaces/member/CommentNotification";
 
@@ -21,9 +21,7 @@
     }
   };
 
-  checkAccountAndRedirect(loadPage);
-
-  $: if ($account) loadPage;
+  $: if ($account) loadPage();
 </script>
 
 <section>
