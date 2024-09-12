@@ -13,13 +13,8 @@ export const getCommentsByMemberId = async (memberId: number): Promise<Comment[]
 	return comments;
 };
 
-export const getCommentsByMemberIdByResumeId = async (
-	memberId: number,
-	resumeId: number
-): Promise<Comment[]> => {
-	const response = await fetchData(
-		PUBLIC_SERVER + "/members/" + memberId + "/resumes/" + resumeId + "/comments/"
-	);
+export const getCommentsByResumeId = async (resumeId: number): Promise<Comment[]> => {
+	const response = await fetchData(PUBLIC_SERVER + "/resumes/" + resumeId + "/comments/");
 
 	if (!response.ok) throw error(response.status, response.statusText);
 
@@ -39,10 +34,7 @@ export const createComment = async (
 		body: JSON.stringify(comment)
 	};
 
-	const response = await fetchData(
-		PUBLIC_SERVER + "/members/" + memberId + "/resumes/" + resumeId + "/comments/",
-		requestInit
-	);
+	const response = await fetchData(PUBLIC_SERVER + "/comments/", requestInit);
 
 	if (!response.ok) {
 		throw error(response.status, response.statusText);
@@ -54,25 +46,11 @@ export const createComment = async (
 };
 
 // DELETE Comment
-export const deleteComment = async (
-	memberId: number,
-	resumeId: number,
-	commentId: number
-): Promise<boolean> => {
+export const deleteComment = async (commentId: number): Promise<boolean> => {
 	const requestInit: RequestInit = {
 		method: "DELETE"
 	};
-	const response = await fetchData(
-		PUBLIC_SERVER +
-			"/members/" +
-			memberId +
-			"/resumes/" +
-			resumeId +
-			"/comments/" +
-			commentId +
-			"/",
-		requestInit
-	);
+	const response = await fetchData(PUBLIC_SERVER + "/comments/" + commentId + "/", requestInit);
 	if (!response.ok) throw error(response.status, response.statusText);
 
 	return true;

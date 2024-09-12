@@ -37,7 +37,7 @@ export const getResumeByMemberIdByResumeId = async (
 };
 
 export const getAllResumes = async (): Promise<Resume[]> => {
-	const response = await fetchData(PUBLIC_SERVER + "/members/resumes");
+	const response = await fetchData(PUBLIC_SERVER + "/resumes");
 
 	if (!response.ok) throw error(response.status, response.statusText);
 
@@ -46,14 +46,14 @@ export const getAllResumes = async (): Promise<Resume[]> => {
 	return resumes;
 };
 
-export const createResume = async (memberId: number, resume: BaseResume): Promise<Resume> => {
+export const createResume = async (resume: BaseResume): Promise<Resume> => {
 	const requestInit: RequestInit = {
 		method: "POST",
 		body: JSON.stringify(resume)
 	};
 
 	const response = await fetchData(
-		PUBLIC_SERVER + "/members/" + memberId + "/resumes/",
+		PUBLIC_SERVER + "/resumes/",
 		requestInit
 	);
 
@@ -62,14 +62,14 @@ export const createResume = async (memberId: number, resume: BaseResume): Promis
 	return resumeData;
 };
 
-export const updateResume = async (memberId: number, resume: Resume): Promise<Resume> => {
+export const updateResume = async (resume: Resume): Promise<Resume> => {
 	const requestInit: RequestInit = {
 		method: "PATCH",
 		body: JSON.stringify(resume)
 	};
 	
 	const response = await fetchData(
-		PUBLIC_SERVER + "/members/" + memberId + "/resumes/" + resume.id + "/",
+		PUBLIC_SERVER + "/resumes/" + resume.id + "/",
 		requestInit
 	);
 	if (!response.ok) throw error(response.status, response.statusText);
@@ -79,12 +79,12 @@ export const updateResume = async (memberId: number, resume: Resume): Promise<Re
 	return resumeUpdated;
 };
 
-export const deleteResume = async (memberId: number, resumeId: number): Promise<boolean> => {
+export const deleteResume = async (resumeId: number): Promise<boolean> => {
 	const requestInit: RequestInit = {
 		method: "DELETE"
 	};
 	const response = await fetchData(
-		PUBLIC_SERVER + "/members/" + memberId + "/resumes/" + resumeId + "/",
+		PUBLIC_SERVER + "/resumes/" + resumeId + "/",
 		requestInit
 	);
 	if (!response.ok) throw error(response.status, response.statusText);

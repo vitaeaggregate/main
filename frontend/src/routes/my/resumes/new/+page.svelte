@@ -40,7 +40,7 @@
 		try {
 			if (!$account || !resume) return;
 			resume.member = $account.id;
-			resume = await createResume($account.id, resume);
+			resume = await createResume(resume);
 			if (resume) goto("/my/page");
 		} catch {
 			addToast(

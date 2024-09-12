@@ -16,7 +16,7 @@
 	};
 
 	const handleDelete = (commentId: number) => {
-		
+		deleteComment(commentId);
 		value = value.filter((comment) => commentId !== comment.id);
 	};
 </script>
@@ -27,9 +27,10 @@
 			{#each value as comment (comment.id)}
 				<div class="flex flex-col gap-2 p-4">
 					<p>
-						<a href={comment.header && `/community/${comment.header.id}`}
-							><strong>Resume Title:</strong> {comment.header && comment.header.title}</a
-						>
+						<a href={comment.header && `/community/${comment.header.id}`}>
+							<strong>Resume Title:</strong>
+							{comment.header && comment.header.title}
+						</a>
 					</p>
 					<div>
 						<p><strong>Comment:</strong></p>
@@ -39,5 +40,7 @@
 				</div>
 			{/each}
 		</div>
+	{:else}
+		<p class="p-5"><strong>No Comments</strong></p>
 	{/if}
 {/if}
