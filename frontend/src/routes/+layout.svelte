@@ -13,8 +13,7 @@
 	import Button from "$lib/components/Button.svelte";
 	import en from "javascript-time-ago/locale/en";
 
-
-	let commentNotifications: CommentNotification[] | null = null;
+	let commentNotifications: CommentNotification[] = [];
 
 	let isNotificationsViewHidden = true;
 
@@ -43,12 +42,12 @@
 					async (commentNotification) => await readNotification($account.id, commentNotification.id)
 				);
 			}
-			commentNotifications = null;
+			commentNotifications = [];
 		}
 	};
 </script>
 
-<div class="z-10 flex w-full flex-col gap-10 grow">
+<div class="z-10 flex w-full grow flex-col gap-10">
 	<header class="flex justify-center bg-slate-200 p-5 px-10">
 		<div class="container">
 			<div class="flex justify-between">
@@ -59,7 +58,7 @@
 							<Button on:click={handleNotificationsView}>
 								<div class="relative size-6">
 									<BellIcon></BellIcon>
-									{#if commentNotifications && commentNotifications.length}
+									{#if commentNotifications.length}
 										<span
 											class="absolute -right-3 -top-2 rounded-full bg-slate-100 px-2 text-sm ring-1"
 										>
@@ -75,14 +74,11 @@
 								<h3>
 									<a on:click={handleNotificationsView} href="/my/notifications">Notifications</a>
 								</h3>
-								{#if commentNotifications && commentNotifications.length}
-									<div role="button" aria-hidden="true" on:click={handleNotificationsView}>
-										<CommentNotificationView value={commentNotifications} type="dropdown"
-										></CommentNotificationView>
-									</div>
-								{:else}
-									<p>Nothing new for now.</p>
-								{/if}
+
+								<div role="button" aria-hidden="true" on:click={handleNotificationsView}>
+									<CommentNotificationView bind:value={commentNotifications} type="dropdown"
+									></CommentNotificationView>
+								</div>
 							</div>
 						{/if}
 					</nav>

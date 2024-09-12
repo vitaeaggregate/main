@@ -5,14 +5,12 @@
 <script lang="ts">
 	import type CommentNotification from "$lib/interfaces/member/CommentNotification";
 	import TimeAgo from "javascript-time-ago";
-	import en from "javascript-time-ago/locale/en";
 	import Button from "$lib/components/Button.svelte";
-	import { onMount } from "svelte";
 	import { dismissNotification } from "$lib/api/commentNotification";
 	import { account } from "$lib/store";
 	import { goto } from "$app/navigation";
 
-	export let value: CommentNotification[];
+	export let value: CommentNotification[] = [];
 	export let type: CommentNotificationViewType = "full";
 
 	const handleDismissClick = (notificationId: number) => {
@@ -71,5 +69,9 @@
 				</div>
 			{/if}
 		{/each}
+	</div>
+{:else}
+	<div>
+		<p>Nothing new for now.</p>
 	</div>
 {/if}

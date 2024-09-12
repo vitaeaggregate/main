@@ -38,22 +38,22 @@
 	let currentSectionMap: ComponentMapping | null = null;
 	let backModalClick: (() => void) | null = null;
 
-	const buttons: { [text: string]: ComponentMapping } = {
-		...createButton("Professional Experience", "professional_exps", ProfessionalExp),
-		...createButton("Link", "links", Link),
-		...createButton("Skill", "skills", Skill),
-		...createButton("Award", "awards", Award),
-		...createButton("Certificate", "certificates", Certificate),
-		...createButton("Course", "courses", Course),
-		...createButton("Education", "educations", Education),
-		...createButton("Interest", "interests", Interest),
-		...createButton("Language", "languages", Language),
-		...createButton("Project", "projects", Project),
-		...createButton("Publication", "publications", Publication),
-		...createButton("Reference", "references", Reference)
+	const componentMap: { [text: string]: ComponentMapping } = {
+		...mapComponent("Professional Experience", "professional_exps", ProfessionalExp),
+		...mapComponent("Link", "links", Link),
+		...mapComponent("Skill", "skills", Skill),
+		...mapComponent("Award", "awards", Award),
+		...mapComponent("Certificate", "certificates", Certificate),
+		...mapComponent("Course", "courses", Course),
+		...mapComponent("Education", "educations", Education),
+		...mapComponent("Interest", "interests", Interest),
+		...mapComponent("Language", "languages", Language),
+		...mapComponent("Project", "projects", Project),
+		...mapComponent("Publication", "publications", Publication),
+		...mapComponent("Reference", "references", Reference)
 	};
 
-	function createButton(
+	function mapComponent(
 		text: string,
 		key: ArrayKeys<BaseResume>,
 		component: ComponentType
@@ -145,8 +145,8 @@
 				</div>
 				{#if !currentSectionMap}
 					<div class="flex flex-wrap justify-center gap-5">
-						{#each Object.entries(buttons) as [text, componentMap], index (index)}
-							<Button on:click={() => addSection(componentMap)}>{text}</Button>
+						{#each Object.entries(componentMap) as [text, map], index (index)}
+							<Button on:click={() => addSection(map)}>{text}</Button>
 						{/each}
 					</div>
 				{:else}
@@ -172,66 +172,15 @@
 		</div>
 		<PersonalInfo bind:value={value.personal_info}></PersonalInfo>
 		<div class="flex flex-col items-start justify-center gap-5">
-			<ComponentView
-				bind:value={value.skills}
-				component={Skill}
-				config={{ readOnly: true, unitLabel: "Skill" }}
-			></ComponentView>
-			<ComponentView
-				bind:value={value.awards}
-				component={Award}
-				config={{ readOnly: true, unitLabel: "Award" }}
-			></ComponentView>
-			<ComponentView
-				bind:value={value.certificates}
-				component={Certificate}
-				config={{ readOnly: true, unitLabel: "Certificate" }}
-			></ComponentView>
-			<ComponentView
-				bind:value={value.courses}
-				component={Course}
-				config={{ readOnly: true, unitLabel: "Course" }}
-			/>
-			<ComponentView
-				bind:value={value.educations}
-				component={Education}
-				config={{ readOnly: true, unitLabel: "Education" }}
-			/>
-			<ComponentView
-				bind:value={value.interests}
-				component={Interest}
-				config={{ readOnly: true, unitLabel: "Interest" }}
-			/>
-			<ComponentView
-				bind:value={value.languages}
-				component={Language}
-				config={{ readOnly: true, unitLabel: "Language" }}
-			/>
-			<ComponentView
-				bind:value={value.links}
-				component={Link}
-				config={{ readOnly: true, unitLabel: "Link" }}
-			/>
-			<ComponentView
-				bind:value={value.professional_exps}
-				component={ProfessionalExp}
-				config={{ readOnly: true, unitLabel: "Professional Experience" }}
-			/>
-			<ComponentView
-				bind:value={value.projects}
-				component={Project}
-				config={{ readOnly: true, unitLabel: "Project" }}
-			/>
-			<ComponentView
-				bind:value={value.publications}
-				component={Publication}
-				config={{ readOnly: true, unitLabel: "Publication" }}
-			/>
-			<ComponentView
-				bind:value={value.references}
-				component={Reference}
-				config={{ readOnly: true, unitLabel: "Reference" }}
-			/>
+			{#each Object.entries(componentMap) as [text, map], index (index)}
+				{#if map.key}
+					<ComponentView
+						bind:value={value[map.key]}
+						component={map.component}
+						config={{ readOnly: true, unitLabel: text }}
+					></ComponentView>
+				{/if}
+			{/each}
 		</div>
 	</div>
 	<div class="fixed bottom-0 right-0 m-9 border-2 bg-slate-200 p-2">
