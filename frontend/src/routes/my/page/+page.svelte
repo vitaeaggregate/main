@@ -101,11 +101,6 @@
 											<li class="rounded-lg border-2 p-2">
 												<p><strong>Member id:</strong> {comment.member}</p>
 												<p><strong>Comment:</strong> {comment.description}</p>
-												<button
-													on:click={() => {
-														handleDeleteComment($account.id, resume.id, comment.id);
-													}}>Delete</button
-												>
 											</li>
 										{/each}
 									</ul>

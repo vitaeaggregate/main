@@ -81,8 +81,8 @@
 						{/if}	
 						{#if resume.professional_exps === undefined} <br/>
 						{:else if resume.professional_exps.length > 0}
-							<h2 class="print:text-xl">Professional Experience</h2>
-							<ul class="text-base leading-8 print:text-sm print:leading-6">
+							<h2 class="print:text-xl bg-gray-100">Professional Experience</h2>
+							<ul class="text-base leading-7">
 								<ul>
 									{#each resume.professional_exps as exp}
 										{#if exp.job_title}
@@ -104,8 +104,8 @@
 							</ul>
 						{/if}
 						{#if resume.awards.length > 0}
-							<h2 class="print:text-xl">Awards</h2>
-							<ul class="text-base leading-8 print:text-sm print:leading-6">
+							<h2 class="print:text-xl bg-gray-100">Awards</h2>
+							<ul class="text-base leading-7">
 								<ul>
 									{#each resume.awards as award}
 										{#if award.title}
@@ -130,8 +130,8 @@
 						{/if}
 						{#if resume.links === undefined} <br/>
 						{:else if resume.links.length > 0}
-							<h2 class="print:text-xl">Links</h2>
-							<ul class="text-base leading-8 print:text-sm print:leading-6">
+							<h2 class="print:text-xl bg-gray-100">Links</h2>
+							<ul class="text-base leading-7">
 								<ul>
 									{#each resume.links as link} 
 										<strong>Title:</strong> {link.title} <br />
@@ -141,8 +141,8 @@
 							</ul>
 						{/if}
 						{#if resume.certificates.length > 0}
-							<h2 class="print:text-xl">Certificates</h2>
-							<ul class="text-base leading-8 print:text-sm print:leading-6">
+							<h2 class="print:text-xl bg-gray-100">Certificates</h2>
+							<ul class="text-base leading-7">
 								<ul>
 									{#each resume.certificates as certificate}
 									{#if certificate.name}
@@ -159,8 +159,8 @@
 						{/if}
 						{#if resume.courses === undefined} <br/>
 						{:else if resume.courses.length > 0}
-							<h2 class="print:text-xl">Courses</h2>
-							<ul class="text-base leading-8 print:text-sm print:leading-6">
+							<h2 class="print:text-xl bg-gray-100">Courses</h2>
+							<ul class="text-base leading-7">
 								<ul>
 									{#each resume.courses as course}
 										{#if course.degree}
@@ -196,8 +196,8 @@
 						{/if}
 						{#if resume.educations === undefined} <br/>
 						{:else if resume.educations.length < 0}
-							<h2 class="print:text-xl">Education</h2>
-							<ul class="text-base leading-8 print:text-sm print:leading-6">
+							<h2 class="print:text-xl bg-gray-100">Education</h2>
+							<ul class="text-base leading-7">
 								<ul>
 									{#each resume.educations as edu}
 										{#if edu.degree}
@@ -234,8 +234,8 @@
 						{/if}
 						{#if resume.interests === undefined} <br/>
 						{:else if resume.interests.length > 0}
-							<h2 class="print:text-xl">Interests</h2>
-							<ul class="text-base leading-8 print:text-sm print:leading-6">
+							<h2 class="print:text-xl bg-gray-100">Interests</h2>
+							<ul class="text-base leading-7">
 								<ul>
 									{#each resume.interests as interest}
 										<strong>Name:</strong> {interest.name} <br />
@@ -249,8 +249,8 @@
 						{/if}
 						{#if resume.languages === undefined} <br/>
 						{:else if resume.languages.length > 0}
-						<h2 class="print:text-xl">Languages</h2>
-						<ul class="text-base leading-8 print:text-sm print:leading-6">
+						<h2 class="print:text-xl bg-gray-100">Languages</h2>
+						<ul class="text-base leading-7">
 							<ul>
 								{#each resume.languages as lang}
 									<strong>Language:</strong> {lang.language} <br />
@@ -262,8 +262,8 @@
 						{/if}
 						{#if resume.projects === undefined} <br/>
 						{:else if resume.projects.length > 0}
-						<h2 class="print:text-xl">Projects</h2>
-						<ul class="text-base leading-8 print:text-sm print:leading-6">
+						<h2 class="print:text-xl bg-gray-100">Projects</h2>
+						<ul class="text-base leading-7">
 							<ul>
 								{#each resume.projects as project}
 									<strong>Title:</strong> {project.title} <br />
@@ -289,8 +289,8 @@
 						{/if}
 						{#if resume.publications === undefined} <br/>
 						{:else if resume.publications.length > 0}
-						<h2 class="print:text-xl">Publications</h2>
-						<ul class="text-base leading-8 print:text-sm print:leading-6">
+						<h2 class="print:text-xl bg-gray-100">Publications</h2>
+						<ul class="text-base leading-7">
 							<ul>
 								{#each resume.publications as publication}
 									<strong>Title:</strong> {publication.title} <br />
