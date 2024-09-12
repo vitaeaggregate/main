@@ -10,6 +10,7 @@
 	import { deleteResume } from "$lib/api/resume";
 	import type { Comment } from "$lib/interfaces/resume/Comment";
 	import MainButton from "$lib/components/MainButton.svelte";
+	import { onMount } from "svelte";
 
 	export const id = writable<number | null>(null);
 	export const resumeId = writable<number | null>(null);
@@ -91,8 +92,6 @@
 							<li class="rounded-lg border-2 p-2">
 								<p><span class="text-xl hover:font-medium"><a href={`/my/resumes/${resumeId}`}>{resume.title}</a></span></p>
 								<p><strong>Resume id:</strong> {resume.id}</p>
-								<!-- <p><strong>Title:</strong> {resume.title}
-								</p> -->
 								<p><strong>Shared:</strong> {resume.is_shareable ? "Yes" : "No"}</p>
 								<h3>Comments</h3>
 								{#if Object.keys(comments).length}

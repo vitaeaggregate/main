@@ -2,7 +2,6 @@
 	import { checkAccountAndRedirect, loadedResumes } from "$lib/store";
 	import { page } from "$app/stores";
 	import { deleteResume, getResumesByMemberId } from "$lib/api/resume";
-	import { onMount } from "svelte";
 	import AppPdf from "../pdf/AppPdf.svelte";
 	import Page from "../pdf/Page.svelte";
 	import { account } from "$lib/store";
@@ -65,7 +64,7 @@
 
 	function handleResumeDelete(id: number, resumeId: number) {
 		deleteResume(id, resumeId);
-		goto("/my/page");
+		goto("/");
 	}
 
 	function handleResumeEdit(resumeId: number) {
