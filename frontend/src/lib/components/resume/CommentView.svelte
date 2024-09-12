@@ -17,8 +17,6 @@
 		const isDeleted = await deleteComment(commentId);
 		if (isDeleted) value = value.filter((comment) => commentId !== comment.id);
 	};
-
-	$: Array.isArray(value) && console.log(value);
 </script>
 
 {#if Array.isArray(value)}
