@@ -1,62 +1,46 @@
 <script lang="ts">
 	import { writable } from "svelte/store";
-	import { account, loadedResumes, checkAccountAndRedirect } from "$lib/store";
-	import { getResumesByMemberId } from "$lib/api/resume";
-	import {
-		deleteComment,
-		getCommentsByMemberId,
-		getCommentsByMemberIdByResumeId
-	} from "$lib/api/comment";
-	import { deleteResume } from "$lib/api/resume";
+	import { account, checkAccountAndRedirect } from "$lib/store";
+	import { getResumesByMemberId, deleteResume } from "$lib/api/resume";
+	import { getCommentsByMemberId, getCommentsByResumeId } from "$lib/api/comment";
 	import type { Comment } from "$lib/interfaces/resume/Comment";
-	import MainButton from "$lib/components/MainButton.svelte";
-	import { onMount } from "svelte";
+	import CommentView from "$lib/components/resume/CommentView.svelte";
+	import type { Resume } from "$lib/interfaces/resume/Resume";
+	import Button from "$lib/components/Button.svelte";
+	import { goto } from "$app/navigation";
 
 	export const id = writable<number | null>(null);
 	export const resumeId = writable<number | null>(null);
-	let token: string | null = null;
-	let email: string | null = null;
 
+	let token: string | null = null;
 	let memberComments: Comment[] = [];
+	let resumes: {
+		[id: string]: {
+			resume: Resume;
+			comments: Comment[];
+		};
+	} = {};
 
 	const loadPage = async () => {
 		if (!$account) return;
-
 		token = sessionStorage.getItem("token");
-		email = $account.email;
 
-		const resumes = await getResumesByMemberId($account.id);
-
-		loadedResumes.update((current) => {
-			resumes.forEach((resume) => {
-				current[resume.id] = {
-					resume,
-					comments: {}
-				};
-			});
-			return current;
-		});
+		const resumesResponse = await getResumesByMemberId($account.id);
 
 		memberComments = await getCommentsByMemberId($account.id);
 
-		for (const resume of resumes) {
-			const comments = await getCommentsByMemberIdByResumeId($account.id, resume.id);
-			loadedResumes.update((current) => {
-				for (const comment of comments) {
-					current[resume.id].comments[comment.id] = comment;
-				}
-				return current;
-			});
+		for (const resume of resumesResponse) {
+			resumes[resume.id] = {
+				resume,
+				comments: await getCommentsByResumeId(resume.id)
+			};
 		}
 	};
 
-	function handleResumeDelete(id: number, resumeId: number) {
-		deleteResume(id, resumeId);
-		delete $loadedResumes[id];
-	}
-
-	function handleDeleteComment(id: number, resumeId: number, commentId: number) {
-		deleteComment(id, resumeId, commentId);
+	function handleResumeDelete(resumeKey: string) {
+		delete resumes[resumeKey];
+		resumes = resumes;
+		deleteResume(resumeKey);
 	}
 
 	checkAccountAndRedirect(loadPage);
@@ -68,70 +52,51 @@
 		<div class="">
 			<div>
 				<h2>User Info</h2>
-				<div class="border-2 bg-slate-200 p-2 mb-2">
-				<ul class="flex flex-col gap-5 p-5">
-					<li class="v-screen overflow-x-auto rounded-lg border-2 p-2">
-						<p><strong>Id: </strong>{$account.id}</p>
-						<p class="break-all"><strong>Token: </strong>{token}</p>
-						{#if email}
-							<p><strong>Email: </strong>{email}</p>
-						{:else}
-							<p><strong>Email: </strong>{$account.email}</p>
-						{/if}
-					</li>
-				</ul>
-			</div>
+				<div class="mb-2 border-2 bg-slate-200 p-2">
+					<p><strong>Email: </strong>{$account.email}</p>
+				</div>
 			</div>
 			<div>
 				<h2>Resumes</h2>
-				<div class="border-2 bg-slate-200 p-2 mb-2">
-				<MainButton><a href="/my/resumes/new">Add Resume</a></MainButton> <MainButton><a href="/my/resumes">Full list</a></MainButton>
-				{#if Object.keys($loadedResumes).length}
-					<ul class="flex flex-col gap-5 p-5">
-						{#each Object.entries($loadedResumes).reverse() as [resumeId, { resume, comments }]}
-							<li class="rounded-lg border-2 p-2">
-								<p><span class="text-xl hover:font-medium"><a href={`/my/resumes/${resumeId}`}>{resume.title}</a></span></p>
-								<p><strong>Resume id:</strong> {resume.id}</p>
-								<p><strong>Shared:</strong> {resume.is_shareable ? "Yes" : "No"}</p>
-								<h3>Comments</h3>
-								{#if Object.keys(comments).length}
-									<ul class="flex flex-col gap-5 p-5">
-										{#each Object.entries(comments) as [commentId, comment]}
-											<li class="rounded-lg border-2 p-2">
-												<p><strong>Member id:</strong> {comment.member}</p>
-												<p><strong>Comment:</strong> {comment.description}</p>
-											</li>
-										{/each}
-									</ul>
-								{:else}
-									<p><strong>No Comments</strong></p>
-								{/if}
-							</li>
-						{/each}
-					</ul>
-				{:else}
-					<p><strong>No Resumes</strong></p>
-				{/if}
+				<div class="mb-2 border-2 bg-slate-200 p-2">
+					<div>
+						<Button on:click={() => goto("/my/resumes/new")}>Add Resume</Button>
+						<Button on:click={() => goto("/my/resumes")}>Full list</Button>
+					</div>
+					<div class="flex flex-col divide-y divide-black">
+						{#if Object.keys(resumes).length}
+							{#each Object.entries(resumes) as [resumeId, { resume, comments }] (resumeId)}
+								<div class="p-4">
+									<a href={`/my/resumes/${resumeId}`}>
+										<span class="text-xl hover:font-medium">
+											{resume.title}
+										</span>
+									</a>
+									<p><strong>Shared:</strong> {resume.is_shareable ? "Yes" : "No"}</p>
+									<h3>Comments</h3>
+									<CommentView
+										bind:value={comments}
+										config={{ isReadyOnly: true, isResumeTitleHidden: true }}
+									></CommentView>
+									<Button on:click={() => handleResumeDelete(resumeId)}>Delete Resume</Button>
+								</div>
+							{/each}
+						{:else}
+							<p><strong>No Resumes</strong></p>
+						{/if}
+					</div>
+				</div>
 			</div>
-		</div>
 			<div>
 				<h2>Community</h2>
-				<div class="border-2 bg-slate-200 p-2 mb-2">
-				<h3>Your Comments</h3>
-				{#if memberComments.length}
-					<ul class="flex flex-col gap-5 p-5">
-						{#each memberComments as comment}
-							<li class="rounded-lg border-2 p-2">
-								<p><strong>Resume id:</strong> {comment.header}</p>
-								<p><strong>Comment:</strong> {comment.description}</p>
-							</li>
-						{/each}
-					</ul>
-				{:else}
-					<p class="p-5"><strong>No Comments</strong></p>
-				{/if}
+				<div class="mb-2 border-2 bg-slate-200 p-2">
+					<h3>Your Comments</h3>
+					<CommentView
+						bind:value={memberComments}
+						config={{ isReadyOnly: true, isResumeTitleHidden: false }}
+					></CommentView>
+				</div>
 			</div>
 		</div>
-	</div>
 	</section>
 {/if}

@@ -121,7 +121,7 @@
 	$: {
 		if (currentSectionMap && currentSectionMap.key && currentSectionMap.componentValue) {
 			// value[currentSection.key] --> value.skills, value.links
-			if (value[currentSectionMap.key].length)
+			if (value[currentSectionMap.key].length) {
 				value[currentSectionMap.key] = value[currentSectionMap.key].map((section) => {
 					if (
 						currentSectionMap &&
@@ -131,6 +131,7 @@
 						return currentSectionMap.componentValue;
 					else return section;
 				});
+			}
 		}
 	}
 </script>

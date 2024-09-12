@@ -7,7 +7,7 @@
 	export let placeholder: string | null = label;
 	export let value: string = "";
 	export let type: InputType = "text";
-	export let required:boolean = false; 
+	export let required: boolean = false;
 </script>
 
 <label class="flex flex-col">

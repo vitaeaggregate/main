@@ -9,25 +9,12 @@ export const getResumesByMemberId = async (memberId: number): Promise<Resume[]> 
 	if (!response.ok) throw error(response.status, response.statusText);
 
 	const resumes: Resume[] = await response.json();
-	return resumes;
-};
-
-// TODO Remove this
-export const getResumesByResumeId = async (resumeId: number): Promise<Resume[]> => {
-	const response = await fetchData(PUBLIC_SERVER + "/resumes/" + resumeId + "/");
-
-	if (!response.ok) throw error(response.status, response.statusText);
-
-	const resumes: Resume[] = await response.json();
 
 	return resumes;
 };
 
-export const getResumeByMemberIdByResumeId = async (
-	memberId: number,
-	resumeId: number
-): Promise<Resume> => {
-	const response = await fetchData(PUBLIC_SERVER + "/members/" + memberId + "/resumes/" + resumeId);
+export const getResumeById = async (resumeId: number): Promise<Resume> => {
+	const response = await fetchData(PUBLIC_SERVER + "/resumes/" + resumeId);
 
 	if (!response.ok) throw error(response.status, response.statusText);
 
@@ -37,7 +24,7 @@ export const getResumeByMemberIdByResumeId = async (
 };
 
 export const getAllResumes = async (): Promise<Resume[]> => {
-	const response = await fetchData(PUBLIC_SERVER + "/members/resumes");
+	const response = await fetchData(PUBLIC_SERVER + "/resumes");
 
 	if (!response.ok) throw error(response.status, response.statusText);
 
@@ -46,32 +33,27 @@ export const getAllResumes = async (): Promise<Resume[]> => {
 	return resumes;
 };
 
-export const createResume = async (memberId: number, resume: BaseResume): Promise<Resume> => {
+export const createResume = async (resume: BaseResume): Promise<Resume> => {
 	const requestInit: RequestInit = {
 		method: "POST",
 		body: JSON.stringify(resume)
 	};
 
-	const response = await fetchData(
-		PUBLIC_SERVER + "/members/" + memberId + "/resumes/",
-		requestInit
-	);
+	const response = await fetchData(PUBLIC_SERVER + "/resumes/", requestInit);
 
 	const resumeData: Resume = await response.json();
 
 	return resumeData;
 };
 
-export const updateResume = async (memberId: number, resume: Resume): Promise<Resume> => {
+export const updateResume = async (resume: Resume): Promise<Resume> => {
 	const requestInit: RequestInit = {
 		method: "PATCH",
 		body: JSON.stringify(resume)
 	};
-	
-	const response = await fetchData(
-		PUBLIC_SERVER + "/members/" + memberId + "/resumes/" + resume.id + "/",
-		requestInit
-	);
+
+	const response = await fetchData(PUBLIC_SERVER + "/resumes/" + resume.id + "/", requestInit);
+
 	if (!response.ok) throw error(response.status, response.statusText);
 
 	const resumeUpdated: Resume = await response.json();
@@ -79,14 +61,13 @@ export const updateResume = async (memberId: number, resume: Resume): Promise<Re
 	return resumeUpdated;
 };
 
-export const deleteResume = async (memberId: number, resumeId: number): Promise<boolean> => {
+export const deleteResume = async (resumeId: number | string): Promise<boolean> => {
 	const requestInit: RequestInit = {
 		method: "DELETE"
 	};
-	const response = await fetchData(
-		PUBLIC_SERVER + "/members/" + memberId + "/resumes/" + resumeId + "/",
-		requestInit
-	);
+
+	const response = await fetchData(PUBLIC_SERVER + "/resumes/" + resumeId + "/", requestInit);
+
 	if (!response.ok) throw error(response.status, response.statusText);
 
 	return true;

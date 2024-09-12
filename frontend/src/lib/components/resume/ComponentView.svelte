@@ -59,7 +59,7 @@
 		{/if}
 		<div class="flex flex-col divide-y">
 			{#each value as item (item.id)}
-				<div class="flex flex-col p-2 gap-3">
+				<div class="flex flex-col gap-3 p-2">
 					<svelte:component this={component} bind:value={item} readOnly={config.readOnly}
 					></svelte:component>
 					<div class="flex gap-10">
