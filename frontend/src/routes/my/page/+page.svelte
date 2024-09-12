@@ -2,13 +2,12 @@
 	import { writable } from "svelte/store";
 	import { account, checkAccountAndRedirect } from "$lib/store";
 	import { getResumesByMemberId, deleteResume } from "$lib/api/resume";
-	import { deleteComment, getCommentsByMemberId, getCommentsByResumeId } from "$lib/api/comment";
+	import { getCommentsByMemberId, getCommentsByResumeId } from "$lib/api/comment";
 	import type { Comment } from "$lib/interfaces/resume/Comment";
 	import CommentView from "$lib/components/resume/CommentView.svelte";
 	import type { Resume } from "$lib/interfaces/resume/Resume";
 	import Button from "$lib/components/Button.svelte";
 	import { goto } from "$app/navigation";
-	import { onMount } from "svelte";
 
 	export const id = writable<number | null>(null);
 	export const resumeId = writable<number | null>(null);
@@ -75,7 +74,10 @@
 									</a>
 									<p><strong>Shared:</strong> {resume.is_shareable ? "Yes" : "No"}</p>
 									<h3>Comments</h3>
-									<CommentView bind:value={comments}></CommentView>
+									<CommentView
+										bind:value={comments}
+										config={{ isReadyOnly: true, isResumeTitleHidden: true }}
+									></CommentView>
 									<Button on:click={() => handleResumeDelete(resumeId)}>Delete Resume</Button>
 								</div>
 							{/each}
@@ -89,7 +91,10 @@
 				<h2>Community</h2>
 				<div class="mb-2 border-2 bg-slate-200 p-2">
 					<h3>Your Comments</h3>
-					<CommentView bind:value={memberComments}></CommentView>
+					<CommentView
+						bind:value={memberComments}
+						config={{ isReadyOnly: true, isResumeTitleHidden: false }}
+					></CommentView>
 				</div>
 			</div>
 		</div>

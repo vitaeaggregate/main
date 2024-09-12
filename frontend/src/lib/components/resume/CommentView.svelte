@@ -1,46 +1,43 @@
-<script context="module" lang="ts">
-	export interface Config {
-		isReadyOnly: boolean;
-	}
-</script>
-
 <script lang="ts">
 	import type { Comment } from "$lib/interfaces/resume/Comment";
 	import Button from "$lib/components/Button.svelte";
 	import { deleteComment } from "$lib/api/comment";
+	import CommentComponent from "$lib/components/resume/Comment.svelte";
+	import type { Config } from "$lib/components/resume/Comment.svelte";
 
-	export let value: Comment[];
+	export let value: Comment | Comment[];
 
 	export let config: Config = {
-		isReadyOnly: true
+		isReadyOnly: false,
+		isResumeTitleHidden: false
 	};
 
-	const handleDelete = (commentId: number) => {
-		deleteComment(commentId);
-		value = value.filter((comment) => commentId !== comment.id);
+	const handleDelete = async (commentId: number | string) => {
+		if (!Array.isArray(value)) return;
+		const isDeleted = await deleteComment(commentId);
+		if (isDeleted) value = value.filter((comment) => commentId !== comment.id);
 	};
+
+	$: Array.isArray(value) && console.log(value);
 </script>
 
-{#if config.isReadyOnly}
+{#if Array.isArray(value)}
 	{#if value.length}
 		<div class="flex flex-col divide-y divide-black">
 			{#each value as comment (comment.id)}
-				<div class="flex flex-col gap-2 p-4">
-					<p>
-						<a href={comment.header && `/community/${comment.header.id}`}>
-							<strong>Resume Title:</strong>
-							{comment.header && comment.header.title}
-						</a>
-					</p>
-					<div>
-						<p><strong>Comment:</strong></p>
-						<p>{comment.description}</p>
-					</div>
-					<Button on:click={() => handleDelete(comment.id)}>Delete</Button>
+				<div class="flex flex-col gap-3 p-4">
+					<CommentComponent bind:value={comment} {config}></CommentComponent>
+					{#if comment.can_delete}
+						<Button on:click={() => comment.id && handleDelete(comment.id)}>Delete</Button>
+					{/if}
 				</div>
 			{/each}
 		</div>
 	{:else}
-		<p class="p-5"><strong>No Comments</strong></p>
+		<div>
+			<p class="p-5"><strong>No Comments</strong></p>
+		</div>
 	{/if}
+{:else if !Array.isArray(value)}
+	<CommentComponent bind:value {config}></CommentComponent>
 {/if}

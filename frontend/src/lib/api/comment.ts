@@ -1,7 +1,7 @@
 import { PUBLIC_SERVER } from "$env/static/public";
 import { fetchData } from "$lib/utils";
 import { error } from "@sveltejs/kit";
-import type { BaseComment, Comment } from "$lib/interfaces/resume/Comment";
+import type { Comment } from "$lib/interfaces/resume/Comment";
 
 export const getCommentsByMemberId = async (memberId: number): Promise<Comment[]> => {
 	const response = await fetchData(PUBLIC_SERVER + "/members/" + memberId + "/comments/");
@@ -23,12 +23,7 @@ export const getCommentsByResumeId = async (resumeId: number): Promise<Comment[]
 	return comments;
 };
 
-// POST Comment
-export const createComment = async (
-	memberId: number,
-	resumeId: number,
-	comment: BaseComment
-): Promise<Comment> => {
+export const createComment = async (comment: Comment): Promise<Comment> => {
 	const requestInit: RequestInit = {
 		method: "POST",
 		body: JSON.stringify(comment)
@@ -36,17 +31,12 @@ export const createComment = async (
 
 	const response = await fetchData(PUBLIC_SERVER + "/comments/", requestInit);
 
-	if (!response.ok) {
-		throw error(response.status, response.statusText);
-	}
+	const commentData: Comment = await response.json();
 
-	const resumeData: Comment = await response.json();
-
-	return resumeData;
+	return commentData;
 };
 
-// DELETE Comment
-export const deleteComment = async (commentId: number): Promise<boolean> => {
+export const deleteComment = async (commentId: number | string): Promise<boolean> => {
 	const requestInit: RequestInit = {
 		method: "DELETE"
 	};

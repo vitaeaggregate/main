@@ -1,31 +1,44 @@
 <script lang="ts">
 	import type { Comment } from "$lib/interfaces/resume/Comment";
 	import { writable } from "svelte/store";
-	import { deleteComment, getCommentsByResumeId } from "$lib/api/comment";
+	import { createComment, deleteComment, getCommentsByResumeId } from "$lib/api/comment";
 	import { getResumeById } from "$lib/api/resume";
 	import { account, checkAccountAndRedirect } from "$lib/store";
 	import { page } from "$app/stores";
 	import type { Resume } from "$lib/interfaces/resume/Resume";
 	import { goto } from "$app/navigation";
 	import Button from "$lib/components/Button.svelte";
+	import CommentView from "$lib/components/resume/CommentView.svelte";
 
 	export const id = writable<number | null>(null);
 
-	$: resumeId = Number($page.params.id);
-
 	let resume: Resume | null = null;
-	let resumesComments: { [resumeId: number]: Comment[] } = {};
+	let resumeComments: Comment[] = [];
+	let newComment: Comment = {
+		description: ""
+	};
 
 	const loadPage = async () => {
-		if (!$account) return;
 		resume = await getResumeById(resumeId);
+		resumeComments = await getCommentsByResumeId(resumeId);
 	};
 
-	const handleGoBack = () => {
-		goto("/community");
+	const handleGoBack = () => goto("/community");
+
+	const handleNewComment = async () => {
+		if (!$account) return;
+		newComment.member = $account.id;
+		newComment.header = resumeId;
+		const comment = await createComment(newComment);
+		resumeComments.push(comment);
+		resumeComments = resumeComments;
+		newComment = {};
 	};
 
-	checkAccountAndRedirect(loadPage);
+	checkAccountAndRedirect();
+	$: resumeId = Number($page.params.id);
+
+	$: if (resumeId && $account) loadPage();
 </script>
 
 <main>
@@ -260,5 +273,10 @@
 		</div>
 	</div>
 	<h2>Comments</h2>
-	<h3 class="mb-2">New Comment</h3>
+	<CommentView bind:value={resumeComments} config={{ isReadyOnly: true, isResumeTitleHidden: true }}
+	></CommentView>
+	<h2 class="mb-2">New Comment</h2>
+	<CommentView bind:value={newComment} config={{ isReadyOnly: false, isResumeTitleHidden: true }}
+	></CommentView>
+	<Button on:click={handleNewComment}>Send</Button>
 </main>

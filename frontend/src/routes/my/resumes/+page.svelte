@@ -1,80 +1,73 @@
 <script lang="ts">
-	import { browser } from "$app/environment";
 	import { goto } from "$app/navigation";
-	import { getCommentsByMemberIdByResumeId } from "$lib/api/comment";
 	import { getResumesByMemberId } from "$lib/api/resume";
-	import MainButton from "$lib/components/MainButton.svelte";
-	import { account, checkAccountAndRedirect, loadedResumes } from "$lib/store";
+	import Button from "$lib/components/Button.svelte";
+	import CommentView from "$lib/components/resume/CommentView.svelte";
+	import type { Resume } from "$lib/interfaces/resume/Resume";
+	import type { Comment } from "$lib/interfaces/resume/Comment";
+	import { account, checkAccountAndRedirect } from "$lib/store";
+	import { getCommentsByResumeId } from "$lib/api/comment";
 
-	
+	let resumes: {
+		[id: number]: {
+			resume: Resume;
+			comments: Comment[];
+		};
+	} = {};
+
 	const loadPage = async () => {
 		if (!$account) return;
+		const results = await getResumesByMemberId($account.id);
 
-		const resumes = await getResumesByMemberId($account.id);
-
-		loadedResumes.update((current) => {
-			resumes.forEach((resume) => {
-				current[resume.id] = {
-					resume,
-					comments: {}
-				};
-			});
-			return current;
-		});
-
-		for (const resume of resumes) {
-			const comments = await getCommentsByMemberIdByResumeId($account.id, resume.id);
-			loadedResumes.update((current) => {
-				for (const comment of comments) {
-					current[resume.id].comments[comment.id] = comment;
-				}
-				return current;
-			});
+		for (const resume of results) {
+			resumes[resume.id] = {
+				resume,
+				comments: await getCommentsByResumeId(resume.id)
+			};
 		}
 	};
 
-const handleGoBack = () => {
-	goto("/my/page")
-}
+	const handleGoBack = () => goto("/my/page");
 
-	checkAccountAndRedirect(loadPage);
+	checkAccountAndRedirect();
+
+	$: if ($account) loadPage();
 </script>
 
-<section>
-	<h1>My Resumes</h1>
-	<br />
-	<MainButton on:click="{handleGoBack}">Back</MainButton>
-	{#if $account}
+{#if $account}
+	<section>
+		<h1>My Resumes</h1>
+		<Button on:click={handleGoBack}>Back</Button>
 		<div>
-			{#if Object.keys($loadedResumes).length}
-				<ul class="flex flex-col gap-5 p-5">
-					{#each Object.entries($loadedResumes) as [resumeId, { resume, comments }]}
-						<li class="rounded-lg border-2 p-2">
-							<h2><a href={`/my/resumes/${resumeId}`}>{resume.title}</a></h2>
-							<hr class="my-3" />
-							<p><strong>Resume Id:</strong> {resumeId}</p>
-							<p><strong>Created at:</strong> {new Date(resume.created_at).toLocaleDateString()}</p>
-							<p><strong>Updated at:</strong> {new Date(resume.created_at).toLocaleDateString()}</p>
-							<hr class="my-3" />
-							<h3>Comments:</h3>
-							{#if Object.keys(comments).length}
-								<ul class="flex flex-col gap-5 p-5">
-									{#each Object.entries(comments) as [commentId, comment]}
-										<li class="rounded-lg border-2 p-2">
-											<p><strong>Comment Id:</strong> {commentId}</p>
-											<p><strong>Comment:</strong> {comment.description}</p>
-										</li>
-									{/each}
-								</ul>
-							{:else}
-								<p><strong>Nothing here.</strong></p>
-							{/if}
-						</li>
-					{/each}
-				</ul>
+			{#if Object.keys(resumes).length}
+				{#each Object.entries(resumes) as [resumeId, { resume, comments }]}
+					<div>
+						<h2>
+							<a href={`/my/resumes/${resumeId}`}>
+								{resume.title}
+							</a>
+						</h2>
+						<p>
+							<strong>Resume Id:</strong>
+							{resumeId}
+						</p>
+						<p>
+							<strong>Created at:</strong>
+							{resume.created_at && new Date(resume.created_at).toLocaleDateString()}
+						</p>
+						<p>
+							<strong>Updated at:</strong>
+							{resume.updated_at && new Date(resume.updated_at).toLocaleDateString()}
+						</p>
+						<h3>Comments:</h3>
+						<CommentView value={comments}></CommentView>
+					</div>
+				{/each}
 			{:else}
-				<p><strong>So Empty...</strong></p>
+				<p>
+					<strong>So Empty...</strong>
+				</p>
 			{/if}
 		</div>
-	{/if}
-</section>
+	</section>
+{/if}
