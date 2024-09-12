@@ -60,7 +60,8 @@
 							{resume.updated_at && new Date(resume.updated_at).toLocaleDateString()}
 						</p>
 						<h3>Comments:</h3>
-						<CommentView value={comments}></CommentView>
+						<CommentView value={comments} config={{ isReadyOnly: true, isResumeTitleHidden: true }}
+						></CommentView>
 					</div>
 				{/each}
 			{:else}
