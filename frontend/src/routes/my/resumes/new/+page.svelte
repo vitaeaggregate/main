@@ -11,7 +11,7 @@
 	let message = "Fields marked * are required";
 	let type = "error";
 	let dismissible = true;
-	let timeout = 10000;
+	let timeout = 3000;
 
 
 	let resume: BaseResume = {
