@@ -31,9 +31,9 @@
 {#if config.isReadyOnly}
 	{#if !config.isResumeTitleHidden}
 		<div>
-			<a href={value.header && `/community/${value.header.id}`}>
+			<a href={ `/community/${value.header_info && value.header_info.id}`}>
 				<strong>Resume Title:</strong>
-				{value.header && value.header.title}
+				{value.header_info && value.header_info.title}
 			</a>
 		</div>
 	{/if}

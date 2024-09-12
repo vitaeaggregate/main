@@ -12,7 +12,7 @@ class CommentSerializer(serializers.ModelSerializer):
         out_data = {
             "id": instance.id,
             "member": instance.member.id,
-            "header": {
+            "header_info": {
                 "id": instance.header.id,
                 "title": instance.header.title,
             },

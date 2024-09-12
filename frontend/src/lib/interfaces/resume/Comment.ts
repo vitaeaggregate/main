@@ -4,7 +4,8 @@ export interface CommentHeader {
 }
 export interface Comment {
 	id?: number | string;
-	header?: CommentHeader | number;
+	header?: number;
+	header_info?: CommentHeader;
 	member?: number;
 	description?: string;
 	created_at?: string | Date;
