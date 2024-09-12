@@ -28,7 +28,7 @@
 	let message = "";
 	let type = "error";
 	let dismissible = true;
-	let timeout = 3000;
+	let timeout = 5000;
 
 	onMount(async () => {
 		if (!firebaseUiContainer) return;
@@ -69,15 +69,15 @@
 			.catch((err) => {
 				const errorCode = err.code;
 				const errorMessage = err.message;
-				message = errorCode;
+				message = "Please enter a valid username or password!";
 				addToast(
-				{
-					message, 
-					type, 
-					dismissible, 
-					timeout
-				});
-				// throw error(err.code, err.message);
+					{
+						message, 
+						type, 
+						dismissible, 
+						timeout
+					});
+				throw error(err.code, err.message);
 			});
 	};
 
