@@ -1,12 +1,7 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
-	import {
-		getResumeByMemberIdByResumeId,
-		getResumesByResumeId,
-		updateResume
-	} from "$lib/api/resume";
-	import Button from "$lib/components/Button.svelte";
+	import { getResumeById, updateResume } from "$lib/api/resume";
 	import MainButton from "$lib/components/MainButton.svelte";
 	import ResumeComponent from "$lib/components/resume/Resume.svelte";
 	import type { Resume } from "$lib/interfaces/resume/Resume";
@@ -16,18 +11,18 @@
 
 	const loadResume = async () => {
 		if (!$account || !$page.params.id) return;
-		resume = await getResumeByMemberIdByResumeId($account.id, Number($page.params.id));
+		resume = await getResumeById(Number($page.params.id));
 	};
 
 	const handleSaveClick = async () => {
 		if (!$account || !resume) return;
-		const updatedResume: Resume = await updateResume($account.id, resume);
+		const updatedResume: Resume = await updateResume(resume);
 		resume = updatedResume;
 	};
 
 	const handleCancelClick = () => {
-		goto(`/my/resumes/${resume?.id}`)
-	}
+		goto(`/my/resumes/${resume?.id}`);
+	};
 
 	$: if ($page.params.id && $account) loadResume();
 
@@ -35,7 +30,8 @@
 </script>
 
 <section>
-	<h1>Edit Resume</h1><br />
+	<h1>Edit Resume</h1>
+	<br />
 	{#if resume}
 		<ResumeComponent bind:value={resume}></ResumeComponent><br />
 		<MainButton on:click={handleCancelClick}>Cancel</MainButton>

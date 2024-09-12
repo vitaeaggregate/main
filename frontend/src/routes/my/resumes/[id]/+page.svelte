@@ -1,13 +1,11 @@
 <script lang="ts">
-	import { checkAccountAndRedirect, loadedResumes } from "$lib/store";
+	import { checkAccountAndRedirect } from "$lib/store";
 	import { page } from "$app/stores";
 	import { deleteResume, getResumesByMemberId } from "$lib/api/resume";
-	import { onMount } from "svelte";
 	import AppPdf from "../pdf/AppPdf.svelte";
 	import Page from "../pdf/Page.svelte";
 	import { account } from "$lib/store";
 	import type { Resume } from "$lib/interfaces/resume/Resume";
-	import { writable } from "svelte/store";
 	import type PersonalInfo from "$lib/interfaces/resume/PersonalInfo";
 	import Skill from "$lib/components/resume/Skill.svelte";
 	import ProfessionalExp from "$lib/components/resume/ProfessionalExp.svelte";
@@ -64,7 +62,7 @@
 	};
 
 	function handleResumeDelete(id: number, resumeId: number) {
-		deleteResume(id, resumeId);
+		deleteResume(resumeId);
 		goto("/my/page");
 	}
 
@@ -103,8 +101,8 @@
 					</ul>
 					<hr class="border-2 border-solid border-black" />
 					<br />
-					
-					<h2 class="print:text-xl bg-gray-100">Personal Info</h2>
+
+					<h2 class="bg-gray-100 print:text-xl">Personal Info</h2>
 					<ul class="text-base leading-8 print:text-sm print:leading-6">
 						{#if resumePersonalInfo?.email}
 							<li><strong>Email:</strong> {resumePersonalInfo?.email}</li>
@@ -133,20 +131,20 @@
 					</ul>
 					<br />
 					{#if resumeSkill.length > 0}
-						<h2 class="print:text-xl bg-gray-100">Skills</h2>
+						<h2 class="bg-gray-100 print:text-xl">Skills</h2>
 						<ul class="text-base leading-8 print:text-sm print:leading-6">
 							<ul>
 								{#each resumeSkill as skill}
 									{#if skill.name}
-									<strong>Name:</strong> {skill.name} <br />
+										<strong>Name:</strong> {skill.name} <br />
 									{/if}
 									{#if skill.description}
-									<strong>Description:</strong>
-									{skill.description} <br />
+										<strong>Description:</strong>
+										{skill.description} <br />
 									{/if}
 									{#if skill.skill_level}
-									<strong>Skill Level:</strong>
-									{skill.skill_level} <br />
+										<strong>Skill Level:</strong>
+										{skill.skill_level} <br />
 									{/if}
 									<br />
 								{/each}
@@ -154,24 +152,26 @@
 						</ul>
 					{/if}
 					{#if resumeProfessionalExp.length > 0}
-						<h2 class="print:text-xl bg-gray-100">Professional Experience</h2>
+						<h2 class="bg-gray-100 print:text-xl">Professional Experience</h2>
 						<ul class="text-base leading-8 print:text-sm print:leading-6">
 							<ul>
 								{#each resumeProfessionalExp as exp}
-								<span class="float-right mr-2">
-									{#if exp.start_date}
-									{exp.start_date}
-								{/if}
-								-
-								{#if exp.end_date}
-									{exp.end_date} <br />
-								{/if}</span>
+									<span class="float-right mr-2">
+										{#if exp.start_date}
+											{exp.start_date}
+										{/if}
+										-
+										{#if exp.end_date}
+											{exp.end_date} <br />
+										{/if}</span
+									>
 									{#if exp.job_title}
 										<strong class="text-xl print:text-lg">{exp.job_title}</strong><br />
 									{/if} -
-									{#if exp.city}<i>{exp.city}</i>{/if}{#if exp.city && exp.country}, {/if}
+									{#if exp.city}<i>{exp.city}</i>{/if}{#if exp.city && exp.country},
+									{/if}
 									{#if exp.country}
-										<i>{exp.country}</i> 
+										<i>{exp.country}</i>
 									{/if}
 									<br />
 									{#if exp.employer}
@@ -185,7 +185,7 @@
 						</ul>
 					{/if}
 					{#if resumeLink.length > 0}
-						<h2 class="print:text-xl bg-gray-100">Links</h2>
+						<h2 class="bg-gray-100 print:text-xl">Links</h2>
 						<ul class="text-base leading-8 print:text-sm print:leading-6">
 							<ul>
 								{#each resumeLink as link}
@@ -198,7 +198,7 @@
 						</ul>
 					{/if}
 					{#if resumeAward.length > 0}
-						<h2 class="print:text-xl bg-gray-100">Awards</h2>
+						<h2 class="bg-gray-100 print:text-xl">Awards</h2>
 						<ul class="text-base leading-8 print:text-sm print:leading-6">
 							<ul>
 								{#each resumeAward as award}
@@ -219,7 +219,7 @@
 						</ul>
 					{/if}
 					{#if resumeCertificate.length > 0}
-						<h2 class="print:text-xl bg-gray-100">Certificates</h2>
+						<h2 class="bg-gray-100 print:text-xl">Certificates</h2>
 						<ul class="text-base leading-8 print:text-sm print:leading-6">
 							<ul>
 								{#each resumeCertificate as certificate}
@@ -234,24 +234,26 @@
 						</ul>
 					{/if}
 					{#if resumeCourse.length > 0}
-						<h2 class="print:text-xl bg-gray-100">Courses</h2>
+						<h2 class="bg-gray-100 print:text-xl">Courses</h2>
 						<ul class="text-base leading-8 print:text-sm print:leading-6">
 							<ul>
 								{#each resumeCourse as course}
-								<span class="float-right mr-2">
-								{#if course.start_date}
-								{course.start_date}
-							{/if}
-							-
-							{#if course.end_date}
-								{course.end_date} <br />
-							{/if}</span>
+									<span class="float-right mr-2">
+										{#if course.start_date}
+											{course.start_date}
+										{/if}
+										-
+										{#if course.end_date}
+											{course.end_date} <br />
+										{/if}</span
+									>
 									{#if course.degree}
 										<strong class="text-xl print:text-lg">{course.degree}</strong>
 									{/if} -
-									{#if course.city}<i>{course.city}</i>{/if}{#if course.city && course.country}, {/if}
+									{#if course.city}<i>{course.city}</i>{/if}{#if course.city && course.country},
+									{/if}
 									{#if course.country}
-										<i>{course.country}</i> 
+										<i>{course.country}</i>
 									{/if}
 									<br />
 									{#if course.institution}
@@ -265,24 +267,26 @@
 						</ul>
 					{/if}
 					{#if resumeEducation.length > 0}
-						<h2 class="print:text-xl bg-gray-100">Education</h2>
+						<h2 class="bg-gray-100 print:text-xl">Education</h2>
 						<ul class="text-base leading-8 print:text-sm print:leading-6">
 							<ul>
 								{#each resumeEducation as edu}
-								<span class="float-right mr-2">
-									{#if edu.start_date}
-									{edu.start_date}
-								{/if}
-								-
-								{#if edu.end_date}
-									{edu.end_date} <br />
-								{/if}</span>
+									<span class="float-right mr-2">
+										{#if edu.start_date}
+											{edu.start_date}
+										{/if}
+										-
+										{#if edu.end_date}
+											{edu.end_date} <br />
+										{/if}</span
+									>
 									{#if edu.degree}
 										<strong class="text-xl print:text-lg">{edu.degree}</strong>
 									{/if} -
-									{#if edu.city}<i>{edu.city}</i>{/if}{#if edu.city && edu.country}, {/if}
+									{#if edu.city}<i>{edu.city}</i>{/if}{#if edu.city && edu.country},
+									{/if}
 									{#if edu.country}
-										<i>{edu.country}</i> 
+										<i>{edu.country}</i>
 									{/if}
 									<br />
 									{#if edu.institution}
@@ -296,7 +300,7 @@
 						</ul>
 					{/if}
 					{#if resumeInterest.length > 0}
-						<h2 class="print:text-xl bg-gray-100">Interests</h2>
+						<h2 class="bg-gray-100 print:text-xl">Interests</h2>
 						<ul class="text-base leading-8 print:text-sm print:leading-6">
 							<ul>
 								{#each resumeInterest as interest}
@@ -310,7 +314,7 @@
 						</ul>
 					{/if}
 					{#if resumeLanguage.length > 0}
-						<h2 class="print:text-xl bg-gray-100">Languages</h2>
+						<h2 class="bg-gray-100 print:text-xl">Languages</h2>
 						<ul class="text-base leading-8 print:text-sm print:leading-6">
 							<ul>
 								{#each resumeLanguage as lang}
@@ -325,7 +329,7 @@
 						</ul>
 					{/if}
 					{#if resumeProject.length > 0}
-						<h2 class="print:text-xl bg-gray-100">Projects</h2>
+						<h2 class="bg-gray-100 print:text-xl">Projects</h2>
 						<ul class="text-base leading-8 print:text-sm print:leading-6">
 							<ul>
 								{#each resumeProject as project}
@@ -333,23 +337,23 @@
 									{project.title} <br />
 									{#if project.subtitle}
 										<strong>Subtitle:</strong> {project.subtitle} <br />
-										{/if}
+									{/if}
 									{#if project.start_date}
 										<strong>Start Date:</strong> {project.start_date} <br />
-										{/if}
+									{/if}
 									{#if project.end_date}
 										<strong>End Date:</strong> {project.end_date} <br />
-										{/if}
+									{/if}
 									{#if project.description}
 										<strong>Description:</strong> {project.description} <br />
-										{/if}
-										<br />
+									{/if}
+									<br />
 								{/each}
 							</ul>
 						</ul>
 					{/if}
 					{#if resumePublication.length > 0}
-						<h2 class="print:text-xl bg-gray-100">Publications</h2>
+						<h2 class="bg-gray-100 print:text-xl">Publications</h2>
 						<ul class="text-base leading-8 print:text-sm print:leading-6">
 							<ul>
 								{#each resumePublication as publication}
@@ -369,7 +373,7 @@
 						</ul>
 					{/if}
 					{#if resumeReference.length > 0}
-						<h2 class="print:text-xl bg-gray-100">References</h2>
+						<h2 class="bg-gray-100 print:text-xl">References</h2>
 						<ul class="text-base leading-8 print:text-sm print:leading-6">
 							<ul>
 								{#each resumeReference as ref}

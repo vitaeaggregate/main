@@ -40,6 +40,7 @@
 	function handleResumeDelete(resumeKey: string) {
 		delete resumes[resumeKey];
 		resumes = resumes;
+		deleteResume(resumeKey);
 	}
 
 	checkAccountAndRedirect(loadPage);
@@ -62,10 +63,10 @@
 						<Button on:click={() => goto("/my/resumes/new")}>Add Resume</Button>
 						<Button on:click={() => goto("/my/resumes")}>Full list</Button>
 					</div>
-					<div>
+					<div class="flex flex-col divide-y divide-black">
 						{#if Object.keys(resumes).length}
 							{#each Object.entries(resumes) as [resumeId, { resume, comments }] (resumeId)}
-								<div>
+								<div class="p-4">
 									<a href={`/my/resumes/${resumeId}`}>
 										<span class="text-xl hover:font-medium">
 											{resume.title}
