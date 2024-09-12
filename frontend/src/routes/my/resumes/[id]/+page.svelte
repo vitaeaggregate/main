@@ -237,7 +237,6 @@
 						<h2 class="print:text-xl bg-gray-100">Courses</h2>
 						<ul class="text-base leading-8 print:text-sm print:leading-6">
 							<ul>
-								
 								{#each resumeCourse as course}
 								<span class="float-right mr-2">
 								{#if course.start_date}
@@ -270,23 +269,24 @@
 						<ul class="text-base leading-8 print:text-sm print:leading-6">
 							<ul>
 								{#each resumeEducation as edu}
+								<span class="float-right mr-2">
+									{#if edu.start_date}
+									{edu.start_date}
+								{/if}
+								-
+								{#if edu.end_date}
+									{edu.end_date} <br />
+								{/if}</span>
 									{#if edu.degree}
-										<strong class="text-xl print:text-lg">{edu.degree}</strong> <br />
+										<strong class="text-xl print:text-lg">{edu.degree}</strong>
+									{/if} -
+									{#if edu.city}<i>{edu.city}</i>{/if}{#if edu.city && edu.country}, {/if}
+									{#if edu.country}
+										<i>{edu.country}</i> 
 									{/if}
+									<br />
 									{#if edu.institution}
 										<strong>Institution:</strong> {edu.institution} <br />
-									{/if}
-									{#if edu.city}
-										<strong>City:</strong> {edu.city} <br />
-									{/if}
-									{#if edu.country}
-										<strong>Country:</strong> {edu.country} <br />
-									{/if}
-									{#if edu.start_date}
-										<strong>Start Date:</strong> {edu.start_date} <br />
-									{/if}
-									{#if edu.end_date}
-										<strong>End Date:</strong> {edu.end_date} <br />
 									{/if}
 									{#if edu.description}
 										<strong>Description:</strong> {edu.description} <br /><br />

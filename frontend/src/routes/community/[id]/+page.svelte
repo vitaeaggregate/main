@@ -72,7 +72,7 @@
 									{#each resume.skills as skill}
 									{#if skill.name}
 										<strong>Name:</strong> {skill.name} <br />
-									{:else}<br/>{/if}
+									{/if}
 										<strong>Description:</strong> {skill.description} <br />
 										<strong>Skill Level:</strong> {skill.skill_level} <br /><br />
 									{/each}
@@ -85,19 +85,27 @@
 							<ul class="text-base leading-7">
 								<ul>
 									{#each resume.professional_exps as exp}
+									<span class="float-right mr-2">
+										{#if exp.start_date}
+										{exp.start_date}
+									{/if}
+									-
+									{#if exp.end_date}
+										{exp.end_date} <br />
+									{/if}</span>
 										{#if exp.job_title}
 											<strong class="text-xl print:text-lg">{exp.job_title}</strong><br />
-										{:else}<br/>{/if}
+										{/if} -
+										{#if exp.city}<i>{exp.city}</i>{/if}{#if exp.city && exp.country}, {/if}
+										{#if exp.country}
+											<i>{exp.country}</i> 
+										{/if}
+										<br />
 										{#if exp.employer}
 											<strong>Employer:</strong> {exp.employer} <br />
-										{:else}<br/>{/if}
-											<strong>City:</strong> {exp.city} <br />
-											<strong>Country:</strong> {exp.country} <br />
-											<strong>Start Date:</strong> {exp.start_date} <br />
-											<strong>End Date:</strong> {exp.end_date} <br />
+										{/if}
 										{#if exp.description}
 											<strong>Description:</strong> {exp.description} <br /><br />
-										{:else}<br/>
 										{/if}
 									{/each}
 								</ul>
@@ -110,19 +118,15 @@
 									{#each resume.awards as award}
 										{#if award.title}
 											<strong>Title:</strong> {award.title} <br />
-										{:else}<br/>
 										{/if}
 										{#if award.issuer}
 											<strong>Issuer:</strong> {award.issuer} <br />
-										{:else}<br/>
 										{/if}
 										{#if award.date}
 											<strong>Date:</strong> {award.date} <br />
-										{:else}<br/>
 										{/if}
 										{#if award.description}
 											<strong>Description:</strong> {award.description} <br /><br />
-										{:else}<br/>
 										{/if}
 									{/each}
 								</ul>
@@ -147,11 +151,9 @@
 									{#each resume.certificates as certificate}
 									{#if certificate.name}
 										<strong>Name:</strong> {certificate.name} <br />
-									{:else}<br/>
 									{/if}
 									{#if certificate.description}
 										<strong>Description:</strong> {certificate.description} <br /><br />
-									{:else}<br/>
 									{/if}
 									{/each}
 								</ul>
@@ -163,72 +165,29 @@
 							<ul class="text-base leading-7">
 								<ul>
 									{#each resume.courses as course}
-										{#if course.degree}
-											<strong>Degree:</strong> {course.degree} <br />
-										{:else}<br/>{/if}
-										{#if course.institution}
-											<strong>Institution:</strong> {course.institution} <br />
-										{:else}<br/>
-										{/if}
-										{#if course.city}
-											<strong>City:</strong> {course.city} <br />
-										{:else}<br/>
-										{/if}
-										{#if course.country}
-											<strong>Country:</strong> {course.country} <br />
-										{:else}<br/>
-										{/if}
+									<span class="float-right mr-2">
 										{#if course.start_date}
-											<strong>Start Date:</strong> {course.start_date} <br />
-										{:else}<br/>
-										{/if}
-										{#if course.end_date}
-											<strong>End Date:</strong> {course.end_date} <br />
-										{:else}<br/>
-										{/if}
-										{#if course.description}
-											<strong>Description:</strong> {course.description} <br /><br />
-										{:else}<br/>
-										{/if}
-									{/each}
-								</ul>
-							</ul>
-						{/if}
-						{#if resume.educations === undefined} <br/>
-						{:else if resume.educations.length < 0}
-							<h2 class="print:text-xl bg-gray-100">Education</h2>
-							<ul class="text-base leading-7">
-								<ul>
-									{#each resume.educations as edu}
-										{#if edu.degree}
-											<strong class="text-xl print:text-lg">{edu.degree}</strong><br />
-										{:else}<br/>
-										{/if}
-										{#if edu.institution}
-											<strong>Institution:</strong> {edu.institution} <br />
-										{:else}<br/>
-										{/if}
-										{#if edu.city}
-											<strong>City:</strong> {edu.city} <br />
-										{:else}<br/>
-										{/if}
-										{#if edu.country}
-											<strong>Country:</strong> {edu.country} <br />
-										{:else}<br/>
-										{/if}
-										{#if edu.start_date}
-											<strong>Start Date:</strong> {edu.start_date} <br />
-										{:else}<br/>
-										{/if}
-										{#if edu.end_date}
-											<strong>End Date:</strong> {edu.end_date} <br />
-										{:else}<br/>
-										{/if}
-										{#if edu.description}
-											<strong>Description:</strong> {edu.description} <br /><br />
-										{:else}<br/>
-										{/if}
-									{/each}
+										{course.start_date}
+									{/if}
+									-
+									{#if course.end_date}
+										{course.end_date} <br />
+									{/if}</span>
+											{#if course.degree}
+												<strong class="text-xl print:text-lg">{course.degree}</strong>
+											{/if} -
+											{#if course.city}<i>{course.city}</i>{/if}{#if course.city && course.country}, {/if}
+											{#if course.country}
+												<i>{course.country}</i> 
+											{/if}
+											<br />
+											{#if course.institution}
+												<strong>Institution:</strong> {course.institution} <br />
+											{/if}
+											{#if course.description}
+												<strong>Description:</strong> {course.description} <br /><br />
+											{/if}
+										{/each}
 								</ul>
 							</ul>
 						{/if}
@@ -241,7 +200,6 @@
 										<strong>Name:</strong> {interest.name} <br />
 										{#if interest.description}
 											<strong>Description:</strong> {interest.description} <br /><br />
-										{:else}<br/>
 										{/if}
 									{/each}
 								</ul>	
@@ -269,19 +227,15 @@
 									<strong>Title:</strong> {project.title} <br />
 									{#if project.sub_title}
 										<strong>Subtitle:</strong> {project.sub_title} <br />
-									{:else}<br/>
 									{/if}
 									{#if project.start_date}
 										<strong>Start Date:</strong> {project.start_date} <br />
-									{:else}<br/>
 									{/if}
 									{#if project.end_date}
 										<strong>End Date:</strong> {project.end_date} <br />
-									{:else}<br/>
 									{/if}
 									{#if project.description}
 										<strong>Description:</strong> {project.description} <br /><br />
-									{:else}<br/>
 									{/if}
 								{/each}
 							</ul>
@@ -296,15 +250,12 @@
 									<strong>Title:</strong> {publication.title} <br />
 								{#if publication.publisher}
 									<strong>Publisher:</strong> {publication.publisher} <br />
-								{:else}<br/>
 								{/if}
 								{#if publication.date}
 									<strong>Date:</strong> {publication.date} <br />
-								{:else}<br/>
 								{/if}
 								{#if publication.description}
 									<strong>Description</strong> {publication.description} <br /><br />
-								{:else}<br/>
 								{/if}
 								{/each}
 							</ul>
@@ -320,7 +271,6 @@
 	<div class="w-4/5 h-3/5 overflow-y-auto p-6"><ul class="flex flex-col gap-5 p-5">
 		{#each Object.entries(resumesComments) as [id, comments]}
 		{#if +id === resumeId}
-<!-- <h2>Resume ID: {id}</h2> -->
 <ul>
 {#each comments as comment, index}
   <li class="bg-gray-200 p-4">{comment.description}</li><br/>
