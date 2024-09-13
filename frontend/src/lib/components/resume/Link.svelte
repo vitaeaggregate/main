@@ -23,7 +23,7 @@
   </div>
 {:else}
   <div>
-    <InputText label="Title" required={true} bind:value={value.title} />
-    <InputText label="URL" required={true} bind:value={value.url} />
+    <InputText label="Title" required={true} bind:value={value.title} placeholder="LinkedIn/Github/Portfolio"/>
+    <InputText label="URL" required={true} bind:value={value.url} placeholder="ex. linkedin.com/stevesmith"/>
   </div>
 {/if}
