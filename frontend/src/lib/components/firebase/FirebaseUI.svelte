@@ -91,6 +91,21 @@
     sessionStorage.setItem("token", token);
     goto("/my/page");
   };
+
+  const handleSmoothScroll = (event) => {
+    event.preventDefault();
+    const link = event.currentTarget;
+    const anchorId = new URL(link.href).hash.replace("#", "");
+    const anchor = document.getElementById(anchorId);   
+
+    if (anchor) {
+      window.scrollTo({
+        top: anchor.offsetTop,
+        behavior: "smooth"   
+
+      });
+    }
+  };
 </script>
 
 <div class="relative flex h-full justify-center">
@@ -98,9 +113,12 @@
   <div class="z-50 mt-8 flex w-fit flex-col items-center gap-4">
     <img src={Logo} alt="Logo" class="h-24 w-auto opacity-30" />
     <h1>Vitae Aggregate</h1>
-    <!-- <div class="absolute top-0 md:mt-8 md:order-first z-1 opacity-25 size-full">
-			</div> -->
     <h2>Welcome!</h2>
+    <p class="text-4xl text-center">Mobile first<br />
+      Never forget
+      </p>
+    <a href="#anchor-login" on:click={handleSmoothScroll}>Sign up or login</a>
+    <h2 id="anchor-login">Login</h2>
     <form action="">
       <div class="flex flex-col gap-5">
         <InputText placeholder="Email" bind:value={email}></InputText>
