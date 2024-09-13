@@ -19,14 +19,14 @@
 
 <div class="flex flex-col">
   <h2>Personal Info</h2>
-  <InputText label="Full Name" required={true} bind:value={value.full_name} />
-  <InputText label="Job Title" required={true} bind:value={value.job_title} />
-  <InputText label="Email" bind:value={value.email} />
-  <InputText label="Phone Number" bind:value={value.phone_number} />
-  <InputText label="Address" bind:value={value.address} />
-  <InputDate label="Date of Birth" bind:value={value.date_of_birth} />
-  <InputText label="Driving License" bind:value={value.driving_license} />
-  <InputText label="Gender Pronouns" bind:value={value.gender_pronoun} />
-  <InputText label="Marital Status" bind:value={value.marital_status} />
-  <InputText label="Nationality" bind:value={value.nationality} />
+  <InputText label="Full Name" required={true} bind:value={value.full_name} placeholder="Stephen A. Smith"/>
+  <InputText label="Job Title" required={true} bind:value={value.job_title} placeholder="Fullstack Engineer"/>
+  <InputText label="Email" bind:value={value.email} placeholder="stephen.smith@email.net"/>
+  <InputText label="Phone Number" bind:value={value.phone_number} placeholder="XXX-XXXX-XXXX"/>
+  <InputText label="Address" bind:value={value.address} placeholder="Tokyo, Japan"/>
+  <InputDate label="Date of Birth" bind:value={value.date_of_birth}/>
+  <InputText label="Driving License" bind:value={value.driving_license} placeholder="XXXXXXXXX"/>
+  <InputText label="Gender Pronouns" bind:value={value.gender_pronoun} placeholder="He/Him"/>
+  <InputText label="Marital Status" bind:value={value.marital_status} placeholder="Single"/>
+  <InputText label="Nationality" bind:value={value.nationality} placeholder="USA"/>
 </div>

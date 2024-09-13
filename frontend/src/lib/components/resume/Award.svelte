@@ -29,9 +29,9 @@
   </div>
 {:else}
   <div>
-    <InputText label="Title" bind:value={value.title} />
-    <InputText label="Issuer" bind:value={value.issuer} />
+    <InputText label="Title" bind:value={value.title} placeholder="Excellence in Management"/>
+    <InputText label="Issuer" bind:value={value.issuer} placeholder="ACME Software"/>
     <InputDate label="Date" bind:value={value.date} />
-    <TextArea label="Description" bind:value={value.description} />
+    <TextArea label="Description" bind:value={value.description} placeholder="Awarded for outstanding performance as team lead"/>
   </div>
 {/if}
