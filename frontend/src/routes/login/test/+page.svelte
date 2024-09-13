@@ -12,7 +12,7 @@
 
   let email = "";
 
-  $: if ($account) goto("/my/page", { replaceState: true });
+  $: if ($account) goto("/community", { replaceState: true });
 
   let handleSubmit = async () => {
     const response = await login(email);
@@ -23,7 +23,7 @@
     sessionStorage.setItem("account", JSON.stringify(json.account));
     sessionStorage.setItem("token", json.token);
 
-    goto("/my/page");
+    // goto("/my/page");
   };
 </script>
 

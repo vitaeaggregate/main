@@ -44,7 +44,8 @@
 
     firebaseUi.start(firebaseUiContainer, {
       signInFlow: "popup",
-      signInSuccessUrl: "/my/page",
+      signInSuccessUrl: "/community",
+      // signInSuccessUrl: "/my/page",
       signInOptions: [
         googleAuthProvider.providerId,
         { provider: emailAuthProvider.providerId, fullLabel: "Sign up with email" }
@@ -89,7 +90,7 @@
     account.set(response);
     sessionStorage.setItem("account", JSON.stringify(response));
     sessionStorage.setItem("token", token);
-    goto("/my/page");
+    goto("/community");
   };
 
   const handleSmoothScroll = (event) => {
