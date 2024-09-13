@@ -31,10 +31,10 @@
   </div>
 {:else}
   <div>
-    <InputText label="Title" required={true} bind:value={value.title} />
-    <InputText label="Subtitle" bind:value={value.sub_title} />
+    <InputText label="Title" required={true} bind:value={value.title} placeholder="Fullstack Project"/>
+    <InputText label="Subtitle" bind:value={value.sub_title} placeholder="Fullstack Engineer"/>
     <InputDate label="Start Date" bind:value={value.start_date} />
     <InputDate label="End Date" bind:value={value.end_date} />
-    <TextArea label="Description" required={true} bind:value={value.description} />
+    <TextArea label="Description" required={true} bind:value={value.description} placeholder="built fullstack project as a member of 5 person team. Focused on Frontend and used Svelte and used Django in the backend"/>
   </div>
 {/if}
