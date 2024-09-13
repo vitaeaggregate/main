@@ -108,15 +108,15 @@
   };
 </script>
 
-<div class="relative flex h-full justify-center">
+<div class="relative flex h-full justify-center ml-4 mr-4">
   <Toasts />
   <div class="z-50 mt-8 flex w-fit flex-col items-center gap-4">
     <img src={Logo} alt="Logo" class="h-24 w-auto opacity-30" />
     <h1>Vitae Aggregate</h1>
-    <h2>Welcome!</h2>
-    <p class="text-4xl text-center">Mobile first<br />
-      Never forget
-      </p>
+    <p class="text-xl text-center">Your Resume, Enhanced.</p>
+        <p class="text-lg text-center">Get personalized feedback from the community to craft a standout resume. Create, share, and collaborate in a supportive environment.      </p>
+    <p class="text-lg text-center font-semibold">Join our community today and level up your resume game!</p>
+
     <a href="#anchor-login" on:click={handleSmoothScroll}>Sign up or login</a>
     <h2 id="anchor-login">Login</h2>
     <form action="">
