@@ -1,9 +1,6 @@
 <script>
-	import { goto } from "$app/navigation";
-	import { account, checkAccountAndRedirect } from "$lib/store";
-	import Logo from "$lib/Logo.png";
-	import { onMount } from "svelte";
+  import { goto } from "$app/navigation";
+  import { checkAccountAndRedirect } from "$lib/store";
 
-	checkAccountAndRedirect(() => goto("/my/page"));
-
-  </script>
+  checkAccountAndRedirect(() => goto("/my/page"));
+</script>

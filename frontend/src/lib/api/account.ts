@@ -3,22 +3,22 @@ import type Account from "$lib/interfaces/member/Account";
 import { error } from "@sveltejs/kit";
 
 export async function createOrGetAccount(token: string) {
-	const fetchConfig: RequestInit = {
-		method: "POST",
-		headers: {
-			"Content-Type": "applications/json",
-			Authorization: `Bearer ${token}`
-		}
-	};
+  const fetchConfig: RequestInit = {
+    method: "POST",
+    headers: {
+      "Content-Type": "applications/json",
+      Authorization: `Bearer ${token}`
+    }
+  };
 
-	const response = await fetch(PUBLIC_SERVER + "/firebase/accounts/", fetchConfig);
+  const response = await fetch(PUBLIC_SERVER + "/firebase/accounts/", fetchConfig);
 
-	console.log(response);
+  console.log(response);
 
-	if (response.ok) console.log("Token sent successfully");
-	else throw error(response.status, response.statusText);
+  if (response.ok) console.log("Token sent successfully");
+  else throw error(response.status, response.statusText);
 
-	const account: Account = await response.json();
+  const account: Account = await response.json();
 
-	return account;
+  return account;
 }

@@ -9,20 +9,19 @@ from .resume.views.comment import CommentViewSet
 router = DefaultRouter()
 
 # Comment Route
-router.register(r"members/(?P<member_pk>[^/.]+)/resumes/(?P<header_pk>[^/.]+)/comments",
-                CommentViewSet, basename="view comments by member id and resume id")
-
 router.register(r"members/(?P<member_pk>[^/.]+)/comments",
                 CommentViewSet, basename="view comments by member id")
 
+router.register(r"resumes/(?P<header_pk>[^/.]+)/comments",
+                CommentViewSet, basename="view comments by member id and resume id")
+
+router.register(r"comments",
+                CommentViewSet, basename="view comments")
 # Resume Route
 router.register(r"members/(?P<member_pk>[^/.]+)/resumes",
-                HeaderViewSet, basename="view resumes by member id")
-router.register(r"members/resumes", HeaderViewSet, basename="view all resumes")
-router.register(r"members/(?P<member_pk>[^/.]+)/resumes/(?P<resume_pk>[^/.]+)",
-                HeaderViewSet, basename="view certain resume of a member by resume id")
-router.register(r"resumes/(?P<resume_pk>[^/.]+)",
-                HeaderViewSet, basename="view certain resume by resume id")
+                HeaderViewSet, basename="view resumes of a member")
+router.register(r"resumes",
+                HeaderViewSet, basename="view resumes")
 
 # Notifications Route
 router.register(r"notifications/comments/receivers/(?P<member_pk>[^/.]+)",
