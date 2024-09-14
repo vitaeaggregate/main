@@ -9,6 +9,7 @@
   import Button from "$lib/components/Button.svelte";
   import { goto } from "$app/navigation";
   import ResumeIcon from "$lib/icons/ResumeIcon.svelte";
+	import FullListIcon from "$lib/icons/FullListIcon.svelte";
 
 
   export const id = writable<number | null>(null);
@@ -54,10 +55,12 @@
     <div class="flex flex-row">
       
       <div class="bg-white mr-1 w-36 h-24 rounded-xl p-4 items-center">
-        <ResumeIcon class="relative top-0" /><br />
+        <ResumeIcon/><br />
         <Button on:click={() => goto("/my/resumes/new")} >Add Resume</Button>
       </div>
-      <div class="bg-white mr-1 w-36 h-24 rounded-xl p-4"><Button on:click={() => goto("/my/resumes")}>Full list</Button></div>
+      <div class="bg-white mr-1 w-36 h-24 rounded-xl p-4 items-center">
+        <FullListIcon/><br />
+        <Button on:click={() => goto("/my/resumes")}>Full list</Button></div>
     </div>
     <br />
       <div>
