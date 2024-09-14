@@ -28,23 +28,23 @@
       }
     </style>
     <div class="source-sans-3 flex flex-col gap-5">
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-2 bg-white rounded-xl p-4">
         <h1 class="lobster-two-bold-italic text-4xl">{resume.personal_info.full_name}</h1>
         <h2 class="text-3xl font-normal"><i>{resume.personal_info.job_title}</i></h2>
       </div>
       <div>
         {#if resume.links.length}
-          <div class="flex gap-3">
+          <div class="flex gap-3 bg-white rounded-xl p-4">
             <a href={"mailto:" + resume.personal_info.email}>{resume.personal_info.email}</a>
             {#each resume.links as link (link.id)}
               <a href={link.url}>{link.title?.slice(0, 15)}</a>
             {/each}
           </div>
         {/if}
-        <span>{resume.personal_info.address}</span>
+        <span class="bg-white flex gap-3 rounded-xl p-4">{resume.personal_info.address}</span>
       </div>
       {#if resume.skills.length}
-        <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-3  bg-white rounded-xl p-4">
           <h3 class="w-fit border-b-2 border-black">Skills</h3>
           <div class="grid grid-cols-4 gap-10">
             {#each resume.skills as skill (skill.id)}
@@ -57,7 +57,7 @@
         </div>
       {/if}
       {#if resume.languages.length}
-        <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-3  bg-white rounded-xl p-4">
           <h3 class="w-fit border-b-2 border-black">Languages</h3>
           <ul class="flex gap-10">
             {#each resume.languages as language (language.id)}
@@ -69,7 +69,7 @@
         </div>
       {/if}
       {#if resume.projects.length}
-        <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-3  bg-white rounded-xl p-4">
           <h3 class="w-fit border-b-2 border-black">Projects</h3>
           <div class="flex flex-col gap-5">
             {#each resume.projects as project (project.id)}
@@ -89,7 +89,7 @@
         </div>
       {/if}
       {#if resume.professional_exps.length}
-        <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-3  bg-white rounded-xl p-4">
           <h3 class="w-fit border-b-2 border-black">Professional Experiences</h3>
           <div class="flex flex-col gap-5">
             {#each resume.professional_exps as professional_exp (professional_exp.id)}
@@ -109,7 +109,7 @@
         </div>
       {/if}
       {#if resume.educations.length}
-        <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-3  bg-white rounded-xl p-4">
           <h3 class="w-fit border-b-2 border-black">Education and Courses</h3>
           <div class="flex flex-col gap-5">
             {#each resume.educations as education (education.id)}

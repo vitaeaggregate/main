@@ -6,6 +6,9 @@
   import { goto } from "$app/navigation";
   import Button from "$lib/components/Button.svelte";
   import ResumePreview from "$lib/components/resume/ResumePreview.svelte";
+	import EditIcon from "$lib/icons/EditIcon.svelte";
+	import DeleteIcon from "$lib/icons/DeleteIcon.svelte";
+	import DownloadIcon from "$lib/icons/DownloadIcon.svelte";
 
   let resume: Resume | null = null;
   let resumeElement: HTMLElement | null = null;
@@ -52,12 +55,21 @@
 
 {#if $account && $page.params.id && resume}
   <section>
-    <div class="flex gap-3">
-      <Button on:click={handleResumeEdit}>Edit</Button>
-      <Button on:click={handleResumeDelete}>Delete</Button>
-      <Button on:click={handleDownloadPdf}>Download</Button>
+    <div class="flex">
+      <div class="bg-white mr-1 w-36 h-24 rounded-xl p-4 items-center">
+        <EditIcon /><br />
+        <Button on:click={handleResumeEdit}>Edit</Button>
     </div>
-    <div class="p-5">
+    <div class="bg-white mr-1 w-36 h-24 rounded-xl p-4 items-center">
+        <DeleteIcon/><br />
+      <Button on:click={handleResumeDelete}>Delete</Button>
+  </div>
+  <div class="bg-white mr-1 w-36 h-24 rounded-xl p-4 items-center">
+        <DownloadIcon /><br />
+    <Button on:click={handleDownloadPdf}>Download</Button>
+</div>
+    </div>
+    <div class="mt-5 mb-5">
       <ResumePreview bind:resume bind:sectionElement={resumeElement}></ResumePreview>
     </div>
   </section>
