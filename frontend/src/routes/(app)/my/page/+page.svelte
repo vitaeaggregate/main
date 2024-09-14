@@ -8,6 +8,9 @@
   import type { Resume } from "$lib/interfaces/resume/Resume";
   import Button from "$lib/components/Button.svelte";
   import { goto } from "$app/navigation";
+  import ResumeIcon from "$lib/icons/ResumeIcon.svelte";
+	import FullListIcon from "$lib/icons/FullListIcon.svelte";
+
 
   export const id = writable<number | null>(null);
   export const resumeId = writable<number | null>(null);
@@ -49,20 +52,26 @@
 {#if $account}
   <section class="">
     <h1>Dashboard</h1>
-    <div class="">
+    <div class="flex flex-row">
+      
+      <div class="bg-white mr-1 w-36 h-24 rounded-xl p-4 items-center">
+        <ResumeIcon/><br />
+        <Button on:click={() => goto("/my/resumes/new")} >Add Resume</Button>
+      </div>
+      <div class="bg-white mr-1 w-36 h-24 rounded-xl p-4 items-center">
+        <FullListIcon/><br />
+        <Button on:click={() => goto("/my/resumes")}>Full list</Button></div>
+    </div>
+    <br />
       <div>
         <h2>User Info</h2>
-        <div class="mb-2 border-2 bg-slate-200 p-2">
+        <div class="mb-2 border-2 bg-white p-2 rounded-xl">
           <p><strong>Email: </strong>{$account.email}</p>
-        </div>
       </div>
       <div>
         <h2>Resumes</h2>
-        <div class="mb-2 border-2 bg-slate-200 p-2">
-          <div>
-            <Button on:click={() => goto("/my/resumes/new")}>Add Resume</Button>
-            <Button on:click={() => goto("/my/resumes")}>Full list</Button>
-          </div>
+        <div class="mb-2 border-2 bg-white p-2 rounded-xl">
+
           <div class="flex flex-col divide-y divide-black">
             {#if Object.keys(resumes).length}
               {#each Object.entries(resumes) as [resumeId, { resume, comments }] (resumeId)}
@@ -73,12 +82,12 @@
                     </span>
                   </a>
                   <p><strong>Shared:</strong> {resume.is_shareable ? "Yes" : "No"}</p>
-                  <h3>Comments</h3>
-                  <CommentView
+                  <p><strong>Comments:</strong> {comments.length}</p>
+                  <!-- <CommentView
                     bind:value={comments}
                     config={{ isReadyOnly: true, isResumeTitleHidden: true }}
-                  ></CommentView>
-                  <Button on:click={() => handleResumeDelete(resumeId)}>Delete Resume</Button>
+                  ></CommentView> -->
+                  <div class="flex justify-end"><Button on:click={() => handleResumeDelete(resumeId)}>Delete Resume</Button></div>
                 </div>
               {/each}
             {:else}
@@ -89,7 +98,7 @@
       </div>
       <div>
         <h2>Community</h2>
-        <div class="mb-2 border-2 bg-slate-200 p-2">
+        <div class="mb-2 border-2 bg-white p-2 rounded-xl">
           <h3>Your Comments</h3>
           <CommentView
             bind:value={memberComments}

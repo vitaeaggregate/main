@@ -21,9 +21,9 @@
 
 {#if Array.isArray(value)}
   {#if value.length}
-    <div class="flex flex-col divide-y divide-black">
+    <div class="flex flex-col">
       {#each value as comment (comment.id)}
-        <div class="flex flex-col gap-3 p-4">
+        <div class="flex flex-col gap-3 p-4 border-l-8 my-3">
           <CommentComponent bind:value={comment} {config}></CommentComponent>
           {#if comment.can_delete}
             <Button on:click={() => comment.id && handleDelete(comment.id)}>Delete</Button>

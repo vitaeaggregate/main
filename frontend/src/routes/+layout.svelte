@@ -11,6 +11,6 @@
   });
 </script>
 
-<div class="z-10 flex w-full grow flex-col gap-10">
+<div class="z-10 flex w-full grow flex-col gap-10 bg-orange">
   <slot></slot>
 </div>
