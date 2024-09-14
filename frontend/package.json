@@ -48,7 +48,6 @@
     "javascript-time-ago": "^2.5.11",
     "jspdf": "^2.5.1",
     "pdf-lib": "^1.17.1",
-    "pdfjs-dist": "^4.6.82",
     "pspdfkit": "^2024.5.1",
     "puppeteer-core": "^23.3.0",
     "svelte-lexical": "^0.4.1",
