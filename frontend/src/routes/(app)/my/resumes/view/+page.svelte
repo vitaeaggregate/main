@@ -2,24 +2,12 @@
   import { getResumeById } from "$lib/api/resume";
   import type { Resume } from "$lib/interfaces/resume/Resume";
   import { onMount } from "svelte";
-  import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
-  import type { PDFPageProxy } from "pdfjs-dist/types/web/interfaces";
   import Button from "$lib/components/Button.svelte";
 
-  interface PageConfig {
-    margin: number;
-  }
-
-  interface PreviewConfig {
-    scale: number;
-  }
-
   let resume: Resume | null = null;
-  let previewCanvas: HTMLCanvasElement | null = null;
   let resumeElement: HTMLDivElement | null = null;
 
   onMount(() => {
-    GlobalWorkerOptions.workerSrc = "https://unpkg.com/pdfjs-dist/build/pdf.worker.min.mjs";
     loadResume();
   });
 
@@ -54,52 +42,10 @@
     invisibleLink.click();
     URL.revokeObjectURL(url);
   };
-
-  const previewDocument = async (documentBlob: Blob) => {
-    const previewConfig: PreviewConfig = {
-      scale: 2
-    };
-
-    const renderPage = async (page: PDFPageProxy, pageNumber: number) => {
-      if (!previewCanvas) throw console.log("No Preview Canvas");
-
-      const viewport = page.getViewport({
-        scale: previewConfig.scale
-      });
-
-      const outputScale = window.devicePixelRatio || 1;
-      const context = previewCanvas.getContext("2d");
-      if (!context) throw console.log("No canvas Context");
-
-      previewCanvas.width = Math.floor(viewport.width * outputScale);
-      previewCanvas.height = Math.floor(viewport.height * outputScale);
-      // previewCanvas.style.width = Math.floor(viewport.width) + "px";
-      // previewCanvas.style.height = Math.floor(viewport.height) + "px";
-
-      const transform = outputScale !== 1 ? [outputScale, 0, 0, outputScale, 0, 0] : undefined;
-
-      const renderContext = {
-        canvasContext: context,
-        transform: transform,
-        viewport: viewport
-      };
-
-      page.render(renderContext);
-    };
-
-    const loadingTask = getDocument(URL.createObjectURL(documentBlob));
-    const document = await loadingTask.promise;
-
-    for (let pageNumber = 1; pageNumber <= document.numPages; pageNumber++) {
-      const page = await document.getPage(pageNumber);
-      renderPage(page, pageNumber);
-    }
-  };
 </script>
 
 <section>
   {#if resume}
-    <canvas bind:this={previewCanvas} class="hidden size-full rounded-lg border-2"></canvas>
     <div bind:this={resumeElement} class="source-sans-3 p-10">
       <div class="flex w-full flex-col gap-5">
         <div class="flex flex-col gap-2">
