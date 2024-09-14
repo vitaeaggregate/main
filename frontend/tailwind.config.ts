@@ -6,8 +6,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        green: "#588157",
-        lime: "#A3B18A"
+        lime: "#A3B18A",
+        orange: "#F2F1F1"
       }
     }
   },
