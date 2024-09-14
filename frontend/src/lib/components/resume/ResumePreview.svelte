@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { Resume } from "$lib/interfaces/resume/Resume";
-
   export let resume: Resume;
   export let sectionElement: HTMLElement | null;
 </script>
@@ -9,6 +8,11 @@
   {#if resume}
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap");
+
+      @page {
+        size: A4 portrait;
+        margin: 1cm;
+      }
 
       .source-sans-3 {
         font-family: "Source Sans 3", sans-serif;
@@ -23,7 +27,7 @@
         font-style: italic;
       }
     </style>
-    <div class="source-sans-3 flex flex-col gap-5 p-10">
+    <div class="source-sans-3 flex flex-col gap-5">
       <div class="flex flex-col gap-2">
         <h1 class="lobster-two-bold-italic text-4xl">{resume.personal_info.full_name}</h1>
         <h2 class="text-3xl font-normal"><i>{resume.personal_info.job_title}</i></h2>
@@ -67,10 +71,17 @@
       {#if resume.projects.length}
         <div class="flex flex-col gap-3">
           <h3 class="w-fit border-b-2 border-black">Projects</h3>
-          <div class="flex flex-col gap-10">
+          <div class="flex flex-col gap-5">
             {#each resume.projects as project (project.id)}
-              <div>
-                <p><strong>{project.title} - {project.sub_title}</strong></p>
+              <div class="flex flex-col gap-2">
+                <div class="grid grid-cols-3">
+                  <span class="col-span-2">
+                    <strong>{project.title} - {project.sub_title}</strong>
+                  </span>
+                  <span class="justify-self-end">
+                    {project.start_date} - {project.end_date}
+                  </span>
+                </div>
                 <p class="whitespace-pre-line">{project.description}</p>
               </div>
             {/each}
@@ -78,7 +89,43 @@
         </div>
       {/if}
       {#if resume.professional_exps.length}
-        <div></div>
+        <div class="flex flex-col gap-3">
+          <h3 class="w-fit border-b-2 border-black">Professional Experiences</h3>
+          <div class="flex flex-col gap-5">
+            {#each resume.professional_exps as professional_exp (professional_exp.id)}
+              <div class="flex flex-col gap-2">
+                <div class="grid grid-cols-3">
+                  <span class="col-span-2">
+                    <strong>{professional_exp.job_title}</strong>, {professional_exp.employer}, {professional_exp.country}
+                  </span>
+                  <span class="justify-self-end">
+                    {professional_exp.start_date} - {professional_exp.end_date}
+                  </span>
+                </div>
+                <p class="whitespace-pre-line">{professional_exp.description}</p>
+              </div>
+            {/each}
+          </div>
+        </div>
+      {/if}
+      {#if resume.educations.length}
+        <div class="flex flex-col gap-3">
+          <h3 class="w-fit border-b-2 border-black">Education and Courses</h3>
+          <div class="flex flex-col gap-5">
+            {#each resume.educations as education (education.id)}
+              <div class="flex flex-col gap-2">
+                <div class="grid grid-cols-3">
+                  <span class="col-span-2">
+                    <strong>{education.degree}</strong>, {education.institution}, {education.country}
+                  </span>
+                  <span class="justify-self-end">{education.start_date} - {education.end_date}</span
+                  >
+                </div>
+                <p class="whitespace-pre-line">{education.description}</p>
+              </div>
+            {/each}
+          </div>
+        </div>
       {/if}
     </div>
   {/if}

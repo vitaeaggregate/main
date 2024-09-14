@@ -57,6 +57,8 @@
       <Button on:click={handleResumeDelete}>Delete</Button>
       <Button on:click={handleDownloadPdf}>Download</Button>
     </div>
-    <ResumePreview bind:resume bind:sectionElement={resumeElement}></ResumePreview>
+    <div class="p-5">
+      <ResumePreview bind:resume bind:sectionElement={resumeElement}></ResumePreview>
+    </div>
   </section>
 {/if}
