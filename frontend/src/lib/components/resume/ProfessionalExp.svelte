@@ -35,12 +35,12 @@
   </div>
 {:else}
   <div>
-    <InputText label="Job Title" required={true} bind:value={value.job_title} />
-    <InputText label="Employer" required={true} bind:value={value.employer} />
-    <InputText label="City" bind:value={value.city} />
-    <InputText label="Country" bind:value={value.country} />
+    <InputText label="Job Title" required={true} bind:value={value.job_title} placeholder="QA Tester"/>
+    <InputText label="Employer" required={true} bind:value={value.employer} placeholder="ACME Software"/>
+    <InputText label="City" bind:value={value.city} placeholder="Tokyo"/>
+    <InputText label="Country" bind:value={value.country} placeholder="Japan"/>
     <InputDate label="Start Date" bind:value={value.start_date} />
     <InputDate label="End Date" bind:value={value.end_date} />
-    <TextArea label="Description" required={true} bind:value={value.description} />
+    <TextArea label="Description" required={true} bind:value={value.description} placeholder="Listed Experience"/>
   </div>
 {/if}

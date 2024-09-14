@@ -44,7 +44,8 @@
 
     firebaseUi.start(firebaseUiContainer, {
       signInFlow: "popup",
-      signInSuccessUrl: "/my/page",
+      signInSuccessUrl: "/community",
+      // signInSuccessUrl: "/my/page",
       signInOptions: [
         googleAuthProvider.providerId,
         { provider: emailAuthProvider.providerId, fullLabel: "Sign up with email" }
@@ -89,18 +90,36 @@
     account.set(response);
     sessionStorage.setItem("account", JSON.stringify(response));
     sessionStorage.setItem("token", token);
-    goto("/my/page");
+    goto("/community");
+  };
+
+  const handleSmoothScroll = (event) => {
+    event.preventDefault();
+    const link = event.currentTarget;
+    const anchorId = new URL(link.href).hash.replace("#", "");
+    const anchor = document.getElementById(anchorId);   
+
+    if (anchor) {
+      window.scrollTo({
+        top: anchor.offsetTop,
+        behavior: "smooth"   
+
+      });
+    }
   };
 </script>
 
-<div class="relative flex h-full justify-center">
+<div class="relative flex h-full justify-center ml-4 mr-4">
   <Toasts />
   <div class="z-50 mt-8 flex w-fit flex-col items-center gap-4">
     <img src={Logo} alt="Logo" class="h-24 w-auto opacity-30" />
     <h1>Vitae Aggregate</h1>
-    <!-- <div class="absolute top-0 md:mt-8 md:order-first z-1 opacity-25 size-full">
-			</div> -->
-    <h2>Welcome!</h2>
+    <p class="text-xl text-center">Your Resume, Enhanced.</p>
+        <p class="text-lg text-center">Get personalized feedback from the community to craft a standout resume. Create, share, and collaborate in a supportive environment.      </p>
+    <p class="text-lg text-center font-semibold">Join our community today and level up your resume game!</p>
+
+    <a href="#anchor-login" on:click={handleSmoothScroll}>Sign up or login</a>
+    <h2 id="anchor-login">Login</h2>
     <form action="">
       <div class="flex flex-col gap-5">
         <InputText placeholder="Email" bind:value={email}></InputText>
