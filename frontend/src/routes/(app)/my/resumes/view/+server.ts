@@ -9,7 +9,7 @@ export const POST: RequestHandler = async ({ request }) => {
     executablePath: await chromium.executablePath(),
     headless: true
   });
-  
+
   const page = await browser.newPage();
 
   await page.setContent(body, { waitUntil: "networkidle0" });
