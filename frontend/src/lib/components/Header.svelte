@@ -54,8 +54,8 @@
   <div class="container">
     <div class="flex justify-between">
       {#if $account}
-        <!-- <nav class="relative flex justify-start gap-10">
-          <div class="flex items-center gap-3">
+        <nav class="relative flex justify-start gap-10">
+         <!--  <div class="flex items-center gap-3">
             <a href="/my/page">My Page </a>
             <Button on:click={handleNotificationsView}>
               <div class="relative size-6">
@@ -82,10 +82,10 @@
                 ></CommentNotificationView>
               </div>
             </div>
-          {/if}
-        </nav> -->
+          {/if} -->
+        
         <div class="dropdown flex justify-start items-center" on:focusout={handleDropdownFocusLoss}>
-          <button class="btn m-1" on:click={handleDropdownClick} >
+          <button class="btn m-1 " on:click={handleDropdownClick} >
           {#if isDropdownOpen}
             <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -114,12 +114,36 @@
                     </svg>
             {/if}
           </button>
-          <ul class="dropdown-content menu p-2 shadow bg-slate-200 rounded-box w-52 leading-9 absolute left-0 top-16" style:visibility={isDropdownOpen ? 'visible' : 'hidden'}>
+          <ul class="dropdown-content menu p-2 shadow bg-slate-200 rounded-box w-52 leading-9 absolute top-14" style:visibility={isDropdownOpen ? 'visible' : 'hidden'}>
             <li><button class="btn text-black ml-2"><a href="/my/page">My Page </a></button></li>
             <li><button class="btn text-black ml-2"><a href="/community">Community</a></button></li>
           </ul>
         </div>
+        <Button on:click={handleNotificationsView}>
+          <div class="relative size-6 mt-1.5">
+            <BellIcon></BellIcon>
+            {#if commentNotifications.length}
+              <span
+                class="absolute -right-3 -top-2 rounded-full bg-slate-100 px-2 text-sm ring-1"
+              >
+                {commentNotifications.length}
+              </span>
+            {/if}
+          </div>
+        </Button>
+        {#if !isNotificationsViewHidden}
+            <div class="item absolute rounded-lg border-2 bg-slate-50 p-5 top-14">
+              <h3>
+                <a on:click={handleNotificationsView} href="/my/notifications">Notifications</a>
+              </h3>
 
+              <div role="button" aria-hidden="true" on:click={handleNotificationsView}>
+                <CommentNotificationView bind:value={commentNotifications} type="dropdown"
+                ></CommentNotificationView>
+              </div>
+            </div>
+          {/if}
+        </nav>
       {:else}
         <nav></nav>
       {/if}
