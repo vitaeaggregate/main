@@ -3,12 +3,19 @@ import chromium from "@sparticuz/chromium";
 import type { RequestHandler } from "@sveltejs/kit";
 
 export const POST: RequestHandler = async ({ request }) => {
-  const { body } = await request.json();
+  let { body } = await request.json();
   const browser = await puppeteer.launch({
     args: chromium.args,
     executablePath: await chromium.executablePath(),
     headless: true
   });
+
+  const normalizeCssLink =
+    "<link rel='https://necolas.github.io/normalize.css/8.0.1/normalize.css' />";
+
+  const tailwindLink = "<script src='https://cdn.tailwindcss.com'></script>";
+
+  body = normalizeCssLink + tailwindLink + body;
 
   const page = await browser.newPage();
 

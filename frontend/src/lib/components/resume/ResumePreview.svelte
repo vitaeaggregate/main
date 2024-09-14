@@ -1,52 +1,12 @@
 <script lang="ts">
-  import { getResumeById } from "$lib/api/resume";
   import type { Resume } from "$lib/interfaces/resume/Resume";
-  import { onMount } from "svelte";
-  import Button from "$lib/components/Button.svelte";
-  import src from "svelte-search";
 
-  let resume: Resume | null = null;
-  let sectionElement: HTMLElement | null = null;
-
-  onMount(() => {
-    loadResume();
-  });
-
-  const loadResume = async () => {
-    const result = await getResumeById(5);
-    resume = result;
-    console.log(resume);
-  };
-
-  const handleDownloadPdf = async () => {
-    if (!resume || !sectionElement) throw console.log("Resume not loaded.");
-
-    const body = sectionElement.innerHTML;
-
-    const response = await fetch("./view", {
-      method: "POST",
-      headers: {
-        "Content-Type": "applications/json"
-      },
-      body: JSON.stringify({ body })
-    });
-
-    if (!response.ok) throw console.log("Fetch error");
-
-    const blob = await response.blob();
-    const url = URL.createObjectURL(blob);
-    const invisibleLink = document.createElement("a");
-    invisibleLink.href = url;
-    invisibleLink.download = "resume.pdf";
-    invisibleLink.click();
-    URL.revokeObjectURL(url);
-  };
+  export let resume: Resume;
+  export let sectionElement: HTMLElement | null;
 </script>
 
 <section bind:this={sectionElement}>
   {#if resume}
-    <link rel="https://necolas.github.io/normalize.css/8.0.1/normalize.css" />
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap");
 
@@ -123,4 +83,3 @@
     </div>
   {/if}
 </section>
-<Button on:click={handleDownloadPdf}>Download</Button>
