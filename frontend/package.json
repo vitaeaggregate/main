@@ -49,6 +49,7 @@
     "jspdf": "^2.5.1",
     "pdf-lib": "^1.17.1",
     "pspdfkit": "^2024.5.1",
+    "puppeteer": "^23.3.0",
     "puppeteer-core": "^23.3.0",
     "svelte-lexical": "^0.4.1",
     "svelte-pdf": "^1.0.20",
