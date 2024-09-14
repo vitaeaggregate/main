@@ -1,9 +1,14 @@
 <script lang="ts">
   import AddressIcon from "$lib/icons/AddressIcon.svelte";
 import EmailIcon from "$lib/icons/EmailIcon.svelte";
+	import LanguageIcon from "$lib/icons/LanguageIcon.svelte";
 	import PhoneIcon from "$lib/icons/PhoneIcon.svelte";
+	import ProjectIcon from "$lib/icons/ProjectIcon.svelte";
+	import SkillsIcon from "$lib/icons/SkillsIcon.svelte";
 import type { Resume } from "$lib/interfaces/resume/Resume";
 import { slide } from 'svelte/transition';
+	import ProfessionalExpIcon from "$lib/icons/ProfessionalExpIcon.svelte";
+	import EducationIcon from "$lib/icons/EducationIcon.svelte";
 
   export let resume: Resume;
   export let sectionElement: HTMLElement | null;
@@ -52,7 +57,6 @@ import { slide } from 'svelte/transition';
       }
     </style>
 
-
     <div class="source-sans-3 flex flex-col gap-2">
       <div class="flex flex-col gap-2 bg-white rounded-xl p-4">
         <h1 class="lobster-two-bold-italic text-4xl">{resume.personal_info.full_name}</h1>
@@ -73,7 +77,7 @@ import { slide } from 'svelte/transition';
       {#if resume.skills.length}
       
         <div bind:this={container} class="flex flex-col gap-3 bg-white rounded-xl p-4">
-          <button on:click={() => showSkills = !showSkills }><h3 class="w-fit border-b-2 border-black">Skills</h3></button>
+          <button on:click={() => showSkills = !showSkills } class="flex flex-row gap-3"> <SkillsIcon /><h3 class="w-fit border-b-2 border-black">Skills</h3></button>
           {#if showSkills}
           <div transition:fadeSlide="{{duration: 300}}" class="grid grid-row-4 gap-10">
             {#each resume.skills as skill (skill.id)}
@@ -88,7 +92,7 @@ import { slide } from 'svelte/transition';
       {/if}
       {#if resume.languages.length}
         <div bind:this={container} class="flex flex-col gap-3 bg-white rounded-xl p-4">
-          <button on:click={() => showLanguages = !showLanguages }><h3 class="w-fit border-b-2 border-black">Languages</h3></button>
+          <button on:click={() => showLanguages = !showLanguages } class="flex flex-row gap-3"><LanguageIcon /><h3 class="w-fit border-b-2 border-black">Languages</h3></button>
           {#if showLanguages}
           <div transition:fadeSlide="{{duration: 300}}">
           <ul class="flex gap-10">
@@ -104,7 +108,7 @@ import { slide } from 'svelte/transition';
       {/if}
       {#if resume.projects.length}
         <div bind:this={container} class="flex flex-col gap-3 bg-white rounded-xl p-4">
-          <button on:click={() => showProjects = !showProjects }><h3 class="w-fit border-b-2 border-black">Projects</h3></button>
+          <button on:click={() => showProjects = !showProjects } class="flex flex-row gap-3"><ProjectIcon /><h3 class="w-fit border-b-2 border-black">Projects</h3></button>
           {#if showProjects}
           <div transition:fadeSlide="{{duration: 300}}" class="flex flex-col gap-5">
             {#each resume.projects as project (project.id)}
@@ -126,7 +130,7 @@ import { slide } from 'svelte/transition';
       {/if}
       {#if resume.professional_exps.length}
         <div bind:this={container} class="flex flex-col gap-3 bg-white rounded-xl p-4">
-          <button on:click={() => showProfessionalExp = !showProfessionalExp }><h3 class="w-fit border-b-2 border-black">Professional Experiences</h3></button>
+          <button on:click={() => showProfessionalExp = !showProfessionalExp } class="flex flex-row gap-3"><ProfessionalExpIcon /><h3 class="w-fit border-b-2 border-black">Professional Experiences</h3></button>
           {#if showProfessionalExp}
           <div transition:fadeSlide="{{duration: 300}}" class="flex flex-col gap-5">
             {#each resume.professional_exps as professional_exp (professional_exp.id)}
@@ -148,9 +152,9 @@ import { slide } from 'svelte/transition';
       {/if}
       {#if resume.educations.length}
         <div bind:this={container} class="flex flex-col gap-3  bg-white rounded-xl p-4">
-          <button on:click={() => showEducation = !showEducation }><h3 class="w-fit border-b-2 border-black">Education and Courses</h3></button>
+          <button on:click={() => showEducation = !showEducation } class="flex flex-row gap-3"><EducationIcon /><h3 class="w-fit border-b-2 border-black">Education and Courses</h3></button>
           {#if showEducation}
-          <div class="flex flex-col gap-5">
+          <div transition:fadeSlide="{{duration: 300}}" class="flex flex-col gap-5">
             {#each resume.educations as education (education.id)}
               <div class="flex flex-col gap-2">
                 <div class="grid grid-cols-3">

@@ -9,6 +9,7 @@
 	import EditIcon from "$lib/icons/EditIcon.svelte";
 	import DeleteIcon from "$lib/icons/DeleteIcon.svelte";
 	import DownloadIcon from "$lib/icons/DownloadIcon.svelte";
+	import PlusIcon from "$lib/icons/PlusIcon.svelte";
 
   let resume: Resume | null = null;
   let resumeElement: HTMLElement | null = null;
@@ -72,5 +73,9 @@
     <div class="mt-5 mb-5">
       <ResumePreview bind:resume bind:sectionElement={resumeElement}></ResumePreview>
     </div>
+    <div class="flex flex-row justify-center">
+    <div class="bg-amber-600 w-12 h-12 rounded-xl shadow-lg p-2.5">
+      <Button on:click={handleResumeEdit}><PlusIcon /></Button>
+  </div></div>
   </section>
 {/if}
