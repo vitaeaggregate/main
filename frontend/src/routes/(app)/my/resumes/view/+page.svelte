@@ -12,7 +12,7 @@
   });
 
   const loadResume = async () => {
-    const result = await getResumeById(5);
+    const result = await getResumeById(1);
     resume = result;
     console.log(resume);
   };
