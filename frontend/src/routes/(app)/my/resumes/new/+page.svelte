@@ -60,12 +60,12 @@
     <Toasts />
     <div>
       <h1>New Resume</h1>
-      <p>Fields marked with (*) are required</p>
+      <p>Fields marked with (*) are required!</p>
     </div>
-
-    <form class="flex flex-col gap-10">
+<br />
+    <form class="flex flex-col gap-10 ">
       <Resume bind:value={resume}></Resume>
-      <Button on:click={handleCreate}>Add Resume</Button>
+      <div class="h-18 w-32 rounded-xl bg-amber-600 p-3 shadow-lg mb-5 -mt-6 pl-4"><Button on:click={handleCreate}>Add Resume</Button></div>
     </form>
   </section>
 {/if}
