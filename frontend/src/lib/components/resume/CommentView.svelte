@@ -4,7 +4,6 @@
   import { deleteComment } from "$lib/api/comment";
   import CommentComponent from "$lib/components/resume/Comment.svelte";
   import type { Config } from "$lib/components/resume/Comment.svelte";
-    import DeleteIcon from "$lib/icons/DeleteIcon.svelte";
     import DeleteIconSmall from "$lib/icons/DeleteIconSmall.svelte";
 
   export let value: Comment | Comment[];
@@ -25,6 +24,7 @@
   {#if value.length}
     <div class="flex flex-col">
       {#each value as comment (comment.id)}
+      <Button><a href="/community/{comment.member}" class="italic">See all comments</a></Button>
         <div class="my-3 flex flex-col gap-3 border-l-8 p-4">
           <CommentComponent bind:value={comment} {config}></CommentComponent>
           {#if comment.can_delete}
