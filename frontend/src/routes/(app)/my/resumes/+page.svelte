@@ -56,7 +56,7 @@ function fadeSlide(node, options) {
 {#if $account}
   <section>
     <h1>My Resumes</h1>
-    <div class="h-12 w-16 rounded-xl bg-amber-600 p-3 shadow-lg mb-4 mt-4"><Button on:click={handleGoBack}>Back</Button></div>
+    <div class="h-12 w-16 rounded-xl bg-amber-600 p-3 shadow-lg mb-4 mt-4 text-center"><Button on:click={handleGoBack}>Back</Button></div>
     <div class="">
       {#if Object.keys(resumes).length}
         {#each Object.entries(resumes) as [resumeId, { resume, comments }]}
