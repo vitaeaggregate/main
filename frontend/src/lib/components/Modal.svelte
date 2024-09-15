@@ -23,10 +23,10 @@
     role="button"
     on:keyup={closeClick}
     tabindex={0}
-    class="absolute -z-10 size-full bg-slate-100 bg-opacity-65"
+    class="absolute -z-10 size-full bg-slate-100 bg-opacity-65 "
     on:click={closeClick}
   ></div>
-  <div class="m-5 rounded-lg border-2 bg-slate-100 p-3">
+  <div class="m-5 rounded-lg shadow-lg border-2 bg-white p-6 leading-10">
     <div class="flex justify-end gap-5">
       {#if backClick}
         <Button on:click={backClick}>Back</Button>

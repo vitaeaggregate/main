@@ -9,6 +9,8 @@
   import Button from "$lib/components/Button.svelte";
   import Modal from "$lib/components/Modal.svelte";
   import EditModal from "$lib/components/resume/EditModal.svelte";
+    import DeleteIcon from "$lib/icons/DeleteIcon.svelte";
+    import EditIcon from "$lib/icons/EditIcon.svelte";
   import { type BaseResumeTypes } from "$lib/interfaces/resume/BaseResumeTypes";
   import { type ComponentType } from "svelte";
 
@@ -53,21 +55,21 @@
   </Modal>
 {/if}
 {#if Array.isArray(value) && value.length}
-  <div class="flex w-full flex-col rounded-lg border-2 bg-slate-100 p-5">
+  <div class="flex w-full flex-col rounded-lg border-2 bg-white p-5">
     {#if config.unitLabel}
       <h2>{config.unitLabel + "s"}</h2>
     {/if}
-    <div class="flex flex-col divide-y">
+    <div class="flex flex-col divide-y gap-3">
       {#each value as item (item.id)}
         <div class="flex flex-col gap-3 p-2">
           <svelte:component this={component} bind:value={item} readOnly={config.readOnly}
           ></svelte:component>
-          <div class="flex gap-10">
-            <Button on:click={() => handleEdit(item)}>Edit</Button>
+          <div class="flex gap-5">
+            <Button on:click={() => handleEdit(item)}><EditIcon/></Button>
             <Button
               on:click={() => {
                 if (item.id) handleRemove(item.id);
-              }}>Remove</Button
+              }}><DeleteIcon/></Button
             >
           </div>
         </div>
