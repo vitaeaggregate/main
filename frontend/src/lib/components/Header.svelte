@@ -47,6 +47,10 @@
     if (relatedTarget instanceof HTMLElement && currentTarget.contains(relatedTarget)) return;
     isDropdownOpen = false;
   };
+  const handleNotificationFocusLoss = ({ relatedTarget, currentTarget }) => {
+    if (relatedTarget instanceof HTMLElement && currentTarget.contains(relatedTarget)) return;
+    isNotificationsViewHidden = true;
+  };
 </script>
 
 <header class="flex justify-center bg-green-800 p-4 px-10">
@@ -130,30 +134,33 @@
               </li>
             </ul>
           </div>
-          <Button on:click={handleNotificationsView}>
-            <div class="relative mt-1.5 size-6">
-              <BellIcon></BellIcon>
-              {#if commentNotifications.length}
-                <span
-                  class="absolute -right-3 -top-2 rounded-full bg-slate-100 px-2 text-sm ring-1"
-                >
-                  {commentNotifications.length}
-                </span>
-              {/if}
-            </div>
-          </Button>
-          {#if !isNotificationsViewHidden}
-            <div class="item absolute top-14 rounded-lg border-2 bg-slate-50 p-5">
-              <h3>
-                <a on:click={handleNotificationsView} href="/my/notifications">Notifications</a>
-              </h3>
-
-              <div role="button" aria-hidden="true" on:click={handleNotificationsView}>
-                <CommentNotificationView bind:value={commentNotifications} type="dropdown"
-                ></CommentNotificationView>
+          <div class="dropdown flex items-center justify-start"
+          on:focusout={handleNotificationFocusLoss}>
+            <Button on:click={handleNotificationsView}>
+              <div class="relative mt-1.5 size-6">
+                <BellIcon></BellIcon>
+                {#if commentNotifications.length}
+                  <span
+                    class="absolute -right-3 -top-2 rounded-full bg-slate-100 px-2 text-sm ring-1"
+                  >
+                    {commentNotifications.length}
+                  </span>
+                {/if}
               </div>
-            </div>
-          {/if}
+            </Button>
+            {#if !isNotificationsViewHidden}
+              <div class="item absolute top-14 rounded-lg border-2 bg-slate-50 p-5">
+                <h3>
+                  <a on:click={handleNotificationsView} href="/my/notifications">Notifications</a>
+                </h3>
+
+                <div role="button" aria-hidden="true" on:click={handleNotificationsView}>
+                  <CommentNotificationView bind:value={commentNotifications} type="dropdown"
+                  ></CommentNotificationView>
+                </div>
+              </div>
+            {/if}
+          </div>
         </nav>
       {:else}
         <nav></nav>
