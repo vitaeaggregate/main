@@ -20,7 +20,7 @@
   let modal: HTMLDivElement | null = null;
 </script>
 
-<div bind:this={modal} class="fixed left-0 top-0 z-10 flex size-full items-center justify-center">
+<div bind:this={modal} class="fixed left-0 top-0 z-50 flex size-full items-center justify-center">
   <div
     role="button"
     on:keyup={closeClick}

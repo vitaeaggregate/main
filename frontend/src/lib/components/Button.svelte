@@ -1,38 +1,46 @@
 <script context="module" lang="ts">
-  export type Style = "default" | "submit" | "add" | "cancel" | "sections" | "delete";
+  export type Style =
+    | "default"
+    | "submit"
+    | "full-width"
+    | "add"
+    | "cancel"
+    | "sections"
+    | "delete";
 </script>
 
 <script lang="ts">
   export let style: Style = "default";
-  let classes: string = "size-fit ";
+  let classes: string;
 
   switch (style) {
     case "default": {
+      classes = "size-fit";
       break;
     }
     case "submit": {
-      classes +=
-        "border-2 bg-white pl-3 pr-3 pt-1 pb-1 m-auto hover:bg-lime hover:text-white hover:ease-in duration-200 rounded-md";
+      classes =
+        "size-fit border-2 bg-white pl-3 pr-3 pt-1 pb-1 m-auto hover:bg-lime hover:text-white hover:ease-in duration-200 rounded-md";
+      break;
+    }
+    case "full-width": {
+      classes = "w-full";
       break;
     }
     case "add": {
-      classes +=
-      "h-max w-max rounded-xl bg-amber-600 p-3 shadow-lg text-center";
+      classes = "size-fit h-max w-max rounded-xl bg-amber-600 p-3 shadow-lg text-center bg-opacity-80";
       break;
     }
     case "cancel": {
-      classes +=
-      "h-max w-max rounded-xl bg-red-700 p-3 shadow-lg text-center";
+      classes = "size-fit h-max w-max rounded-xl bg-red-700 p-3 shadow-lg text-center";
       break;
     }
     case "sections": {
-      classes +=
-      "bg-white border-2 rounded-lg p-3 hover:bg-amber-600";
+      classes = "size-fit bg-white border-2 rounded-lg p-3 hover:bg-amber-600";
       break;
     }
     case "delete": {
-      classes +=
-      "flex h-max w-max rounded-xl bg-amber-600 p-3 shadow-lg";
+      classes = "size-fit flex h-max w-max rounded-xl bg-amber-600 p-3 shadow-lg";
       break;
     }
   }

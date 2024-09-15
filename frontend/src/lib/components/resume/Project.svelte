@@ -13,7 +13,8 @@
     end_date: undefined,
     description: ""
   };
-  export let readOnly: boolean = false;
+  export let readOnly = false;
+  export let isList = false;
 
   onMount(() => {
     if (value.id) return;
@@ -22,14 +23,25 @@
 </script>
 
 {#if readOnly}
-  <div>
-    <p><strong>Title:</strong> {value.title ? value.title : ""}</p>
-    <p><strong>Subtitle:</strong> {value.sub_title ? value.sub_title : ""}</p>
-    <p><strong>Start Date:</strong> {value.start_date ? value.start_date : ""}</p>
-    <p><strong>End Date:</strong> {value.end_date ? value.end_date : ""}</p>
-    <p><strong>Description:</strong></p>
-    <p class="whitespace-pre-line">{value.description ? value.description : ""}</p>
-  </div>
+  {#if isList}
+    <div>
+      <p>
+        <strong>{value.title ? value.title : ""}</strong> - {value.sub_title ? value.sub_title : ""}
+      </p>
+      <p>
+        {value.start_date ? value.start_date : ""} - {value.end_date ? value.end_date : ""}
+      </p>
+    </div>
+  {:else}
+    <div>
+      <p><strong>Title:</strong> {value.title ? value.title : ""}</p>
+      <p><strong>Subtitle:</strong> {value.sub_title ? value.sub_title : ""}</p>
+      <p><strong>Start Date:</strong> {value.start_date ? value.start_date : ""}</p>
+      <p><strong>End Date:</strong> {value.end_date ? value.end_date : ""}</p>
+      <p><strong>Description:</strong></p>
+      <p class="whitespace-pre-line">{value.description ? value.description : ""}</p>
+    </div>
+  {/if}
 {:else}
   <div>
     <InputText

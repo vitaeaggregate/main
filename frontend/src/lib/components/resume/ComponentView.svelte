@@ -1,6 +1,7 @@
 <script context="module" lang="ts">
   export interface ComponentConfig {
     readOnly?: boolean;
+    isList?: boolean;
     unitLabel: string;
   }
 </script>
@@ -9,18 +10,23 @@
   import Button from "$lib/components/Button.svelte";
   import Modal from "$lib/components/Modal.svelte";
   import EditModal from "$lib/components/resume/EditModal.svelte";
-    import DeleteIcon from "$lib/icons/DeleteIcon.svelte";
-    import EditIcon from "$lib/icons/EditIcon.svelte";
+  import DeleteIcon from "$lib/icons/DeleteIcon.svelte";
+  import EditIcon from "$lib/icons/EditIcon.svelte";
   import { type BaseResumeTypes } from "$lib/interfaces/resume/BaseResumeTypes";
   import { type ComponentType } from "svelte";
+  import SectionCard from "./SectionCard.svelte";
+
+  import { slide } from "svelte/transition";
 
   export let value: BaseResumeTypes;
   export let component: ComponentType | null = null;
   export let config: ComponentConfig = {
     unitLabel: "",
-    readOnly: false
+    readOnly: false,
+    isList: false
   };
 
+  let isVisible = false;
   let currentSection: BaseResumeTypes<true> | null;
 
   const handleRemove = (id: string | number) => {
@@ -55,25 +61,35 @@
   </Modal>
 {/if}
 {#if Array.isArray(value) && value.length}
-  <div class="flex w-full flex-col rounded-lg border-2 bg-white p-5 overflow-y-auto">
-    {#if config.unitLabel}
-      <h2>{config.unitLabel + "s"}</h2>
-    {/if}
-    <div class="flex flex-col divide-y gap-3">
-      {#each value as item (item.id)}
-      <div class="flex flex-col gap-3 p-2 text-wrap break-words text-ellipsis leading-8">
-        <svelte:component this={component} bind:value={item} readOnly={config.readOnly}
-        ></svelte:component>
-        <div class="flex gap-5">
-          <Button on:click={() => handleEdit(item)}><EditIcon /></Button>
-          <Button on:click={() => { if (item.id) handleRemove(item.id); }}>
-            <DeleteIcon />
-          </Button>
-        </div>
+  <SectionCard>
+    <Button on:click={() => (isVisible = isVisible ? false : true)} style="full-width">
+      <h2>
+        {config.unitLabel + "s"}
+      </h2>
+    </Button>
+    {#if isVisible}
+      <div
+        class="flex flex-col gap-3 divide-y"
+        in:slide={{ axis: "y", duration: 800 }}
+        out:slide={{ axis: "y", duration: 800 }}
+      >
+        {#each value as item (item.id)}
+          <div class="flex flex-col gap-3 text-ellipsis text-wrap break-words p-2 leading-8">
+            <svelte:component
+              this={component}
+              bind:value={item}
+              readOnly={config.readOnly}
+              isList={config.isList}
+            ></svelte:component>
+            <div class="flex gap-5">
+              <Button on:click={() => handleEdit(item)}><EditIcon /></Button>
+              <Button on:click={() => item.id && handleRemove(item.id)}><DeleteIcon /></Button>
+            </div>
+          </div>
+        {/each}
       </div>
-    {/each}
-    </div>
-  </div>
+    {/if}
+  </SectionCard>
 {:else if !Array.isArray(value)}
   <div class="flex flex-col">
     <h2>{config.unitLabel}</h2>
