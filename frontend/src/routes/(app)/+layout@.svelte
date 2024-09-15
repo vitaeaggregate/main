@@ -14,7 +14,7 @@
 {#if $account}
   <Header></Header>
   <main class="relative -z-10 flex justify-center">
-    <div class="container px-10">
+    <div class="container">
       <slot></slot>
     </div>
   </main>

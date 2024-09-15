@@ -12,7 +12,8 @@
     email: "",
     phone: ""
   };
-  export let readOnly: boolean = false;
+  export let readOnly = false;
+  export let isList = false;
 
   onMount(() => {
     if (value.id) return;
@@ -21,13 +22,24 @@
 </script>
 
 {#if readOnly}
-  <div>
-    <p><strong>Name:</strong> {value.name ? value.name : ""}</p>
-    <p><strong>Job Title:</strong> {value.job_title ? value.job_title : ""}</p>
-    <p><strong>Organization:</strong> {value.organization ? value.organization : ""}</p>
-    <p><strong>Email:</strong> {value.email ? value.email : ""}</p>
-    <p><strong>Phone:</strong> {value.phone ? value.phone : ""}</p>
-  </div>
+  {#if isList}
+    <div>
+      <p>
+        <strong>{value.name ? value.name : ""}</strong>, {value.job_title ? value.job_title : ""}
+      </p>
+      <p>
+        {value.organization ? value.organization : ""}
+      </p>
+    </div>
+  {:else}
+    <div>
+      <p><strong>Name:</strong> {value.name ? value.name : ""}</p>
+      <p><strong>Job Title:</strong> {value.job_title ? value.job_title : ""}</p>
+      <p><strong>Organization:</strong> {value.organization ? value.organization : ""}</p>
+      <p><strong>Email:</strong> {value.email ? value.email : ""}</p>
+      <p><strong>Phone:</strong> {value.phone ? value.phone : ""}</p>
+    </div>
+  {/if}
 {:else}
   <div>
     <InputText label="Name" required={true} bind:value={value.name} placeholder="Clark Kent" />

@@ -19,6 +19,8 @@
   import Button from "$lib/components/Button.svelte";
   import Modal from "../Modal.svelte";
   import ComponentView from "./ComponentView.svelte";
+  import PlusIcon from "$lib/icons/PlusIcon.svelte";
+  import SectionCard from "./SectionCard.svelte";
 
   export const id: number | null = null;
   export let value: BaseResume;
@@ -175,20 +177,28 @@
       />
       <InputCheckBox label="Share" bind:value={value.is_shareable}></InputCheckBox>
     </div>
-    <PersonalInfo bind:value={value.personal_info}></PersonalInfo>
+    <SectionCard>
+      <PersonalInfo bind:value={value.personal_info} readOnly={true}></PersonalInfo>
+    </SectionCard>
+
     <div class="flex flex-col items-start justify-center gap-5">
       {#each Object.entries(componentMap) as [text, map], index (index)}
         {#if map.key}
           <ComponentView
             bind:value={value[map.key]}
             component={map.component}
-            config={{ readOnly: true, unitLabel: text }}
+            config={{ readOnly: true, unitLabel: text, isList: true }}
           ></ComponentView>
         {/if}
       {/each}
     </div>
   </div>
-  <div class="fixed bottom-0 right-0 m-9 border-2 bg-slate-200 p-2">
-    <Button on:click={() => (isModalHidden = false)}>Add Section</Button>
+  <div class="m-5">
+    <Button on:click={() => (isModalHidden = false)} style="full-width">
+      <div class="flex w-full items-center justify-center">
+        <PlusIcon />
+        Add Section
+      </div>
+    </Button>
   </div>
 </section>
