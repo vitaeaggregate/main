@@ -8,6 +8,9 @@ export default {
       colors: {
         lime: "#A3B18A",
         orange: "#F2F1F1"
+      },
+      maxHeight: {
+        "128": "32rem"
       }
     }
   },
