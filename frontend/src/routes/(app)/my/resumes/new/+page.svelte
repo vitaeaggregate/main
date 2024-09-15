@@ -32,11 +32,9 @@
     skills: []
   };
 
-  const resumeStore = writable(resume);
-
   const loadPage = () => {};
 
-  const handleCreate = async () => {
+  const handleCreateClick = async () => {
     try {
       if (!$account || !resume) return;
       resume.member = $account.id;
@@ -66,12 +64,15 @@
       <h1>New Resume</h1>
       <p>Fields marked with (*) are required!</p>
     </div>
-<br />
-    <form class="flex flex-col gap-10 ">
+    <br />
+    <form class="flex flex-col gap-10">
       <Resume bind:value={resume}></Resume>
-      <div class="flex flex-row gap-3 mb-4 -mt-4">
-      <Button on:click={handleCreate} style="add">Add Resume</Button>
-      <Button on:click={handleCancelClick} style="cancel">Cancel</Button></div>
+      <div
+        class="fixed bottom-0 right-0 z-10 flex w-full justify-between gap-5 border-2 bg-slate-100 p-2"
+      >
+        <Button on:click={handleCreateClick} style="add">Save</Button>
+        <Button on:click={handleCancelClick} style="cancel">Cancel</Button>
+      </div>
     </form>
   </section>
 {/if}

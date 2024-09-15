@@ -69,19 +69,21 @@
     </Button>
     {#if isVisible}
       <div
-        class="flex flex-col gap-3 divide-y"
+        class="flex flex-col divide-y overflow-hidden"
         in:slide={{ axis: "y", duration: 800 }}
         out:slide={{ axis: "y", duration: 800 }}
       >
         {#each value as item (item.id)}
-          <div class="flex flex-col gap-3 text-ellipsis text-wrap break-words p-2 leading-8">
-            <svelte:component
-              this={component}
-              bind:value={item}
-              readOnly={config.readOnly}
-              isList={config.isList}
-            ></svelte:component>
-            <div class="flex gap-5">
+          <div class="grid auto-cols-auto grid-flow-col gap-3 p-2 leading-8 divide-x-2">
+            <div class="truncate">
+              <svelte:component
+                this={component}
+                bind:value={item}
+                readOnly={config.readOnly}
+                isList={config.isList}
+              ></svelte:component>
+            </div>
+            <div class="flex gap-5 justify-self-end px-2 self-center">
               <Button on:click={() => handleEdit(item)}><EditIcon /></Button>
               <Button on:click={() => item.id && handleRemove(item.id)}><DeleteIcon /></Button>
             </div>
