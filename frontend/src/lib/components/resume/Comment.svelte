@@ -39,7 +39,9 @@
   {/if}
   <div>
     <p>{value.description}</p>
-    <p class="italic">{value.created_at && new TimeAgo("en-US").format(new Date(value.created_at))}</p>
+    <p class="italic">
+      {value.created_at && new TimeAgo("en-US").format(new Date(value.created_at))}
+    </p>
   </div>
 {:else}
   <div>
