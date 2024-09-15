@@ -28,7 +28,7 @@
     class="absolute -z-10 size-full bg-slate-100 bg-opacity-65"
     on:click={closeClick}
   ></div>
-  <div class="m-5 rounded-lg shadow-lg border-2 bg-white p-6 leading-9 max-h-128 overflow-y-auto">
+  <div class="m-5 rounded-lg shadow-lg border-2 bg-white p-6 leading-9 max-h-128 overflow-y-auto w-80">
     <div class="flex justify-end gap-5 -mt-3">
       {#if backClick}
        <div class="mt-1.5"><Button on:click={backClick}><ReturnIcon /></Button></div>

@@ -91,7 +91,7 @@
             class="dropdown flex items-center justify-start"
             on:focusout={handleDropdownFocusLoss}
           >
-            <button class="btn m-1" on:click={handleDropdownClick}>
+            <button class="btn m-1 -ml-3" on:click={handleDropdownClick}>
               {#if isDropdownOpen}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -125,7 +125,7 @@
               {/if}
             </button>
             <ul
-              class="dropdown-content menu rounded-box absolute top-14 w-52 bg-slate-200 p-2 leading-9 shadow"
+              class="dropdown-content menu rounded-box absolute top-14 w-52 bg-white p-2 leading-9 shadow-xl -ml-3"
               style:visibility={isDropdownOpen ? "visible" : "hidden"}
             >
               <li><button class="btn ml-2 text-black"><a href="/my/page">My Page </a></button></li>

@@ -10,6 +10,7 @@
   import { goto } from "$app/navigation";
   import ResumeIcon from "$lib/icons/ResumeIcon.svelte";
   import FullListIcon from "$lib/icons/FullListIcon.svelte";
+    import DeleteIconSmall from "$lib/icons/DeleteIconSmall.svelte";
 
   export const id = writable<number | null>(null);
   export const resumeId = writable<number | null>(null);
@@ -86,7 +87,9 @@
                     config={{ isReadyOnly: true, isResumeTitleHidden: true }}
                   ></CommentView> -->
                   <div class="flex justify-end">
-                    <Button on:click={() => handleResumeDelete(resumeId)}>Delete Resume</Button>
+                    <div class="flex h-10 w-10 rounded-xl bg-amber-600 p-3 shadow-lg">
+                    <Button on:click={() => handleResumeDelete(resumeId)}><DeleteIconSmall /></Button>
+                  </div>
                   </div>
                 </div>
               {/each}
