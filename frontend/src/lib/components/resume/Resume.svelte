@@ -77,8 +77,15 @@
   const addCurrentSection = () => {
     if (!currentSectionMap || !currentSectionMap.key) return;
     // Add the next
-    value[currentSectionMap.key] = [...value[currentSectionMap.key], {}];
-    currentSectionMap.componentValue = {};
+    
+    // value[currentSectionMap.key] = [...value[currentSectionMap.key], {}];
+   currentSectionMap.componentValue = {};
+
+    closeModalClick()
+
+
+
+    
   };
 
   const closeModalClick = (event?: Event) => {
@@ -158,7 +165,7 @@
               config={{ unitLabel: currentSectionMap.label }}
             ></ComponentView>
             <div class="flex justify-between">
-              <div class="h-10 w-20 rounded-xl bg-amber-600 shadow-lg text-center"><Button on:click={addCurrentSection}>Add</Button></div>
+              <div class="h-10 w-20 rounded-xl bg-amber-600 shadow-lg text-center "><Button on:click={addCurrentSection}>Add</Button></div>
               <div class="h-10 w-20 rounded-xl bg-red-700 shadow-lg text-center"><Button on:click={cancelCurrentSection}>Cancel</Button></div>
             </div>
           </div>
