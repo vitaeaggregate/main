@@ -76,6 +76,7 @@
     goto("/my/page");
   };
 
+  //TODO: Remove this
   const handleResumeEdit = () => {
     if (!resume) return;
     goto(`/my/resumes/${resume.id}/edit`);
@@ -126,14 +127,14 @@
       <Button on:click={handleResumeDelete}>Delete</Button>
       <Button on:click={handleDownloadPdf}>Download</Button>
     </div>
-    <div class="grid grid-cols-1 gap-10 overflow-hidden p-5">
+    <div class="grid grid-cols-1 gap-10 overflow-hidden">
       <ResumeComponent bind:value={resume}></ResumeComponent>
       {#if isModified}
         <div
-          class="fixed bottom-0 right-0 z-10 flex w-full justify-between gap-5 border-2 bg-slate-100 p-5"
+          class="fixed bottom-0 right-0 z-10 flex w-full justify-between gap-5 border-2 bg-slate-100 p-2"
         >
-          <Button on:click={handleSaveClick}>Save</Button>
-          <Button on:click={handleCancelClick}>Cancel</Button>
+          <Button on:click={handleSaveClick} style="add">Save</Button>
+          <Button on:click={handleCancelClick} style="cancel">Cancel</Button>
         </div>
       {/if}
       <div class="rounded-lg bg-slate-100 p-5 shadow-lg">

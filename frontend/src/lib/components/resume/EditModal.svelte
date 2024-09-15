@@ -1,21 +1,25 @@
 <script lang="ts">
   import Button from "$lib/components/Button.svelte";
+  import type { BaseResumeTypes } from "$lib/interfaces/resume/BaseResumeTypes";
   import { onMount, tick, type ComponentType } from "svelte";
 
   export let component: ComponentType;
-  export let value: {};
+  export let value: BaseResumeTypes<true> = {};
   export let title: string = "";
   export let closeModalClick: () => void;
 
-  let initialValue: {};
+  let initialValue: BaseResumeTypes<true> = {};
 
   onMount(() => {
     initialValue = { ...value };
   });
 
   const handleCancelClick = () => {
-    value = { ...initialValue };
-    closeModalClick();
+    if (!value) return;
+    for (const key in initialValue) {
+      value[key] = initialValue[key];
+    }
+    // closeModalClick();
   };
 </script>
 
