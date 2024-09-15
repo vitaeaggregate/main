@@ -87,9 +87,7 @@
                     config={{ isReadyOnly: true, isResumeTitleHidden: true }}
                   ></CommentView> -->
                   <div class="flex justify-end">
-                    <div class="flex h-10 w-10 rounded-xl bg-amber-600 p-3 shadow-lg">
-                    <Button on:click={() => handleResumeDelete(resumeId)}><DeleteIconSmall /></Button>
-                  </div>
+                    <Button on:click={() => handleResumeDelete(resumeId)} style="delete"><DeleteIconSmall /></Button>
                   </div>
                 </div>
               {/each}

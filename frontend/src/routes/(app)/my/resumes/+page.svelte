@@ -7,7 +7,7 @@
   import type { Comment } from "$lib/interfaces/resume/Comment";
   import { account } from "$lib/store";
   import { getCommentsByResumeId } from "$lib/api/comment";
-    import { slide } from "svelte/transition";
+  import { slide } from "svelte/transition";
 
   let resumes: {
     [id: number]: {
@@ -55,9 +55,12 @@ function fadeSlide(node, options) {
 
 {#if $account}
   <section>
+  
     <h1>My Resumes</h1>
-    <div class="h-12 w-16 rounded-xl bg-amber-600 p-3 shadow-lg mb-4 mt-4 text-center"><Button on:click={handleGoBack}>Back</Button></div>
-    <div class="">
+    <div class="my-3">
+    <Button on:click={handleGoBack} style="cancel">Back</Button>
+  </div>
+    <div>
       {#if Object.keys(resumes).length}
         {#each Object.entries(resumes) as [resumeId, { resume, comments }]}
           <div class="mb-2 rounded-xl border-2 bg-white p-4">

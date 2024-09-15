@@ -29,8 +29,8 @@
           <CommentComponent bind:value={comment} {config}></CommentComponent>
           {#if comment.can_delete}
           <div class="flex justify-end -mb-5 -mt-3">
-          <div class="flex h-10 w-10 rounded-xl bg-amber-600 p-3 shadow-lg">
-            <Button on:click={() => comment.id && handleDelete(comment.id)}><DeleteIconSmall /></Button></div></div>
+        
+            <Button on:click={() => comment.id && handleDelete(comment.id)} style="delete"><DeleteIconSmall /></Button></div>
           {/if}
         </div>
       {/each}
