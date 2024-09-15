@@ -52,6 +52,10 @@
     }
   };
 
+  const handleCancelClick = () => {
+    goto("/my/page");
+  };
+
   $: if ($account) loadPage();
 </script>
 
@@ -60,12 +64,14 @@
     <Toasts />
     <div>
       <h1>New Resume</h1>
-      <p>Fields marked with (*) are required</p>
+      <p>Fields marked with (*) are required!</p>
     </div>
-
-    <form class="flex flex-col gap-10">
+<br />
+    <form class="flex flex-col gap-10 ">
       <Resume bind:value={resume}></Resume>
-      <Button on:click={handleCreate}>Add Resume</Button>
+      <div class="flex flex-row gap-3 mb-4 -mt-4">
+      <Button on:click={handleCreate} style="add">Add Resume</Button>
+      <Button on:click={handleCancelClick} style="cancel">Cancel</Button></div>
     </form>
   </section>
 {/if}

@@ -79,8 +79,11 @@
   const addCurrentSection = () => {
     if (!currentSectionMap || !currentSectionMap.key) return;
     // Add the next
-    value[currentSectionMap.key] = [...value[currentSectionMap.key], {}];
+
+    // value[currentSectionMap.key] = [...value[currentSectionMap.key], {}];
     currentSectionMap.componentValue = {};
+
+    closeModalClick();
   };
 
   const closeModalClick = (event?: Event) => {
@@ -143,12 +146,13 @@
     <Modal closeClick={closeModalClick} backClick={backModalClick}>
       <div>
         <div class="flex justify-center">
-          <h2>Add Section</h2>
+          <h1 class="mb-3">Add Section</h1>
+          <br />
         </div>
         {#if !currentSectionMap}
-          <div class="flex flex-wrap justify-center gap-5">
+          <div class="flex flex-wrap justify-center gap-4 p-4">
             {#each Object.entries(componentMap) as [text, map], index (index)}
-              <Button on:click={() => addSection(map)}>{text}</Button>
+              <Button on:click={() => addSection(map)} style="sections">{text}</Button>
             {/each}
           </div>
         {:else}
@@ -159,8 +163,8 @@
               config={{ unitLabel: currentSectionMap.label }}
             ></ComponentView>
             <div class="flex justify-between">
-              <Button on:click={addCurrentSection}>Add</Button>
-              <Button on:click={cancelCurrentSection}>Cancel</Button>
+              <Button on:click={addCurrentSection} style="add">Add</Button>
+              <Button on:click={cancelCurrentSection} style="cancel">Cancel</Button>
             </div>
           </div>
         {/if}
@@ -193,11 +197,18 @@
       {/each}
     </div>
   </div>
-  <div class="m-5">
-    <Button on:click={() => (isModalHidden = false)} style="full-width">
+  <div class="mt-5 flex flex-row justify-center">
+    <Button on:click={() => (isModalHidden = false)} style="add">
       <div class="flex w-full items-center justify-center">
         <PlusIcon />
         Add Section
+      </div>
+    </Button>
+  </div>
+  <div class="fixed bottom-0 right-0 z-10 mx-5 my-20">
+    <Button on:click={() => (isModalHidden = false)} style="add">
+      <div class="flex w-full items-center justify-center">
+        <PlusIcon />
       </div>
     </Button>
   </div>

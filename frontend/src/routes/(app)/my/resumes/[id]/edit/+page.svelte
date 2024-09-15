@@ -50,8 +50,9 @@
   <Toasts />
   <h1>Edit Resume</h1>
   {#if resume}
-    <Button on:click={handleCancelClick}>Cancel</Button>
-    <Button on:click={handleSaveClick}>Save</Button>
-    <ResumeComponent bind:value={resume}></ResumeComponent>
+  <div class="flex flex-row gap-3 my-4">
+    <Button on:click={handleCancelClick} style="cancel">Cancel</Button>
+    <Button on:click={handleSaveClick} style="add">Save</Button></div>
+    <ResumeComponent bind:value={resume}></ResumeComponent><br />
   {/if}
 </section>

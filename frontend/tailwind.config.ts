@@ -9,8 +9,8 @@ export default {
         lime: "#A3B18A",
         orange: "#F2F1F1"
       },
-      screens: {
-        page: { raw: "page" }
+      maxHeight: {
+        "128": "32rem"
       }
     }
   },

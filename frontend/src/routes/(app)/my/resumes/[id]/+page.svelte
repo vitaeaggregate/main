@@ -9,6 +9,7 @@
   import ResumeComponent from "$lib/components/resume/Resume.svelte";
   import { onDestroy } from "svelte";
   import Toasts from "$lib/components/Toasts.svelte";
+  import PlusIcon from "$lib/icons/PlusIcon.svelte";
 
   let resume: Resume | null = null;
   let originalResume: string | null = null;

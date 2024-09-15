@@ -1,5 +1,12 @@
 <script context="module" lang="ts">
-  export type Style = "default" | "submit" | "full-width";
+  export type Style =
+    | "default"
+    | "submit"
+    | "full-width"
+    | "add"
+    | "cancel"
+    | "sections"
+    | "delete";
 </script>
 
 <script lang="ts">
@@ -18,6 +25,23 @@
     }
     case "full-width": {
       classes = "w-full";
+      break;
+    }
+    case "add": {
+      classes = "size-fit h-max w-max rounded-xl bg-amber-600 p-3 shadow-lg text-center bg-opacity-80";
+      break;
+    }
+    case "cancel": {
+      classes = "size-fit h-max w-max rounded-xl bg-red-700 p-3 shadow-lg text-center";
+      break;
+    }
+    case "sections": {
+      classes = "size-fit bg-white border-2 rounded-lg p-3 hover:bg-amber-600";
+      break;
+    }
+    case "delete": {
+      classes = "size-fit flex h-max w-max rounded-xl bg-amber-600 p-3 shadow-lg";
+      break;
     }
   }
 </script>

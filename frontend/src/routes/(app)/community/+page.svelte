@@ -70,12 +70,12 @@
     </div>
   </div>
   <h1>Community Resumes</h1>
-  <Search bind:value={searchTerm} label="Search:" class="text-m m-2, border-1, border-solid p-2" />
-  <div class="flex flex-row justify-center">
-    <div class="mr-1 h-10 w-32 items-center rounded-xl bg-white p-2">
+  <Search bind:value={searchTerm} label="Search:" class="text-m m-2, border-1, border-solid p-2 rounded-xl" />
+  <div class="flex flex-row justify-center gap-3">
+    <div class="mr-1 h-10 w-32 items-center text-center rounded-xl bg-white p-2">
       <Button on:click={handleFilterByCreationDate}>Date Created</Button>
     </div>
-    <div class="mr-1 h-10 w-32 items-center rounded-xl bg-white p-2">
+    <div class="mr-1 h-10 w-32 items-center text-center rounded-xl bg-white p-2">
       <Button on:click={handleFilterByUpdateDate}>Date Updated</Button>
     </div>
   </div>

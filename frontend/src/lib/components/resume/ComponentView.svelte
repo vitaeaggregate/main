@@ -10,6 +10,8 @@
   import Button from "$lib/components/Button.svelte";
   import Modal from "$lib/components/Modal.svelte";
   import EditModal from "$lib/components/resume/EditModal.svelte";
+  import DeleteIcon from "$lib/icons/DeleteIcon.svelte";
+  import EditIcon from "$lib/icons/EditIcon.svelte";
   import { type BaseResumeTypes } from "$lib/interfaces/resume/BaseResumeTypes";
   import { type ComponentType } from "svelte";
   import SectionCard from "./SectionCard.svelte";
@@ -67,21 +69,21 @@
     </Button>
     {#if isVisible}
       <div
-        class="flex flex-col divide-y"
+        class="flex flex-col gap-3 divide-y"
         in:slide={{ axis: "y", duration: 800 }}
         out:slide={{ axis: "y", duration: 800 }}
       >
         {#each value as item (item.id)}
-          <div class="flex flex-col gap-3 p-2">
+          <div class="flex flex-col gap-3 text-ellipsis text-wrap break-words p-2 leading-8">
             <svelte:component
               this={component}
               bind:value={item}
               readOnly={config.readOnly}
               isList={config.isList}
             ></svelte:component>
-            <div class="flex gap-10">
-              <Button on:click={() => handleEdit(item)}>Edit</Button>
-              <Button on:click={() => item.id && handleRemove(item.id)}>Remove</Button>
+            <div class="flex gap-5">
+              <Button on:click={() => handleEdit(item)}><EditIcon /></Button>
+              <Button on:click={() => item.id && handleRemove(item.id)}><DeleteIcon /></Button>
             </div>
           </div>
         {/each}
