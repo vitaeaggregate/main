@@ -97,26 +97,29 @@
     event.preventDefault();
     const link = event.currentTarget;
     const anchorId = new URL(link.href).hash.replace("#", "");
-    const anchor = document.getElementById(anchorId);   
-
+    const anchor = document.getElementById(anchorId);
     if (anchor) {
       window.scrollTo({
         top: anchor.offsetTop,
-        behavior: "smooth"   
-
+        behavior: "smooth"
       });
     }
   };
 </script>
 
-<div class="relative flex h-full justify-center ml-4 mr-4">
+<div class="relative ml-4 mr-4 flex h-full justify-center">
   <Toasts />
   <div class="z-50 mt-8 flex w-fit flex-col items-center gap-4">
     <img src={Logo} alt="Logo" class="h-24 w-auto opacity-30" />
     <h1>Vitae Aggregate</h1>
-    <p class="text-xl text-center">Your Resume, Enhanced.</p>
-        <p class="text-lg text-center">Get personalized feedback from the community to craft a standout resume. Create, share, and collaborate in a supportive environment.      </p>
-    <p class="text-lg text-center font-semibold">Join our community today and level up your resume game!</p>
+    <p class="text-center text-xl">Your Resume, Enhanced.</p>
+    <p class="text-center text-lg">
+      Get personalized feedback from the community to craft a standout resume. Create, share, and
+      collaborate in a supportive environment.
+    </p>
+    <p class="text-center text-lg font-semibold">
+      Join our community today and level up your resume game!
+    </p>
 
     <a href="#anchor-login" on:click={handleSmoothScroll}>Sign up or login</a>
     <h2 id="anchor-login">Login</h2>

@@ -24,7 +24,15 @@
   </div>
 {:else}
   <div>
-    <InputText label="Name" bind:value={value.name} placeholder="Google Project Management Certification"/>
-    <TextArea label="Description" bind:value={value.description} placeholder="3 month program learning Google's Project Management Techniques"/>
+    <InputText
+      label="Name"
+      bind:value={value.name}
+      placeholder="Google Project Management Certification"
+    />
+    <TextArea
+      label="Description"
+      bind:value={value.description}
+      placeholder="3 month program learning Google's Project Management Techniques"
+    />
   </div>
 {/if}

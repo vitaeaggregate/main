@@ -29,8 +29,13 @@
   </div>
 {:else}
   <div>
-    <InputText label="Title" required={true} bind:value={value.title} placeholder="Why I Came to Japan"/>
-    <InputText label="Publisher" bind:value={value.publisher} placeholder="Time Magazine"/>
+    <InputText
+      label="Title"
+      required={true}
+      bind:value={value.title}
+      placeholder="Why I Came to Japan"
+    />
+    <InputText label="Publisher" bind:value={value.publisher} placeholder="Time Magazine" />
     <InputDate label="Date" bind:value={value.date} />
     <TextArea label="Description" bind:value={value.description} />
   </div>
