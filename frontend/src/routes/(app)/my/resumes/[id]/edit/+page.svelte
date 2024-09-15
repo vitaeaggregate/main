@@ -51,8 +51,8 @@
   <h1>Edit Resume</h1>
   {#if resume}
   <div class="flex flex-row gap-3 my-4">
-    <div class="h-18 w-20 rounded-xl bg-red-700 p-3 shadow-lg text-center"><Button on:click={handleCancelClick}>Cancel</Button></div>
-    <div class="h-18 w-20 rounded-xl bg-amber-600 p-3 shadow-lg text-center"><Button on:click={handleSaveClick}>Save</Button></div></div>
+    <Button on:click={handleCancelClick} style="cancel">Cancel</Button>
+    <Button on:click={handleSaveClick} style="add">Save</Button></div>
     <ResumeComponent bind:value={resume}></ResumeComponent><br />
   {/if}
 </section>

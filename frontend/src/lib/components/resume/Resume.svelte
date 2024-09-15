@@ -83,9 +83,6 @@
 
     closeModalClick()
 
-
-
-    
   };
 
   const closeModalClick = (event?: Event) => {
@@ -154,7 +151,7 @@
         {#if !currentSectionMap}
           <div class="flex flex-wrap justify-center gap-4 p-4">
             {#each Object.entries(componentMap) as [text, map], index (index)}
-              <div class="bg-white border-2 rounded-lg p-3 hover:bg-amber-600"><Button on:click={() => addSection(map)}>{text}</Button></div>
+              <Button on:click={() => addSection(map)} style="sections">{text}</Button>
             {/each}
           </div>
         {:else}
@@ -165,8 +162,8 @@
               config={{ unitLabel: currentSectionMap.label }}
             ></ComponentView>
             <div class="flex justify-between">
-              <div class="h-10 w-20 rounded-xl bg-amber-600 shadow-lg text-center "><Button on:click={addCurrentSection}>Add</Button></div>
-              <div class="h-10 w-20 rounded-xl bg-red-700 shadow-lg text-center"><Button on:click={cancelCurrentSection}>Cancel</Button></div>
+             <Button on:click={addCurrentSection} style="add">Add</Button>
+              <Button on:click={cancelCurrentSection} style="cancel">Cancel</Button>
             </div>
           </div>
         {/if}
@@ -196,7 +193,7 @@
       {/each}
     </div>
   </div>
-  <div class="fixed bottom-0 right-0 m-3 border-2 h-20 w-24 rounded-xl bg-amber-600 p-3 shadow-lg text-center">
-    <Button on:click={() => (isModalHidden = false)}>Add Section</Button>
+  <div class="fixed bottom-0 right-0 m-3 border-2">
+    <Button on:click={() => (isModalHidden = false)} style="add">Add Section</Button>
   </div>
 </section>

@@ -74,9 +74,7 @@
       <ResumePreview bind:resume bind:sectionElement={resumeElement}></ResumePreview>
     </div>
     <div class="flex flex-row justify-center">
-      <div class="h-12 w-12 rounded-xl bg-amber-600 p-2.5 shadow-lg">
-        <Button on:click={handleResumeEdit}><PlusIcon /></Button>
-      </div>
+      <Button on:click={handleResumeEdit} style="add"><PlusIcon /></Button>
     </div>
   </section>
 {/if}
