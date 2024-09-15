@@ -26,8 +26,12 @@
   </div>
 {:else}
   <div>
-    <InputText label="Name" required={true} bind:value={value.name} placeholder="Javascript"/>
-    <TextArea label="Description" bind:value={value.description} placeholder="Frameworks: Svelte, React"/>
-    <InputText label="Skill Level" bind:value={value.skill_level} placeholder="Expert"/>
+    <InputText label="Name" required={true} bind:value={value.name} placeholder="Javascript" />
+    <TextArea
+      label="Description"
+      bind:value={value.description}
+      placeholder="Frameworks: Svelte, React"
+    />
+    <InputText label="Skill Level" bind:value={value.skill_level} placeholder="Expert" />
   </div>
 {/if}

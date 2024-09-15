@@ -167,7 +167,12 @@
   {/if}
   <div class="flex flex-col gap-5">
     <div class="flex flex-col gap-2">
-      <InputText label="Resume Name" required={true} bind:value={value.title} placeholder="[Company Name]: [Position]"/>
+      <InputText
+        label="Resume Name"
+        required={true}
+        bind:value={value.title}
+        placeholder="[Company Name]: [Position]"
+      />
       <InputCheckBox label="Share" bind:value={value.is_shareable}></InputCheckBox>
     </div>
     <PersonalInfo bind:value={value.personal_info}></PersonalInfo>

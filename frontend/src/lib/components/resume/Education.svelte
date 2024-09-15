@@ -35,12 +35,12 @@
   </div>
 {:else}
   <div>
-    <InputText label="Degree" bind:value={value.degree} placeholder="Computer Science"/>
-    <InputText label="Institution" bind:value={value.institution} placeholder="MIT"/>
-    <InputText label="City" bind:value={value.city} placeholder="Cambridge"/>
-    <InputText label="Country" bind:value={value.country} placeholder="Massachusetts"/>
+    <InputText label="Degree" bind:value={value.degree} placeholder="Computer Science" />
+    <InputText label="Institution" bind:value={value.institution} placeholder="MIT" />
+    <InputText label="City" bind:value={value.city} placeholder="Cambridge" />
+    <InputText label="Country" bind:value={value.country} placeholder="Massachusetts" />
     <InputDate label="Start Date" bind:value={value.start_date} />
     <InputDate label="End Date" bind:value={value.end_date} />
-    <TextArea label="Description" bind:value={value.description} placeholder="Achievements"/>
+    <TextArea label="Description" bind:value={value.description} placeholder="Achievements" />
   </div>
 {/if}

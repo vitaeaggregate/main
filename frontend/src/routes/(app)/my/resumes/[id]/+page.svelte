@@ -6,10 +6,10 @@
   import { goto } from "$app/navigation";
   import Button from "$lib/components/Button.svelte";
   import ResumePreview from "$lib/components/resume/ResumePreview.svelte";
-	import EditIcon from "$lib/icons/EditIcon.svelte";
-	import DeleteIcon from "$lib/icons/DeleteIcon.svelte";
-	import DownloadIcon from "$lib/icons/DownloadIcon.svelte";
-	import PlusIcon from "$lib/icons/PlusIcon.svelte";
+  import EditIcon from "$lib/icons/EditIcon.svelte";
+  import DeleteIcon from "$lib/icons/DeleteIcon.svelte";
+  import DownloadIcon from "$lib/icons/DownloadIcon.svelte";
+  import PlusIcon from "$lib/icons/PlusIcon.svelte";
 
   let resume: Resume | null = null;
   let resumeElement: HTMLElement | null = null;
@@ -57,25 +57,26 @@
 {#if $account && $page.params.id && resume}
   <section>
     <div class="flex">
-      <div class="bg-white mr-1 w-36 h-24 rounded-xl p-4 items-center">
+      <div class="mr-1 h-24 w-36 items-center rounded-xl bg-white p-4">
         <EditIcon /><br />
         <Button on:click={handleResumeEdit}>Edit</Button>
-    </div>
-    <div class="bg-white mr-1 w-36 h-24 rounded-xl p-4 items-center">
-        <DeleteIcon/><br />
-      <Button on:click={handleResumeDelete}>Delete</Button>
-  </div>
-  <div class="bg-white mr-1 w-36 h-24 rounded-xl p-4 items-center">
+      </div>
+      <div class="mr-1 h-24 w-36 items-center rounded-xl bg-white p-4">
+        <DeleteIcon /><br />
+        <Button on:click={handleResumeDelete}>Delete</Button>
+      </div>
+      <div class="mr-1 h-24 w-36 items-center rounded-xl bg-white p-4">
         <DownloadIcon /><br />
-    <Button on:click={handleDownloadPdf}>Download</Button>
-</div>
+        <Button on:click={handleDownloadPdf}>Download</Button>
+      </div>
     </div>
-    <div class="mt-5 mb-5">
+    <div class="mb-5 mt-5">
       <ResumePreview bind:resume bind:sectionElement={resumeElement}></ResumePreview>
     </div>
     <div class="flex flex-row justify-center">
-    <div class="bg-amber-600 w-12 h-12 rounded-xl shadow-lg p-2.5">
-      <Button on:click={handleResumeEdit}><PlusIcon /></Button>
-  </div></div>
+      <div class="h-12 w-12 rounded-xl bg-amber-600 p-2.5 shadow-lg">
+        <Button on:click={handleResumeEdit}><PlusIcon /></Button>
+      </div>
+    </div>
   </section>
 {/if}

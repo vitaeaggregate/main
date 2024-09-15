@@ -41,13 +41,12 @@
 
   const handleDropdownClick = () => {
     isDropdownOpen = !isDropdownOpen;
-  }
+  };
 
   const handleDropdownFocusLoss = ({ relatedTarget, currentTarget }) => {
-    if (relatedTarget instanceof HTMLElement && currentTarget.contains(relatedTarget)) return 
-    isDropdownOpen = false
-  }
-
+    if (relatedTarget instanceof HTMLElement && currentTarget.contains(relatedTarget)) return;
+    isDropdownOpen = false;
+  };
 </script>
 
 <header class="flex justify-center bg-green-800 p-4 px-10">
@@ -55,7 +54,7 @@
     <div class="flex justify-between">
       {#if $account}
         <nav class="relative flex justify-start gap-10">
-         <!--  <div class="flex items-center gap-3">
+          <!--  <div class="flex items-center gap-3">
             <a href="/my/page">My Page </a>
             <Button on:click={handleNotificationsView}>
               <div class="relative size-6">
@@ -83,56 +82,68 @@
               </div>
             </div>
           {/if} -->
-        
-        <div class="dropdown flex justify-start items-center" on:focusout={handleDropdownFocusLoss}>
-          <button class="btn m-1 " on:click={handleDropdownClick} >
-          {#if isDropdownOpen}
-            <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      class="inline-block h-6 w-6 stroke-current">
-                      <title>Close Dropdown</title>
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-            {:else}
-            <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      class="inline-block h-6 w-6 stroke-current">
-                      <title>Open Dropdown</title>
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-            {/if}
-          </button>
-          <ul class="dropdown-content menu p-2 shadow bg-slate-200 rounded-box w-52 leading-9 absolute top-14" style:visibility={isDropdownOpen ? 'visible' : 'hidden'}>
-            <li><button class="btn text-black ml-2"><a href="/my/page">My Page </a></button></li>
-            <li><button class="btn text-black ml-2"><a href="/community">Community</a></button></li>
-          </ul>
-        </div>
-        <Button on:click={handleNotificationsView}>
-          <div class="relative size-6 mt-1.5">
-            <BellIcon></BellIcon>
-            {#if commentNotifications.length}
-              <span
-                class="absolute -right-3 -top-2 rounded-full bg-slate-100 px-2 text-sm ring-1"
-              >
-                {commentNotifications.length}
-              </span>
-            {/if}
+
+          <div
+            class="dropdown flex items-center justify-start"
+            on:focusout={handleDropdownFocusLoss}
+          >
+            <button class="btn m-1" on:click={handleDropdownClick}>
+              {#if isDropdownOpen}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  class="inline-block h-6 w-6 stroke-current"
+                >
+                  <title>Close Dropdown</title>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              {:else}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  class="inline-block h-6 w-6 stroke-current"
+                >
+                  <title>Open Dropdown</title>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              {/if}
+            </button>
+            <ul
+              class="dropdown-content menu rounded-box absolute top-14 w-52 bg-slate-200 p-2 leading-9 shadow"
+              style:visibility={isDropdownOpen ? "visible" : "hidden"}
+            >
+              <li><button class="btn ml-2 text-black"><a href="/my/page">My Page </a></button></li>
+              <li>
+                <button class="btn ml-2 text-black"><a href="/community">Community</a></button>
+              </li>
+            </ul>
           </div>
-        </Button>
-        {#if !isNotificationsViewHidden}
-            <div class="item absolute rounded-lg border-2 bg-slate-50 p-5 top-14">
+          <Button on:click={handleNotificationsView}>
+            <div class="relative mt-1.5 size-6">
+              <BellIcon></BellIcon>
+              {#if commentNotifications.length}
+                <span
+                  class="absolute -right-3 -top-2 rounded-full bg-slate-100 px-2 text-sm ring-1"
+                >
+                  {commentNotifications.length}
+                </span>
+              {/if}
+            </div>
+          </Button>
+          {#if !isNotificationsViewHidden}
+            <div class="item absolute top-14 rounded-lg border-2 bg-slate-50 p-5">
               <h3>
                 <a on:click={handleNotificationsView} href="/my/notifications">Notifications</a>
               </h3>

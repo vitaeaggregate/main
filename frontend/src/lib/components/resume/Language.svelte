@@ -26,8 +26,18 @@
   </div>
 {:else}
   <div>
-    <InputText label="Language" required={true} bind:value={value.language} placeholder="English"/>
-    <TextArea label="Description" required={true} bind:value={value.description} placeholder="Description"/>
-    <InputText label="Skill Level" required={true} bind:value={value.skill_level} placeholder="Native"/>
+    <InputText label="Language" required={true} bind:value={value.language} placeholder="English" />
+    <TextArea
+      label="Description"
+      required={true}
+      bind:value={value.description}
+      placeholder="Description"
+    />
+    <InputText
+      label="Skill Level"
+      required={true}
+      bind:value={value.skill_level}
+      placeholder="Native"
+    />
   </div>
 {/if}

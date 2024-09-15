@@ -24,7 +24,16 @@
   </div>
 {:else}
   <div>
-    <InputText label="Name" required={true} bind:value={value.name} placeholder="Machine Learning"/>
-    <TextArea label="Description" bind:value={value.description} placeholder="Actively contributing to machine learning dataset"/>
+    <InputText
+      label="Name"
+      required={true}
+      bind:value={value.name}
+      placeholder="Machine Learning"
+    />
+    <TextArea
+      label="Description"
+      bind:value={value.description}
+      placeholder="Actively contributing to machine learning dataset"
+    />
   </div>
 {/if}

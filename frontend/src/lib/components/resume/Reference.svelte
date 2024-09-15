@@ -30,10 +30,10 @@
   </div>
 {:else}
   <div>
-    <InputText label="Name" required={true} bind:value={value.name} placeholder="Clark Kent"/>
-    <InputText label="Job Title" bind:value={value.job_title} placeholder="Reporter"/>
-    <InputText label="Organization" bind:value={value.organization} placeholder="Daily Planet"/>
-    <InputText label="Email" bind:value={value.email} placeholder="clark.kent@dailyplanet.com"/>
-    <InputText label="Phone" bind:value={value.phone} placeholder="XXX-XXXX-XXXX"/>
+    <InputText label="Name" required={true} bind:value={value.name} placeholder="Clark Kent" />
+    <InputText label="Job Title" bind:value={value.job_title} placeholder="Reporter" />
+    <InputText label="Organization" bind:value={value.organization} placeholder="Daily Planet" />
+    <InputText label="Email" bind:value={value.email} placeholder="clark.kent@dailyplanet.com" />
+    <InputText label="Phone" bind:value={value.phone} placeholder="XXX-XXXX-XXXX" />
   </div>
 {/if}
