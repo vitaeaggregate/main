@@ -205,11 +205,11 @@
       </div>
     </Button>
   </div>
-  <div class="fixed bottom-0 right-0 z-10 mx-5 my-20">
+  <!-- <div class="fixed bottom-0 right-0 z-10 mx-5 my-20">
     <Button on:click={() => (isModalHidden = false)} style="add">
       <div class="flex w-full items-center justify-center">
         <PlusIcon />
       </div>
-    </Button>
-  </div>
+    </Button> 
+  </div> -->
 </section>
