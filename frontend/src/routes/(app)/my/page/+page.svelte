@@ -54,12 +54,16 @@
     <h1>Dashboard</h1>
     <div class="flex gap-3">
       <Button on:click={() => goto("/my/resumes/new")} style="labeled-icon">
-        <span class="flex flex-col gap-6"><ResumeIcon />
-        Add Resume</span>
+        <span class="flex flex-col gap-6"
+          ><ResumeIcon />
+          Add Resume</span
+        >
       </Button>
       <Button on:click={() => goto("/my/resumes")} style="labeled-icon">
-        <span class="flex flex-col gap-6"><FullListIcon />
-        Full List</span>
+        <span class="flex flex-col gap-6"
+          ><FullListIcon />
+          Full List</span
+        >
       </Button>
     </div>
     <div>
@@ -81,7 +85,12 @@
                       </span>
                     </a>
                     <p><strong>Shared:</strong> {resume.is_shareable ? "Yes" : "No"}</p>
-                    <p><strong>Comments:</strong> {comments.length}</p>
+                    <p class="text-blue-700 underline underline-offset-4">
+                      <a href="../community/{resumeId}">
+                        <strong>Comments:</strong>
+                        {comments.length}
+                      </a>
+                    </p>
                   </div>
                   <div class="self-center justify-self-end">
                     <Button on:click={() => handleResumeDelete(resumeId)} style="delete">
