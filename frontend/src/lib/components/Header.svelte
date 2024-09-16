@@ -54,39 +54,10 @@
 </script>
 
 <header class="flex justify-center bg-green p-4 px-10">
-  <div class="container">
+  <div class="container ">
     <div class="flex justify-between">
       {#if $account}
-        <nav class="relative flex justify-start gap-10">
-          <!--  <div class="flex items-center gap-3">
-            <a href="/my/page">My Page </a>
-            <Button on:click={handleNotificationsView}>
-              <div class="relative size-6">
-                <BellIcon></BellIcon>
-                {#if commentNotifications.length}
-                  <span
-                    class="absolute -right-3 -top-2 rounded-full bg-slate-100 px-2 text-sm ring-1"
-                  >
-                    {commentNotifications.length}
-                  </span>
-                {/if}
-              </div>
-            </Button>
-          </div>
-          <a href="/community">Community</a>
-          {#if !isNotificationsViewHidden}
-            <div class="item absolute top-full rounded-lg border-2 bg-slate-50 p-5">
-              <h3>
-                <a on:click={handleNotificationsView} href="/my/notifications">Notifications</a>
-              </h3>
-
-              <div role="button" aria-hidden="true" on:click={handleNotificationsView}>
-                <CommentNotificationView bind:value={commentNotifications} type="dropdown"
-                ></CommentNotificationView>
-              </div>
-            </div>
-          {/if} -->
-
+        <nav class="flex items-center gap-3 space-x-24">
           <div
             class="dropdown flex items-center justify-start"
             on:focusout={handleDropdownFocusLoss}
@@ -125,7 +96,7 @@
               {/if}
             </button>
             <ul
-              class="dropdown-content menu rounded-box absolute top-14 w-52 bg-white p-2 leading-9 shadow-xl -ml-3"
+              class="dropdown-content menu rounded-box absolute top-20 w-52 bg-white p-2 leading-9 shadow-xl -ml-3"
               style:visibility={isDropdownOpen ? "visible" : "hidden"}
             >
               <li><button class="btn ml-2 text-black"><a href="/my/page">My Page </a></button></li>
@@ -134,10 +105,10 @@
               </li>
             </ul>
           </div>
-          <div class="dropdown flex items-center justify-start"
+          <div class="dropdown flex items-center justify-center rounded-full p-2 place-content-center shadow-lg bg-orange hover:bg-lime"
           on:focusout={handleNotificationFocusLoss}>
             <Button on:click={handleNotificationsView}>
-              <div class="relative mt-1.5 size-6">
+              <div class="relative size-6">
                 <BellIcon></BellIcon>
                 {#if commentNotifications.length}
                   <span
@@ -149,7 +120,7 @@
               </div>
             </Button>
             {#if !isNotificationsViewHidden}
-              <div class="item absolute top-14 rounded-lg border-2 bg-slate-50 p-5">
+              <div class="item absolute top-20 rounded-lg border-2 bg-white p-5 shadow-lg">
                 <h3>
                   <a on:click={handleNotificationsView} href="/my/notifications">Notifications</a>
                 </h3>
@@ -166,9 +137,9 @@
         <nav></nav>
       {/if}
       {#if !$account}
-        <button on:click={() => goto("/login/test")}>Login</button>
+        <button on:click={() => goto("/login/test")} class="-mr-3">Login</button>
       {:else}
-        <button on:click={logout}>Logout</button>
+        <button on:click={logout} class="-mr-3">Logout</button>
       {/if}
     </div>
   </div>

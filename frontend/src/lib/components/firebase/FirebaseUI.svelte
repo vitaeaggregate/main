@@ -141,6 +141,7 @@
     </div>
     <p class="text-center text-lg font-semibold">
       Join our community today and level up your resume game!
+      
     </p>
     <h2 id="anchor-login">Login</h2>
     <form action="">
