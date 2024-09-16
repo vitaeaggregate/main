@@ -3,7 +3,30 @@
   export let resume: Resume;
   export let resumeElement: HTMLElement | null;
 
-  export let a4Container: HTMLDivElement | null = null;
+  export let resumeElementSize: {
+    height: number;
+    width: number;
+  } = {
+    height: 0,
+    width: 0
+  };
+
+  let a4Container: HTMLDivElement | null = null;
+  let resizeObserver: ResizeObserver | null = null;
+
+  const handleResize: ResizeObserverCallback = (entries) => {
+    if (!resumeElementSize) return;
+
+    for (let entry of entries) {
+      resumeElementSize.height = entry.contentRect.height;
+      resumeElementSize.width = entry.contentRect.width;
+    }
+  };
+
+  $: if (a4Container) {
+    resizeObserver = new ResizeObserver(handleResize);
+    resizeObserver.observe(a4Container);
+  }
 </script>
 
 <section bind:this={resumeElement} class="origin-top-left">

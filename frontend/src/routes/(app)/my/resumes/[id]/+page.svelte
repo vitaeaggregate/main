@@ -7,19 +7,24 @@
   import Button from "$lib/components/Button.svelte";
   import ResumePreview from "$lib/components/resume/ResumePreview.svelte";
   import ResumeComponent from "$lib/components/resume/Resume.svelte";
-  import { onDestroy } from "svelte";
   import Toasts from "$lib/components/Toasts.svelte";
-  import PlusIcon from "$lib/icons/PlusIcon.svelte";
-    import DeleteIcon from "$lib/icons/DeleteIcon.svelte";
-    import DownloadIcon from "$lib/icons/DownloadIcon.svelte";
+  import DeleteIcon from "$lib/icons/DeleteIcon.svelte";
+  import DownloadIcon from "$lib/icons/DownloadIcon.svelte";
 
   let resume: Resume | null = null;
   let originalResume: string | null = null;
   let isModified = false;
 
-  let resumeElement: HTMLElement | null = null;
   let previewContainer: HTMLDivElement | null = null;
-  let a4Container: HTMLDivElement | null = null;
+  let previewContainerWidth: number;
+  let resumeElement: HTMLElement | null = null;
+  let resumeElementSize: {
+    height: number;
+    width: number;
+  } = {
+    height: 0,
+    width: 0
+  };
   let resizeObserver: ResizeObserver | null = null;
 
   // Toasts config
@@ -55,33 +60,10 @@
     resume = JSON.parse(originalResume);
   };
 
-  const handleResize: ResizeObserverCallback = (entries) => {
-    for (let entry of entries) {
-      const width = entry.contentRect.width;
-
-      if (!a4Container || !resumeElement || !previewContainer) return;
-
-      const scale = width / a4Container.clientWidth;
-
-      resumeElement.style.transform = `scale(${scale})`;
-
-      const currentHeight = Math.round(resumeElement.clientHeight * scale);
-
-      if (previewContainer.clientHeight !== currentHeight)
-        previewContainer.style.height = currentHeight + "px";
-    }
-  };
-
   const handleResumeDelete = () => {
     if (!resume) return;
     deleteResume(resume.id);
     goto("/my/page");
-  };
-
-  //TODO: Remove this
-  const handleResumeEdit = () => {
-    if (!resume) return;
-    goto(`/my/resumes/${resume.id}/edit`);
   };
 
   const handleDownloadPdf = async () => {
@@ -108,28 +90,33 @@
     URL.revokeObjectURL(url);
   };
 
-  onDestroy(() => {
-    if (resizeObserver && previewContainer) resizeObserver.unobserve(previewContainer);
-  });
-
   $: if ($account && $page.params.id) loadResume();
 
-  $: if (previewContainer) {
-    resizeObserver = new ResizeObserver(handleResize);
-    resizeObserver.observe(previewContainer);
-  }
-
   $: isModified = originalResume !== JSON.stringify(resume);
+
+  $: {
+    if (previewContainer && previewContainerWidth && resumeElement && resumeElementSize) {
+      const scale = previewContainerWidth / resumeElementSize.width;
+      resumeElement.style.transform = `scale(${scale})`;
+      const currentHeight = Math.round(resumeElementSize.height * scale);
+      previewContainer.style.height = currentHeight + "px";
+    }
+  }
 </script>
 
 {#if $account && $page.params.id && resume}
   <Toasts />
   <section>
-    <div class="flex gap-3 mb-4">
+    <div class="mb-4 flex gap-3">
       <Button on:click={handleResumeDelete} style="labeled-icon">
-        <span class="flex flex-col gap-6"><DeleteIcon />
-        Delete</span></Button>
-      <Button on:click={handleDownloadPdf} style="labeled-icon"><span class="flex flex-col gap-6"><DownloadIcon />Download</span></Button>
+        <span class="flex flex-col gap-6"
+          ><DeleteIcon />
+          Delete</span
+        ></Button
+      >
+      <Button on:click={handleDownloadPdf} style="labeled-icon"
+        ><span class="flex flex-col gap-6"><DownloadIcon />Download</span></Button
+      >
     </div>
     <div class="grid grid-cols-1 gap-10 overflow-hidden">
       <ResumeComponent bind:value={resume}></ResumeComponent>
@@ -142,8 +129,12 @@
         </div>
       {/if}
       <div class="rounded-lg bg-slate-100 p-5 shadow-lg">
-        <div bind:this={previewContainer}>
-          <ResumePreview bind:resume bind:resumeElement bind:a4Container></ResumePreview>
+        <div bind:this={previewContainer} bind:clientWidth={previewContainerWidth}>
+          <ResumePreview
+            bind:resume
+            bind:resumeElement
+            bind:resumeElementSize
+          ></ResumePreview>
         </div>
       </div>
     </div>
