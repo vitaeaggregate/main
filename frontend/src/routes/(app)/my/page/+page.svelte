@@ -85,7 +85,7 @@
                       </span>
                     </a>
                     <p><strong>Shared:</strong> {resume.is_shareable ? "Yes" : "No"}</p>
-                    <p class="underline underline-offset-4">
+                    <p class="text-blue-700 underline underline-offset-4">
                       <a href="../community/{resumeId}">
                         <strong>Comments:</strong>
                         {comments.length}

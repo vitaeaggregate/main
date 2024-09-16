@@ -35,10 +35,13 @@
                 >
               </span>
             </p>
-            <p class="underline underline-offset-4">
-              <a href={"/community/" + commentNotification.header.id}
-                ><strong>Resume Title: </strong>{commentNotification.header.title}</a
-              >
+            <p>
+              <a href={"/community/" + commentNotification.header.id}>
+                <strong>Resume Title: </strong>
+                <span class="text-blue-700 underline underline-offset-4">
+                  {commentNotification.header.title}
+                </span>
+              </a>
             </p>
             <p><strong>Comment: </strong>{commentNotification.comment.description}</p>
             <p>
