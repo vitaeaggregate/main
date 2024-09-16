@@ -7,7 +7,8 @@
     | "cancel"
     | "sections"
     | "delete"
-    | "delete-md";
+    | "delete-md"
+    | "labeled-icon";
 </script>
 
 <script lang="ts">
@@ -48,6 +49,9 @@
     case "delete-md": {
       classes = "flex h-max rounded-xl bg-amber-600 p-3 shadow-lg justify-center w-20";
       break;
+    }
+    case "labeled-icon": {
+      classes = "flex gap-3 h-max rounded-xl bg-amber-600 p-3 shadow-lg justify-center";
     }
   }
 </script>

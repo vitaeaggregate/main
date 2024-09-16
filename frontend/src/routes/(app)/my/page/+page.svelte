@@ -50,14 +50,16 @@
 </script>
 
 {#if $account}
-  <section class="flex flex-col gap-5 text-ce">
+  <section class="text-ce flex flex-col gap-5">
     <h1>Dashboard</h1>
     <div class="flex gap-4">
-      <Button on:click={() => goto("/my/resumes/new")} style="add">
-        <span class="flex gap-2"> <ResumeIcon />Add Resume</span>
+      <Button on:click={() => goto("/my/resumes/new")} style="labeled-icon">
+        <ResumeIcon />
+        Add Resume
       </Button>
-      <Button on:click={() => goto("/my/resumes")} style="add">
-        <span class="flex gap-2"><FullListIcon />Full list</span>
+      <Button on:click={() => goto("/my/resumes")} style="labeled-icon">
+        <FullListIcon />
+        Full list
       </Button>
     </div>
     <div>
@@ -71,7 +73,7 @@
           <div class="flex flex-col divide-y divide-black">
             {#if Object.keys(resumes).length}
               {#each Object.entries(resumes) as [resumeId, { resume, comments }] (resumeId)}
-                <div class="grid-flow-col grid auto-cols-auto p-4">
+                <div class="grid auto-cols-auto grid-flow-col p-4">
                   <div>
                     <a href={`/my/resumes/${resumeId}`}>
                       <span class="text-xl hover:font-medium">
@@ -81,7 +83,7 @@
                     <p><strong>Shared:</strong> {resume.is_shareable ? "Yes" : "No"}</p>
                     <p><strong>Comments:</strong> {comments.length}</p>
                   </div>
-                  <div class="justify-self-end self-center">
+                  <div class="self-center justify-self-end">
                     <Button on:click={() => handleResumeDelete(resumeId)} style="delete">
                       <DeleteIconSmall />
                     </Button>
