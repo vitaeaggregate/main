@@ -122,20 +122,20 @@
     </div>
     <a href="#anchor-login" on:click={handleSmoothScroll}><Button style="submit">Sign up or login</Button></a>
     <h2>What we offer</h2>
-    <div class="flex flex-col gap-3">
-      <p class="h-18 w-18 p-3 bg-white rounded-xl shadow-lg text-center font-bold place-content-center">
+    <div class="flex flex-col bg-white rounded-xl divide-y shadow-lg">
+      <p class="h-18 w-18 p-3 text-center font-bold place-content-center">
         User-friendly resume builder
       </p>
-      <p class="h-18 w-18 p-3 bg-white rounded-xl shadow-lg text-center font-bold place-content-center">
+      <p class="h-18 w-18 p-3 text-center font-bold place-content-center">
         Community-driven feedback
       </p>
-      <p class="h-18 w-18 p-3 bg-white rounded-xl shadow-lg text-center font-bold place-content-center">
+      <p class="h-18 w-18 p-3 text-center font-bold place-content-center">
         Anonymized sharing for privacy
       </p>
-      <p class="h-18 w-18 p-3 bg-white rounded-xl shadow-lg text-center font-bold place-content-center">
+      <p class="h-18 w-18 p-3 text-center font-bold place-content-center">
         Advanced search and filtering
       </p>
-      <p class="h-18 w-18 p-3 bg-white rounded-xl shadow-lg text-center font-bold place-content-center">
+      <p class="h-18 w-18 p-3 text-center font-bold place-content-center">
         Real-time notifications
       </p>
     </div>
