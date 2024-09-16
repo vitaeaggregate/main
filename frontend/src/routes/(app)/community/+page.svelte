@@ -12,30 +12,11 @@
   let resumes: Resume[] = [];
   let searchTerm = "";
   let slicedResumes: Resume[] = [];
-
-  $: filteredResumes = resumes.filter((resume) =>
-    resume.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  $: if (filteredResumes.length > 0) {
-    const randomResumes: number[] = [];
-    while (randomResumes.length < 5) {
-      const randomIndex = Math.floor(Math.random() * filteredResumes.length);
-      if (!randomResumes.includes(randomIndex)) {
-        randomResumes.push(randomIndex);
-      }
-    }
-    slicedResumes = randomResumes.map((index) => filteredResumes[index]);
-  } else {
-    slicedResumes = [];
-  }
-
-  const loadPage = async () => (resumes = await getAllResumes());
-
-  $: if ($account) loadPage();
-
   let isFilteredByCreationDate = false;
   let isFilteredByUpdateDate = false;
+  let filteredResumes: Resume[] = [];
+
+  const loadPage = async () => (resumes = await getAllResumes());
 
   function handleFilterByCreationDate() {
     if (!isFilteredByCreationDate) {
@@ -60,6 +41,25 @@
       isFilteredByCreationDate = false;
     }
   }
+
+  $: filteredResumes = resumes.filter((resume) => {
+    if (resume.title) return resume.title.toLowerCase().includes(searchTerm.toLowerCase());
+  });
+
+  $: if (filteredResumes.length > 0) {
+    const randomResumes: number[] = [];
+    while (randomResumes.length < 5 && randomResumes.length < filteredResumes.length) {
+      const randomIndex = Math.floor(Math.random() * filteredResumes.length);
+      if (!randomResumes.includes(randomIndex)) {
+        randomResumes.push(randomIndex);
+      }
+    }
+    slicedResumes = randomResumes.map((index) => filteredResumes[index]);
+  } else {
+    slicedResumes = [];
+  }
+
+  $: if ($account) loadPage();
 </script>
 
 <section class="flex flex-col gap-3 text-center">
