@@ -18,7 +18,7 @@
   );
 
   $: if (filteredResumes.length > 0) {
-    const randomResumes = [];
+    const randomResumes: number[] = [];
     while (randomResumes.length < 5) {
       const randomIndex = Math.floor(Math.random() * filteredResumes.length);
       if (!randomResumes.includes(randomIndex)) {
@@ -39,7 +39,11 @@
 
   function handleFilterByCreationDate() {
     if (!isFilteredByCreationDate) {
-      filteredResumes = filteredResumes.sort((a, b) => b.created_at - a.created_at);
+      filteredResumes = filteredResumes.sort((a, b) => {
+        if (a.created_at && b.created_at) Date.parse(b.created_at) - Date.parse(a.created_at);
+        if (!b.created_at) return 1;
+        else return -1;
+      });
       isFilteredByCreationDate = true;
       isFilteredByUpdateDate = false;
     }
@@ -47,35 +51,46 @@
 
   function handleFilterByUpdateDate() {
     if (!isFilteredByUpdateDate) {
-      filteredResumes = filteredResumes.sort((a, b) => b.updated_at - a.updated_at);
+      filteredResumes = filteredResumes.sort((a, b) => {
+        if (a.updated_at && b.updated_at) Date.parse(b.updated_at) - Date.parse(a.updated_at);
+        if (!b.updated_at) return 1;
+        else return -1;
+      });
       isFilteredByUpdateDate = true;
       isFilteredByCreationDate = false;
     }
   }
 </script>
 
-<section class="flex flex-col gap-3">
-  <div class="flex flex-row">
-    <div class="mr-1 h-24 w-40 items-center rounded-xl bg-white p-4">
-      <ResumeIcon /><br />
-      <Button on:click={() => goto("/my/resumes/new")}>Create Resume</Button>
-    </div>
-    <div class="mr-1 h-24 w-40 items-center rounded-xl bg-white p-4">
-      <RandomIcon /><br />
-      <Button
-        on:click={() =>
-          goto(`/community/${resumes[Math.floor(Math.random() * resumes.length)].id}`)}
-        >Random</Button
-      >
-    </div>
-  </div>
+<section class="flex flex-col gap-3 text-center">
   <h1>Community Resumes</h1>
-  <Search bind:value={searchTerm} label="Search:" class="text-m m-2, border-1, border-solid p-2 rounded-xl" />
-  <div class="flex flex-row justify-center gap-3">
-    <div class="mr-1 h-10 w-32 items-center text-center rounded-xl bg-white p-2">
+  <div class="flex justify-center gap-10">
+    <Button on:click={() => goto("/my/resumes/new")} style="labeled-icon">
+      <ResumeIcon />
+      Create Resume
+    </Button>
+    <Button
+      on:click={() => goto(`/community/${resumes[Math.floor(Math.random() * resumes.length)].id}`)}
+      style="labeled-icon"
+    >
+      <RandomIcon />
+      Random
+    </Button>
+  </div>
+  <div class="flex flex-col gap-2">
+    <h3>Search</h3>
+    <Search
+      bind:value={searchTerm}
+      hideLabel={true}
+      label="Search:"
+      class="text-m m-2, border-1, rounded-xl border-solid p-2"
+    />
+  </div>
+  <div class="flex justify-center gap-3">
+    <div class="mr-1 h-10 w-32 items-center rounded-xl bg-white p-2 text-center">
       <Button on:click={handleFilterByCreationDate}>Date Created</Button>
     </div>
-    <div class="mr-1 h-10 w-32 items-center text-center rounded-xl bg-white p-2">
+    <div class="mr-1 h-10 w-32 items-center rounded-xl bg-white p-2 text-center">
       <Button on:click={handleFilterByUpdateDate}>Date Updated</Button>
     </div>
   </div>
@@ -84,7 +99,7 @@
   {:else}
     <h2>Recommended Resumes</h2>
   {/if}
-  <div class="text-center">
+  <div>
     {#each slicedResumes as resume}
       <div class="mb-4 rounded-xl bg-white p-4">
         <a href="/community/{resume.id}">{resume?.title}</a><br /><br />
