@@ -56,25 +56,31 @@
   $: if ($page.params.id && $account) loadPage();
 </script>
 
-{#if $account}
-  <section>
-    <h1>Community</h1>
-    <Button on:click={handleGoBack}>Back</Button><br /><br />
-    {#if resume}
-      <div class="rounded-lg bg-slate-100 p-5 shadow-lg">
-        <div bind:this={previewContainer} bind:clientWidth={previewContainerWidth}>
-          <ResumePreview bind:resume bind:resumeElement bind:resumeElementSize></ResumePreview>
-        </div>
+{#if $account && resume}
+  <section class="flex flex-col gap-5">
+    <div class="flex gap-5">
+      <Button on:click={handleGoBack} style="cancel">Back</Button>
+      <h1>Community</h1>
+    </div>
+    <div class="rounded-lg bg-slate-100 p-5 shadow-lg">
+      <div bind:this={previewContainer} bind:clientWidth={previewContainerWidth}>
+        <ResumePreview bind:resume bind:resumeElement bind:resumeElementSize></ResumePreview>
       </div>
-    {/if}
-    <h2>Comments</h2>
-    <CommentView
-      bind:value={resumeComments}
-      config={{ isReadyOnly: true, isResumeTitleHidden: true }}
-    ></CommentView>
-    <h2 class="mb-2">New Comment</h2>
-    <CommentView bind:value={newComment} config={{ isReadyOnly: false, isResumeTitleHidden: true }}
-    ></CommentView>
-    <Button on:click={handleNewComment}>Send</Button>
+    </div>
+    <div class="flex flex-col">
+      <h2>Comments</h2>
+      <CommentView
+        bind:value={resumeComments}
+        config={{ isReadyOnly: true, isResumeTitleHidden: true }}
+      ></CommentView>
+    </div>
+    <div class="flex flex-col gap-3">
+      <h2>New Comment</h2>
+      <CommentView
+        bind:value={newComment}
+        config={{ isReadyOnly: false, isResumeTitleHidden: true }}
+      ></CommentView>
+      <Button on:click={handleNewComment} style="submit">Send</Button>
+    </div>
   </section>
 {/if}
