@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="26px" fill="#000000" class="svg-bold">
+    <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/>
+  </svg>
+  
+  <style>
+    .svg-bold path {
+      stroke: #000000;
+      stroke-width: 4px; 
+    }
+  </style>

@@ -3,7 +3,7 @@
   export let value: boolean = false;
 </script>
 
-<label class="flex">
-  <input type="checkbox" bind:checked={value} class="mt-0.5" />
+<label class="flex items-center">
+  <input type="checkbox" bind:checked={value} />
   <span class="mx-2">{label ? label : ""}</span>
 </label>

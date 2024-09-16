@@ -19,6 +19,8 @@
   import Button from "$lib/components/Button.svelte";
   import Modal from "../Modal.svelte";
   import ComponentView from "./ComponentView.svelte";
+  import PlusIcon from "$lib/icons/PlusIcon.svelte";
+  import SectionCard from "$lib/components/resume/SectionCard.svelte";
 
   export const id: number | null = null;
   export let value: BaseResume;
@@ -77,8 +79,11 @@
   const addCurrentSection = () => {
     if (!currentSectionMap || !currentSectionMap.key) return;
     // Add the next
-    value[currentSectionMap.key] = [...value[currentSectionMap.key], {}];
+
+    // value[currentSectionMap.key] = [...value[currentSectionMap.key], {}];
     currentSectionMap.componentValue = {};
+
+    closeModalClick();
   };
 
   const closeModalClick = (event?: Event) => {
@@ -141,12 +146,13 @@
     <Modal closeClick={closeModalClick} backClick={backModalClick}>
       <div>
         <div class="flex justify-center">
-          <h2>Add Section</h2>
+          <h1 class="mb-3">Add Section</h1>
+          <br />
         </div>
         {#if !currentSectionMap}
-          <div class="flex flex-wrap justify-center gap-5">
+          <div class="flex flex-wrap justify-center gap-4 p-4">
             {#each Object.entries(componentMap) as [text, map], index (index)}
-              <Button on:click={() => addSection(map)}>{text}</Button>
+              <Button on:click={() => addSection(map)} style="sections">{text}</Button>
             {/each}
           </div>
         {:else}
@@ -157,8 +163,8 @@
               config={{ unitLabel: currentSectionMap.label }}
             ></ComponentView>
             <div class="flex justify-between">
-              <Button on:click={addCurrentSection}>Add</Button>
-              <Button on:click={cancelCurrentSection}>Cancel</Button>
+              <Button on:click={addCurrentSection} style="add">Add</Button>
+              <Button on:click={cancelCurrentSection} style="cancel">Cancel</Button>
             </div>
           </div>
         {/if}
@@ -167,23 +173,43 @@
   {/if}
   <div class="flex flex-col gap-5">
     <div class="flex flex-col gap-2">
-      <InputText label="Resume Name" required={true} bind:value={value.title} placeholder="[Company Name]: [Position]"/>
+      <InputText
+        label="Resume Name"
+        required={true}
+        bind:value={value.title}
+        placeholder="[Company Name]: [Position]"
+      />
       <InputCheckBox label="Share" bind:value={value.is_shareable}></InputCheckBox>
     </div>
-    <PersonalInfo bind:value={value.personal_info}></PersonalInfo>
+    <SectionCard>
+      <PersonalInfo bind:value={value.personal_info} readOnly={true}></PersonalInfo>
+    </SectionCard>
+
     <div class="flex flex-col items-start justify-center gap-5">
       {#each Object.entries(componentMap) as [text, map], index (index)}
         {#if map.key}
           <ComponentView
             bind:value={value[map.key]}
             component={map.component}
-            config={{ readOnly: true, unitLabel: text }}
+            config={{ readOnly: true, unitLabel: text, isList: true }}
           ></ComponentView>
         {/if}
       {/each}
     </div>
   </div>
-  <div class="fixed bottom-0 right-0 m-9 border-2 bg-slate-200 p-2">
-    <Button on:click={() => (isModalHidden = false)}>Add Section</Button>
+  <div class="mt-5 flex flex-row justify-center">
+    <Button on:click={() => (isModalHidden = false)} style="add">
+      <div class="flex w-full items-center justify-center">
+        <PlusIcon />
+        Add Section
+      </div>
+    </Button>
+  </div>
+  <div class="fixed bottom-0 right-0 z-10 mx-5 my-20">
+    <Button on:click={() => (isModalHidden = false)} style="add">
+      <div class="flex w-full items-center justify-center">
+        <PlusIcon />
+      </div>
+    </Button> 
   </div>
 </section>

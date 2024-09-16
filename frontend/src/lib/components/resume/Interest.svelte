@@ -9,7 +9,8 @@
     name: "",
     description: ""
   };
-  export let readOnly: boolean = false;
+  export let readOnly = false;
+  export let isList = false;
 
   onMount(() => {
     if (value.id) return;
@@ -18,13 +19,30 @@
 </script>
 
 {#if readOnly}
-  <div>
-    <p><strong>Name:</strong> {value.name ? value.name : ""}</p>
-    <p><strong>Description:</strong> {value.description ? value.description : ""}</p>
-  </div>
+  {#if isList}
+    <div>
+      <p>
+        <strong>{value.name ? value.name : ""}</strong>
+      </p>
+    </div>
+  {:else}
+    <div>
+      <p><strong>Name:</strong> {value.name ? value.name : ""}</p>
+      <p><strong>Description:</strong> {value.description ? value.description : ""}</p>
+    </div>
+  {/if}
 {:else}
   <div>
-    <InputText label="Name" required={true} bind:value={value.name} placeholder="Machine Learning"/>
-    <TextArea label="Description" bind:value={value.description} placeholder="Actively contributing to machine learning dataset"/>
+    <InputText
+      label="Name"
+      required={true}
+      bind:value={value.name}
+      placeholder="Machine Learning"
+    />
+    <TextArea
+      label="Description"
+      bind:value={value.description}
+      placeholder="Actively contributing to machine learning dataset"
+    />
   </div>
 {/if}

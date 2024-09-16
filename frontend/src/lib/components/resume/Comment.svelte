@@ -37,9 +37,11 @@
       </a>
     </div>
   {/if}
-  <div>
+  <div class="flex flex-col gap-3">
     <p>{value.description}</p>
-    <p class="italic">{value.created_at && new TimeAgo("en-US").format(new Date(value.created_at))}</p>
+    <p class="italic self-end">
+      {value.created_at && new TimeAgo("en-US").format(new Date(value.created_at))}
+    </p>
   </div>
 {:else}
   <div>

@@ -11,6 +11,7 @@
     skill_level: ""
   };
   export let readOnly: boolean = false;
+  export let isList = false;
 
   onMount(() => {
     if (value.id) return;
@@ -19,15 +20,35 @@
 </script>
 
 {#if readOnly}
-  <div>
-    <p><strong>Language:</strong> {value.language ? value.language : ""}</p>
-    <p><strong>Description:</strong> {value.description ? value.description : ""}</p>
-    <p><strong>Skill Level:</strong> {value.skill_level ? value.skill_level : ""}</p>
-  </div>
+  {#if isList}
+    <div>
+      <p>
+        <strong>{value.language ? value.language : ""}</strong> - {value.skill_level
+          ? value.skill_level
+          : ""}
+      </p>
+    </div>
+  {:else}
+    <div>
+      <p><strong>Language:</strong> {value.language ? value.language : ""}</p>
+      <p><strong>Description:</strong> {value.description ? value.description : ""}</p>
+      <p><strong>Skill Level:</strong> {value.skill_level ? value.skill_level : ""}</p>
+    </div>
+  {/if}
 {:else}
   <div>
-    <InputText label="Language" required={true} bind:value={value.language} placeholder="English"/>
-    <TextArea label="Description" required={true} bind:value={value.description} placeholder="Description"/>
-    <InputText label="Skill Level" required={true} bind:value={value.skill_level} placeholder="Native"/>
+    <InputText label="Language" required={true} bind:value={value.language} placeholder="English" />
+    <TextArea
+      label="Description"
+      required={true}
+      bind:value={value.description}
+      placeholder="Description"
+    />
+    <InputText
+      label="Skill Level"
+      required={true}
+      bind:value={value.skill_level}
+      placeholder="Native"
+    />
   </div>
 {/if}

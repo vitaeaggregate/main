@@ -97,28 +97,52 @@
     event.preventDefault();
     const link = event.currentTarget;
     const anchorId = new URL(link.href).hash.replace("#", "");
-    const anchor = document.getElementById(anchorId);   
-
+    const anchor = document.getElementById(anchorId);
     if (anchor) {
       window.scrollTo({
         top: anchor.offsetTop,
-        behavior: "smooth"   
-
+        behavior: "smooth"
       });
     }
   };
 </script>
 
-<div class="relative flex h-full justify-center ml-4 mr-4">
+
+<div class="relative ml-4 mr-4 flex h-full justify-center">
   <Toasts />
   <div class="z-50 mt-8 flex w-fit flex-col items-center gap-4">
     <img src={Logo} alt="Logo" class="h-24 w-auto opacity-30" />
-    <h1>Vitae Aggregate</h1>
-    <p class="text-xl text-center">Your Resume, Enhanced.</p>
-        <p class="text-lg text-center">Get personalized feedback from the community to craft a standout resume. Create, share, and collaborate in a supportive environment.      </p>
-    <p class="text-lg text-center font-semibold">Join our community today and level up your resume game!</p>
-
-    <a href="#anchor-login" on:click={handleSmoothScroll}>Sign up or login</a>
+    <h1 class="text-5xl">Vitae Aggregate</h1>
+    <div>
+      <p class="text-center text-2xl font-bold mb-4">Your Resume, Enhanced.</p>
+      <p class="text-center text-lg">
+        Get personalized feedback from the community to craft a standout resume. Create, share, and
+        collaborate in a supportive environment.
+      </p>
+    </div>
+    <a href="#anchor-login" on:click={handleSmoothScroll}><Button style="submit">Sign up or login</Button></a>
+    <h2>What we offer</h2>
+    <div class="flex flex-col gap-3">
+      <p class="h-18 w-18 p-3 bg-white rounded-xl shadow-lg text-center font-bold place-content-center">
+        User-friendly resume builder
+      </p>
+      <p class="h-18 w-18 p-3 bg-white rounded-xl shadow-lg text-center font-bold place-content-center">
+        Community-driven feedback
+      </p>
+      <p class="h-18 w-18 p-3 bg-white rounded-xl shadow-lg text-center font-bold place-content-center">
+        Anonymized sharing for privacy
+      </p>
+      <p class="h-18 w-18 p-3 bg-white rounded-xl shadow-lg text-center font-bold place-content-center">
+        Advanced search and filtering
+      </p>
+      <p class="h-18 w-18 p-3 bg-white rounded-xl shadow-lg text-center font-bold place-content-center">
+        Real-time notifications
+      </p>
+    </div>
+    <p class="text-center text-lg font-semibold">
+      Join our community today and level up your resume game!
+      
+    </p>
     <h2 id="anchor-login">Login</h2>
     <form action="">
       <div class="flex flex-col gap-5">

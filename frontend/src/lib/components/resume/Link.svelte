@@ -8,7 +8,8 @@
     title: "",
     url: ""
   };
-  export let readOnly: boolean = false;
+  export let readOnly = false;
+  export let isList = false;
 
   onMount(() => {
     if (value.id) return;
@@ -17,13 +18,34 @@
 </script>
 
 {#if readOnly}
-  <div>
-    <p><strong>Title:</strong> {value.title ? value.title : ""}</p>
-    <p><strong>URL:</strong> {value.url ? value.url : ""}</p>
-  </div>
+  {#if isList}
+    <div>
+      <p>
+        <strong>{value.title ? value.title : ""}</strong>
+      </p>
+      <p>
+        {value.url ? value.url : ""}
+      </p>
+    </div>
+  {:else}
+    <div>
+      <p><strong>Title:</strong> {value.title ? value.title : ""}</p>
+      <p><strong>URL:</strong> {value.url ? value.url : ""}</p>
+    </div>
+  {/if}
 {:else}
   <div>
-    <InputText label="Title" required={true} bind:value={value.title} placeholder="LinkedIn/Github/Portfolio"/>
-    <InputText label="URL" required={true} bind:value={value.url} placeholder="ex. linkedin.com/stevesmith"/>
+    <InputText
+      label="Title"
+      required={true}
+      bind:value={value.title}
+      placeholder="LinkedIn/Github/Portfolio"
+    />
+    <InputText
+      label="URL"
+      required={true}
+      bind:value={value.url}
+      placeholder="ex. linkedin.com/stevesmith"
+    />
   </div>
 {/if}

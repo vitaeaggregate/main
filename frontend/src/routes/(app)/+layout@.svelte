@@ -1,6 +1,7 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import Header from "$lib/components/Header.svelte";
+  import Footer from "$lib/components/Footer.svelte";
   import { account, checkAccountAndRedirect } from "$lib/store";
   import { onMount } from "svelte";
 
@@ -14,8 +15,9 @@
 {#if $account}
   <Header></Header>
   <main class="relative -z-10 flex justify-center">
-    <div class="container px-10">
+    <div class="container px-5">
       <slot></slot>
     </div>
   </main>
+  <Footer></Footer>
 {/if}
