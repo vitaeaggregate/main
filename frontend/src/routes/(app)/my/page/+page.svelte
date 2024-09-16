@@ -10,7 +10,7 @@
   import { goto } from "$app/navigation";
   import ResumeIcon from "$lib/icons/ResumeIcon.svelte";
   import FullListIcon from "$lib/icons/FullListIcon.svelte";
-    import DeleteIconSmall from "$lib/icons/DeleteIconSmall.svelte";
+  import DeleteIconSmall from "$lib/icons/DeleteIconSmall.svelte";
 
   export const id = writable<number | null>(null);
   export const resumeId = writable<number | null>(null);
@@ -50,19 +50,16 @@
 </script>
 
 {#if $account}
-  <section class="">
+  <section class="flex flex-col gap-5 text-ce">
     <h1>Dashboard</h1>
-    <div class="flex flex-row">
-      <div class="mr-1 h-24 w-36 items-center rounded-xl bg-white p-4">
-        <ResumeIcon /><br />
-        <Button on:click={() => goto("/my/resumes/new")}>Add Resume</Button>
-      </div>
-      <div class="mr-1 h-24 w-36 items-center rounded-xl bg-white p-4">
-        <FullListIcon /><br />
-        <Button on:click={() => goto("/my/resumes")}>Full list</Button>
-      </div>
+    <div class="flex gap-4">
+      <Button on:click={() => goto("/my/resumes/new")} style="add">
+        <span class="flex gap-2"> <ResumeIcon />Add Resume</span>
+      </Button>
+      <Button on:click={() => goto("/my/resumes")} style="add">
+        <span class="flex gap-2"><FullListIcon />Full list</span>
+      </Button>
     </div>
-    <br />
     <div>
       <h2>User Info</h2>
       <div class="mb-2 rounded-xl border-2 bg-white p-2">
@@ -74,20 +71,20 @@
           <div class="flex flex-col divide-y divide-black">
             {#if Object.keys(resumes).length}
               {#each Object.entries(resumes) as [resumeId, { resume, comments }] (resumeId)}
-                <div class="p-4">
-                  <a href={`/my/resumes/${resumeId}`}>
-                    <span class="text-xl hover:font-medium">
-                      {resume.title}
-                    </span>
-                  </a>
-                  <p><strong>Shared:</strong> {resume.is_shareable ? "Yes" : "No"}</p>
-                  <p><strong>Comments:</strong> {comments.length}</p>
-                  <!-- <CommentView
-                    bind:value={comments}
-                    config={{ isReadyOnly: true, isResumeTitleHidden: true }}
-                  ></CommentView> -->
-                  <div class="flex justify-end">
-                    <Button on:click={() => handleResumeDelete(resumeId)} style="delete"><DeleteIconSmall /></Button>
+                <div class="grid-flow-col grid auto-cols-auto p-4">
+                  <div>
+                    <a href={`/my/resumes/${resumeId}`}>
+                      <span class="text-xl hover:font-medium">
+                        {resume.title}
+                      </span>
+                    </a>
+                    <p><strong>Shared:</strong> {resume.is_shareable ? "Yes" : "No"}</p>
+                    <p><strong>Comments:</strong> {comments.length}</p>
+                  </div>
+                  <div class="justify-self-end self-center">
+                    <Button on:click={() => handleResumeDelete(resumeId)} style="delete">
+                      <DeleteIconSmall />
+                    </Button>
                   </div>
                 </div>
               {/each}

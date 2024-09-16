@@ -24,7 +24,7 @@
         <strong>{value.title ? value.title : ""}</strong>
       </p>
       <p>
-        {value.url ? (value.url.length > 10 ? value.url.slice(0, 30) + "..." : value.url) : ""}
+        {value.url ? value.url : ""}
       </p>
     </div>
   {:else}

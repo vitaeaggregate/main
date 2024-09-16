@@ -6,7 +6,8 @@
     | "add"
     | "cancel"
     | "sections"
-    | "delete";
+    | "delete"
+    | "delete-md";
 </script>
 
 <script lang="ts">
@@ -28,7 +29,8 @@
       break;
     }
     case "add": {
-      classes = "size-fit h-max w-max rounded-xl bg-amber-600 p-3 shadow-lg text-center bg-opacity-80";
+      classes =
+        "size-fit h-max w-max rounded-xl bg-amber-600 p-3 shadow-lg text-center bg-opacity-80";
       break;
     }
     case "cancel": {
@@ -41,6 +43,10 @@
     }
     case "delete": {
       classes = "size-fit flex h-max w-max rounded-xl bg-amber-600 p-3 shadow-lg";
+      break;
+    }
+    case "delete-md": {
+      classes = "flex h-max rounded-xl bg-amber-600 p-3 shadow-lg justify-center w-20";
       break;
     }
   }

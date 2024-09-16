@@ -10,9 +10,7 @@
 
   let initialValue: BaseResumeTypes<true> = {};
 
-  onMount(() => {
-    initialValue = { ...value };
-  });
+  onMount(() => (initialValue = { ...value }));
 
   const handleCancelClick = () => {
     if (!value) return;
@@ -21,9 +19,11 @@
   };
 </script>
 
-<div>
+<div class="flex flex-col gap-3">
   <h2>{title}</h2>
   <svelte:component this={component} bind:value></svelte:component>
-  <Button on:click={closeModalClick}>Save</Button>
-  <Button on:click={handleCancelClick}>Cancel</Button>
+  <div class="flex justify-between px-5">
+    <Button on:click={closeModalClick}>Save</Button>
+    <Button on:click={handleCancelClick}>Cancel</Button>
+  </div>
 </div>
