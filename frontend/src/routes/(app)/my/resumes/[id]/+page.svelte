@@ -10,6 +10,8 @@
   import { onDestroy } from "svelte";
   import Toasts from "$lib/components/Toasts.svelte";
   import PlusIcon from "$lib/icons/PlusIcon.svelte";
+    import DeleteIcon from "$lib/icons/DeleteIcon.svelte";
+    import DownloadIcon from "$lib/icons/DownloadIcon.svelte";
 
   let resume: Resume | null = null;
   let originalResume: string | null = null;
@@ -123,9 +125,11 @@
 {#if $account && $page.params.id && resume}
   <Toasts />
   <section>
-    <div class="flex gap-3">
-      <Button on:click={handleResumeDelete}>Delete</Button>
-      <Button on:click={handleDownloadPdf}>Download</Button>
+    <div class="flex gap-3 mb-4">
+      <Button on:click={handleResumeDelete} style="labeled-icon">
+        <span class="flex flex-col gap-6"><DeleteIcon />
+        Delete</span></Button>
+      <Button on:click={handleDownloadPdf} style="labeled-icon"><span class="flex flex-col gap-6"><DownloadIcon />Download</span></Button>
     </div>
     <div class="grid grid-cols-1 gap-10 overflow-hidden">
       <ResumeComponent bind:value={resume}></ResumeComponent>

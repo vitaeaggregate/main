@@ -52,14 +52,14 @@
 {#if $account}
   <section class="text-ce flex flex-col gap-5">
     <h1>Dashboard</h1>
-    <div class="flex gap-4">
+    <div class="flex gap-3">
       <Button on:click={() => goto("/my/resumes/new")} style="labeled-icon">
-        <ResumeIcon />
-        Add Resume
+        <span class="flex flex-col gap-6"><ResumeIcon />
+        Add Resume</span>
       </Button>
       <Button on:click={() => goto("/my/resumes")} style="labeled-icon">
-        <FullListIcon />
-        Full list
+        <span class="flex flex-col gap-6"><FullListIcon />
+        Full List</span>
       </Button>
     </div>
     <div>
