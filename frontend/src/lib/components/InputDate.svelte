@@ -7,5 +7,5 @@
 <label class="flex flex-col">
   {required ? "*" : ""}
   {label}:
-  <input type="date" bind:value class="border-2" />
+  <input type="date" bind:value class="rounded-lg border-2 px-3 py-1" />
 </label>

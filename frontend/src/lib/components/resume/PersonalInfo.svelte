@@ -4,7 +4,6 @@
   import type PersonalInfo from "$lib/interfaces/resume/PersonalInfo";
   import Modal from "../Modal.svelte";
   import Button from "../Button.svelte";
-  import SectionCard from "./SectionCard.svelte";
   import EmailIcon from "$lib/icons/EmailIcon.svelte";
   import PhoneIcon from "$lib/icons/PhoneIcon.svelte";
   import AddressIcon from "$lib/icons/AddressIcon.svelte";
@@ -24,6 +23,18 @@
   export let readOnly = false;
 
   let isModalHidden: boolean = true;
+
+  let initialValue: PersonalInfo = {};
+
+  const handleEditClick = () => {
+    initialValue = { ...value };
+    readOnly = false;
+  };
+
+  const handleCancelClick = () => {
+    value = { ...initialValue };
+    readOnly = true;
+  };
 
   const closeModal = (event?: Event) => {
     if (event instanceof KeyboardEvent && event.key !== "Enter") return;
@@ -69,6 +80,8 @@
 {/if}
 {#if readOnly}
   <div class="flex flex-col gap-3">
+    <h2>Personal Info</h2>
+
     <div class="flex flex-col gap-3">
       <h2><strong>{value.full_name ? value.full_name : ""}</strong></h2>
       <h3>{value.job_title ? value.job_title : ""}</h3>
@@ -84,9 +97,10 @@
         <AddressIcon></AddressIcon>{value.address ? value.address : ""}
       </p>
     </div>
+    <Button on:click={handleEditClick}>Edit</Button>
   </div>
 {:else}
-  <div class="flex flex-col">
+  <div class="flex flex-col gap-3">
     <h2>Personal Info</h2>
     <InputText
       label="Full Name"
@@ -115,5 +129,9 @@
       placeholder="Marriage Visa"
     />
     <InputText label="Nationality" bind:value={value.nationality} placeholder="USA" />
+    <div class="flex justify-between px-5">
+      <Button on:click={() => (readOnly = true)}>Save</Button>
+      <Button on:click={handleCancelClick}>Cancel</Button>
+    </div>
   </div>
 {/if}
