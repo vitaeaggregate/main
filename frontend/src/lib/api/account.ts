@@ -13,10 +13,7 @@ export async function createOrGetAccount(token: string) {
 
   const response = await fetch(PUBLIC_SERVER + "/firebase/accounts/", fetchConfig);
 
-  console.log(response);
-
-  if (response.ok) console.log("Token sent successfully");
-  else throw error(response.status, response.statusText);
+  if (!response.ok) throw error(response.status, response.statusText);
 
   const account: Account = await response.json();
 

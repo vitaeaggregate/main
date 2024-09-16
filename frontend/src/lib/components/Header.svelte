@@ -121,11 +121,12 @@
               </div>
             </Button>
             {#if !isNotificationsViewHidden}
-              <div class="item absolute top-20 rounded-lg border-2 bg-white p-5 shadow-lg">
-                <h3>
-                  <a on:click={handleNotificationsView} href="/my/notifications">Notifications</a>
+              <div class="item absolute top-20 left-5 rounded-lg border-2 bg-white p-5 shadow-lg">
+                <h3 class="">
+                  Notifications
                 </h3>
-
+                <a on:click={handleNotificationsView} href="/my/notifications" class="italic">See all</a>
+                <br /><br />
                 <div role="button" aria-hidden="true" on:click={handleNotificationsView}>
                   <CommentNotificationView bind:value={commentNotifications} type="dropdown"
                   ></CommentNotificationView>
