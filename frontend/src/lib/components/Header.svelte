@@ -8,6 +8,7 @@
   import { goto } from "$app/navigation";
   import { account } from "$lib/store";
   import { logout } from "$lib/utils";
+  import Logo from "$lib/Logo.png"
 
   let commentNotifications: CommentNotification[] = [];
 
@@ -57,7 +58,7 @@
   <div class="container ">
     <div class="flex justify-between">
       {#if $account}
-        <nav class="flex items-center gap-3 space-x-24">
+        <nav class="flex items-center gap-3">
           <div
             class="dropdown flex items-center justify-start"
             on:focusout={handleDropdownFocusLoss}
@@ -136,6 +137,7 @@
       {:else}
         <nav></nav>
       {/if}
+      <img src={Logo} alt="Logo" class="h-10 w-auto" />
       {#if !$account}
         <button on:click={() => goto("/login/test")} class="-mr-3">Login</button>
       {:else}
