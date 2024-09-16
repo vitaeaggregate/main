@@ -29,15 +29,18 @@
 </script>
 
 {#if config.isReadyOnly}
-  {#if !config.isResumeTitleHidden}
-    <p class="underline underline-offset-4">
-      <a href={`/community/${value.header_info && value.header_info.id}`}>
-        <strong>Resume Title:</strong>
-        {value.header_info && value.header_info.title}
-      </a>
-    </p>
-  {/if}
   <div class="flex flex-col gap-3">
+    {#if !config.isResumeTitleHidden}
+      <p>
+        <a href={`/community/${value.header_info && value.header_info.id}`}>
+          <strong>Resume Title:</strong>
+          <span class="text-blue-700 underline underline-offset-4">
+            {value.header_info && value.header_info.title}
+          </span>
+        </a>
+      </p>
+    {/if}
+
     <p>{value.description}</p>
     <p class="self-end italic">
       {value.created_at && new TimeAgo("en-US").format(new Date(value.created_at))}
