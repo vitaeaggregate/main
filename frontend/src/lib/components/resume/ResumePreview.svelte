@@ -56,11 +56,14 @@
         width: 21cm;
       }
     </style>
+
     <div class="a4-size source-sans-3 flex flex-col gap-3" bind:this={a4Container}>
-      <div class="flex flex-col gap-2">
-        <h1 class="lobster-two-bold-italic text-4xl">{resume.personal_info.full_name}</h1>
-        <h2 class="text-3xl font-normal"><i>{resume.personal_info.job_title}</i></h2>
-      </div>
+      {#if resume.personal_info}
+        <div class="flex flex-col gap-2">
+          <h1 class="lobster-two-bold-italic text-4xl">{resume.personal_info.full_name}</h1>
+          <h2 class="text-3xl font-normal"><i>{resume.personal_info.job_title}</i></h2>
+        </div>
+      {/if}
       <div>
         {#if resume.links.length}
           <div class="flex gap-3">
