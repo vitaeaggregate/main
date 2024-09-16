@@ -20,7 +20,7 @@
   import Modal from "../Modal.svelte";
   import ComponentView from "./ComponentView.svelte";
   import PlusIcon from "$lib/icons/PlusIcon.svelte";
-  import SectionCard from "./SectionCard.svelte";
+  import SectionCard from "$lib/components/resume/SectionCard.svelte";
 
   export const id: number | null = null;
   export let value: BaseResume;

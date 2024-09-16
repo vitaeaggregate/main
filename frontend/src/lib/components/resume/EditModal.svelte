@@ -16,10 +16,8 @@
 
   const handleCancelClick = () => {
     if (!value) return;
-    for (const key in initialValue) {
-      value[key] = initialValue[key];
-    }
-    // closeModalClick();
+    for (const key in initialValue) value[key] = initialValue[key];
+    closeModalClick();
   };
 </script>
 

@@ -14,8 +14,7 @@
   import EditIcon from "$lib/icons/EditIcon.svelte";
   import { type BaseResumeTypes } from "$lib/interfaces/resume/BaseResumeTypes";
   import { type ComponentType } from "svelte";
-  import SectionCard from "./SectionCard.svelte";
-
+  import SectionCard from "$lib/components/resume/SectionCard.svelte";
   import { slide } from "svelte/transition";
 
   export let value: BaseResumeTypes;
@@ -33,13 +32,9 @@
     if (Array.isArray(value)) value = [...value.filter((value) => value.id !== id)];
   };
 
-  const handleEdit = (section: BaseResumeTypes<true>) => {
-    currentSection = section;
-  };
+  const handleEdit = (section: BaseResumeTypes<true>) => (currentSection = section);
 
-  const closeModalClick = () => {
-    currentSection = null;
-  };
+  const closeModalClick = () => (currentSection = null);
 
   $: {
     if (Array.isArray(value))
@@ -74,7 +69,7 @@
         out:slide={{ axis: "y", duration: 800 }}
       >
         {#each value as item (item.id)}
-          <div class="grid auto-cols-auto grid-flow-col gap-3 p-2 leading-8 divide-x-2">
+          <div class="grid auto-cols-auto grid-flow-col gap-3 divide-x-2 p-2 leading-8">
             <div class="truncate">
               <svelte:component
                 this={component}
@@ -83,7 +78,7 @@
                 isList={config.isList}
               ></svelte:component>
             </div>
-            <div class="flex gap-5 justify-self-end px-2 self-center">
+            <div class="flex gap-5 self-center justify-self-end px-2">
               <Button on:click={() => handleEdit(item)}><EditIcon /></Button>
               <Button on:click={() => item.id && handleRemove(item.id)}><DeleteIcon /></Button>
             </div>
