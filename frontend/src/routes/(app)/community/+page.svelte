@@ -66,14 +66,14 @@
   <h1>Community Resumes</h1>
   <div class="flex justify-center gap-3">
     <Button on:click={() => goto("/my/resumes/new")} style="labeled-icon">
-      <span class="flex gap-2"><ResumeIcon />
-      Create Resume</span>
+      <span class="flex gap-2 underline"><ResumeIcon />
+      Create New</span>
     </Button>
     <Button
       on:click={() => goto(`/community/${resumes[Math.floor(Math.random() * resumes.length)].id}`)}
       style="labeled-icon"
     >
-    <span class="flex gap-2"><RandomIcon />
+    <span class="flex gap-2 underline"><RandomIcon />
       Random</span>
     </Button>
   </div>
