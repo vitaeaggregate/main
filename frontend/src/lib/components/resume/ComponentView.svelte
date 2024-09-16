@@ -70,7 +70,7 @@
       >
         {#each value as item (item.id)}
           <div class="grid auto-cols-auto grid-flow-col gap-3 divide-x-2 p-2 leading-8">
-            <div class="text-nowrap overflow-x-auto">
+            <div class="overflow-x-auto text-wrap break-words">
               <svelte:component
                 this={component}
                 bind:value={item}

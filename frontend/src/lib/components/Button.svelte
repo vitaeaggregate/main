@@ -22,7 +22,7 @@
     }
     case "submit": {
       classes =
-        "size-fit border-2 bg-white pl-3 pr-3 pt-1 pb-1 m-auto hover:bg-lime hover:text-white hover:ease-in duration-200 rounded-md";
+        "size-fit border-2 bg-lime pl-4 pr-4 pt-2 pb-2 m-auto rounded-xl shadow-lg hover:bg-green hover:ease-in duration-200";
       break;
     }
     case "full-width": {
@@ -31,27 +31,27 @@
     }
     case "add": {
       classes =
-        "size-fit h-max w-max rounded-xl bg-amber-600 p-3 shadow-lg text-center bg-opacity-80";
+        "size-fit h-max w-max rounded-xl bg-lime p-3 shadow-lg text-center bg-opacity-80 hover:bg-green hover:ease-in duration-200";
       break;
     }
     case "cancel": {
-      classes = "size-fit h-max w-max rounded-xl bg-red-700 p-3 shadow-lg text-center";
+      classes = "size-fit h-max w-max rounded-xl bg-grayish p-3 shadow-lg text-center hover:bg-red hover:ease-in duration-200";
       break;
     }
     case "sections": {
-      classes = "size-fit bg-white border-2 rounded-lg p-3 hover:bg-amber-600";
+      classes = "size-fit bg-white border-2 rounded-lg p-3 hover:bg-green hover:ease-in duration-200";
       break;
     }
     case "delete": {
-      classes = "size-fit flex h-max w-max rounded-xl bg-amber-600 p-3 shadow-lg";
+      classes = "size-fit flex h-max w-max rounded-xl bg-grayish p-3 shadow-lg hover:bg-red hover:ease-in duration-200";
       break;
     }
     case "delete-md": {
-      classes = "flex h-max rounded-xl bg-amber-600 p-3 shadow-lg justify-center w-20";
+      classes = "flex h-max rounded-xl bg-grayish p-3 shadow-lg justify-center w-20 hover:bg-red hover:ease-in duration-200";
       break;
     }
     case "labeled-icon": {
-      classes = "flex gap-3 h-max rounded-xl bg-white p-3 shadow-lg justify-center";
+      classes = "flex gap-3 h-max rounded-xl bg-white p-3 shadow-lg justify-center hover:bg-green hover:ease-in duration-200";
     }
   }
 </script>
