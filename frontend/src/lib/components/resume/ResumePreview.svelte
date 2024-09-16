@@ -3,8 +3,30 @@
   export let resume: Resume;
   export let resumeElement: HTMLElement | null;
 
-  export let a4Container: HTMLDivElement | null = null;
-  // export let censored: boolean = false;
+  export let resumeElementSize: {
+    height: number;
+    width: number;
+  } = {
+    height: 0,
+    width: 0
+  };
+
+  let a4Container: HTMLDivElement | null = null;
+  let resizeObserver: ResizeObserver | null = null;
+
+  const handleResize: ResizeObserverCallback = (entries) => {
+    if (!resumeElementSize) return;
+
+    for (let entry of entries) {
+      resumeElementSize.height = entry.contentRect.height;
+      resumeElementSize.width = entry.contentRect.width;
+    }
+  };
+
+  $: if (a4Container) {
+    resizeObserver = new ResizeObserver(handleResize);
+    resizeObserver.observe(a4Container);
+  }
 </script>
 
 <section bind:this={resumeElement} class="origin-top-left">
@@ -34,11 +56,14 @@
         width: 21cm;
       }
     </style>
+
     <div class="a4-size source-sans-3 flex flex-col gap-3" bind:this={a4Container}>
-      <div class="flex flex-col gap-2">
-        <h1 class="lobster-two-bold-italic text-4xl">{resume.personal_info.full_name}</h1>
-        <h2 class="text-3xl font-normal"><i>{resume.personal_info.job_title}</i></h2>
-      </div>
+      {#if resume.personal_info}
+        <div class="flex flex-col gap-2">
+          <h1 class="lobster-two-bold-italic text-4xl">{resume.personal_info.full_name}</h1>
+          <h2 class="text-3xl font-normal"><i>{resume.personal_info.job_title}</i></h2>
+        </div>
+      {/if}
       <div>
         {#if resume.links.length}
           <div class="flex gap-3">

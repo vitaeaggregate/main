@@ -15,6 +15,7 @@
   let resumeElement: HTMLElement | null = null;
   let previewContainer: HTMLDivElement | null = null;
   let a4Container: HTMLDivElement | null = null;
+  let previewContainerWidth: number;
   let censoredResume: Resume | null = null;
 
   export const id = writable<number | null>(null);
