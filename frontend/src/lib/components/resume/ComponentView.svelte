@@ -65,8 +65,8 @@
     {#if isVisible}
       <div
         class="flex flex-col divide-y overflow-hidden"
-        in:slide={{ axis: "y", duration: 800 }}
-        out:slide={{ axis: "y", duration: 800 }}
+        in:slide={{ axis: "y", duration: 500 }}
+        out:slide={{ axis: "y", duration: 500 }}
       >
         {#each value as item (item.id)}
           <div class="grid auto-cols-auto grid-flow-col gap-3 divide-x-2 p-2 leading-8">
