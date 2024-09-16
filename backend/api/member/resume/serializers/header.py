@@ -116,7 +116,7 @@ class HeaderSerializer(serializers.ModelSerializer):
             'is_shareable', instance.is_shareable)
         instance.save()
 
-        PersonalInfo.objects.update(**validated_data.pop("personal_info"))
+        PersonalInfo.objects.filter(header=instance).update(**validated_data.pop("personal_info"))
 
         model_data_mapping = {
             Link: validated_data.pop("links", []),
