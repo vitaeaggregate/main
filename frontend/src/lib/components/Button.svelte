@@ -51,7 +51,7 @@
       break;
     }
     case "labeled-icon": {
-      classes = "flex gap-3 h-max rounded-xl bg-white p-3 shadow-lg justify-center hover:bg-green hover:ease-in duration-200";
+      classes = "flex gap-3 h-max w-44 h-20 rounded-xl bg-white p-3 shadow-lg justify-left items-center hover:bg-green hover:ease-in duration-200";
     }
   }
 </script>

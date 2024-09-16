@@ -66,14 +66,14 @@
   <h1>Community Resumes</h1>
   <div class="flex justify-center gap-3">
     <Button on:click={() => goto("/my/resumes/new")} style="labeled-icon">
-      <span class="flex flex-col gap-6"><ResumeIcon />
+      <span class="flex gap-2"><ResumeIcon />
       Create Resume</span>
     </Button>
     <Button
       on:click={() => goto(`/community/${resumes[Math.floor(Math.random() * resumes.length)].id}`)}
       style="labeled-icon"
     >
-    <span class="flex flex-col gap-6"><RandomIcon />
+    <span class="flex gap-2"><RandomIcon />
       Random</span>
     </Button>
   </div>
@@ -83,7 +83,7 @@
       bind:value={searchTerm}
       hideLabel={true}
       label="Search:"
-      class="text-m m-2, border-1, rounded-xl border-solid p-2"
+      class="text-m m-2, border-1, rounded-xl border-solid p-2 w-9/12"
     />
   </div>
   <div class="flex justify-center gap-3">
