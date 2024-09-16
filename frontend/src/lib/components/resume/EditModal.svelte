@@ -23,7 +23,7 @@
   <h2>{title}</h2>
   <svelte:component this={component} bind:value></svelte:component>
   <div class="flex justify-between px-5">
-    <Button on:click={closeModalClick}>Save</Button>
-    <Button on:click={handleCancelClick}>Cancel</Button>
+    <Button on:click={closeModalClick} style="add">Save</Button>
+    <Button on:click={handleCancelClick} style="cancel">Cancel</Button>
   </div>
 </div>

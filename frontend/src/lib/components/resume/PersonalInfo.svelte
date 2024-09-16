@@ -97,7 +97,7 @@
         <AddressIcon></AddressIcon>{value.address ? value.address : ""}
       </p>
     </div>
-    <Button on:click={handleEditClick}>Edit</Button>
+    <Button on:click={handleEditClick} style="add">Edit</Button>
   </div>
 {:else}
   <div class="flex flex-col gap-3">
@@ -130,8 +130,8 @@
     />
     <InputText label="Nationality" bind:value={value.nationality} placeholder="USA" />
     <div class="flex justify-between px-5">
-      <Button on:click={() => (readOnly = true)}>Save</Button>
-      <Button on:click={handleCancelClick}>Cancel</Button>
+      <Button on:click={() => (readOnly = true)} style="add">Save</Button>
+      <Button on:click={handleCancelClick} style="cancel">Cancel</Button>
     </div>
   </div>
 {/if}
