@@ -9,17 +9,25 @@
   import { goto } from "$app/navigation";
   import Button from "$lib/components/Button.svelte";
   import CommentView from "$lib/components/resume/CommentView.svelte";
+  import ResumePreview from "$lib/components/resume/ResumePreview.svelte";
+  
+  let originalResume: string | null = null;
+  let resumeElement: HTMLElement | null = null;
+  let previewContainer: HTMLDivElement | null = null;
+  let a4Container: HTMLDivElement | null = null;
+  let previewContainerWidth: number;
 
   export const id = writable<number | null>(null);
-
-  let resume: Resume | null = null;
-  let resumeComments: Comment[] = [];
-  let newComment: Comment = {
+    let resume: Resume | null = null;
+    let resumeComments: Comment[] = [];
+    let newComment: Comment = {
     description: ""
   };
 
   const loadPage = async () => {
-    resume = await getResumeById(resumeId);
+    // resume = await getResumeById(resumeId);
+    resume = await getResumeById($page.params.id);
+    originalResume = JSON.stringify(resume);
     resumeComments = await getCommentsByResumeId(resumeId);
   };
 
@@ -38,13 +46,38 @@
   $: resumeId = Number($page.params.id);
 
   $: if (resumeId && $account) loadPage();
+
+  $: {
+    if(previewContainer && previewContainerWidth && resumeElement && resumeElementSize) {
+      const scale = previewContainerWidth / resumeElementSize.width;
+      resumeElement.style.transform = `scale(${scale})`;
+      const currentHeight = Math.round(resumeElementSize.height * scale);
+      previewContainer.style.height = currentHeight + "px";
+    }
+  }
+
+  let resumeElementSize: {
+    height: number;
+    width: number;
+  } = {
+    height: 0,
+    width: 0,
+  }
+
 </script>
 
 <main>
   <h1>Community</h1>
   <br />
   <Button on:click={handleGoBack}>Back</Button><br /><br />
-  <div class="test-div flex justify-center">
+  {#if resume}
+  <div class="rounded-lg bg-slate-100 p-5 shadow-lg">
+    <div bind:this={previewContainer} bind:clientWidth={previewContainerWidth}>
+      <ResumePreview bind:resume bind:resumeElement bind:resumeElementSize></ResumePreview>
+    </div>
+  </div>
+  {/if}
+  <!-- <div class="test-div flex justify-center">
     <div
       class="mb-16 ml-16 mr-16 flex h-screen w-4/5 flex-col overflow-y-auto border-2 border-solid border-black p-4"
     >
@@ -270,7 +303,7 @@
         {/if}
       {/if}
     </div>
-  </div>
+  </div> -->
   <h2>Comments</h2>
   <CommentView bind:value={resumeComments} config={{ isReadyOnly: true, isResumeTitleHidden: true }}
   ></CommentView>
