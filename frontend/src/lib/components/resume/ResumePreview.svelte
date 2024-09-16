@@ -64,14 +64,19 @@
           <h2 class="text-3xl font-normal"><i>{resume.personal_info.job_title}</i></h2>
         </div>
       {/if}
-      {#if resume.links?.length}
+      {#if resume.links?.length || resume.personal_info}
         <div>
           <div class="flex gap-3">
-            <a href={"mailto:" + resume.personal_info.email}>{resume.personal_info.email}</a>
+            {#if resume.personal_info.email || resume.personal_info.phone_number}
+              <span>{resume.personal_info.email}</span>
+              <a href={"mailto:" + resume.personal_info.phone_number}>
+                {resume.personal_info.phone_number}
+              </a>
+              <span>{resume.personal_info.address}</span>
+            {/if}
             {#each resume.links as link (link.id)}
               <a href={link.url}>{link.title?.slice(0, 15)}</a>
             {/each}
-            <span>{resume.personal_info.address}</span>
           </div>
         </div>
       {/if}
@@ -150,10 +155,114 @@
                   <span class="col-span-2">
                     <strong>{education.degree}</strong>, {education.institution}, {education.country}
                   </span>
-                  <span class="justify-self-end">{education.start_date} - {education.end_date}</span
-                  >
+                  <span class="justify-self-end">
+                    {education.start_date} - {education.end_date}
+                  </span>
                 </div>
                 <p class="whitespace-pre-line">{education.description}</p>
+              </div>
+            {/each}
+          </div>
+        </div>
+      {/if}
+      {#if resume.awards?.length}
+        <div class="flex flex-col gap-3">
+          <h3 class="w-fit border-b-2 border-black">Awards</h3>
+          <div class="flex flex-col gap-5">
+            {#each resume.awards as award (award.id)}
+              <div class="flex flex-col gap-2">
+                <div class="grid grid-cols-3">
+                  <span class="col-span-2">
+                    <strong>{award.title}</strong>, {award.issuer}
+                  </span>
+                  <span class="justify-self-end">{award.date}</span>
+                </div>
+                <p class="whitespace-pre-line">{award.description}</p>
+              </div>
+            {/each}
+          </div>
+        </div>
+      {/if}
+      {#if resume.certificates?.length}
+        <div class="flex flex-col gap-3">
+          <h3 class="w-fit border-b-2 border-black">Certificates</h3>
+          <div class="flex flex-col gap-5">
+            {#each resume.certificates as certificate (certificate.id)}
+              <div class="flex flex-col gap-2">
+                <p><strong>{certificate.name}</strong></p>
+                <p class="whitespace-pre-line">{certificate.description}</p>
+              </div>
+            {/each}
+          </div>
+        </div>
+      {/if}
+      {#if resume.courses?.length}
+        <div class="flex flex-col gap-3">
+          <h3 class="w-fit border-b-2 border-black">Courses</h3>
+          <div class="flex flex-col gap-5">
+            {#each resume.courses as course (course.id)}
+              <div class="flex flex-col gap-2">
+                <div class="grid grid-cols-3">
+                  <span class="col-span-2">
+                    <strong>{course.degree}</strong>, {course.institution}, {course.country}
+                  </span>
+                  <span class="justify-self-end">{course.start_date} - {course.end_date}</span>
+                </div>
+                <p class="whitespace-pre-line">{course.description}</p>
+              </div>
+            {/each}
+          </div>
+        </div>
+      {/if}
+      {#if resume.interests?.length}
+        <div class="flex flex-col gap-3">
+          <h3 class="w-fit border-b-2 border-black">Interests</h3>
+          <div class="flex flex-col gap-5">
+            {#each resume.interests as interest (interest.id)}
+              <div class="flex flex-col gap-2">
+                <div class="grid grid-cols-3">
+                  <strong>{interest.name}</strong>
+                </div>
+                <p class="whitespace-pre-line">{interest.description}</p>
+              </div>
+            {/each}
+          </div>
+        </div>
+      {/if}
+      {#if resume.publications?.length}
+        <div class="flex flex-col gap-3">
+          <h3 class="w-fit border-b-2 border-black">Publications</h3>
+          <div class="flex flex-col gap-5">
+            {#each resume.publications as publication (publication.id)}
+              <div class="flex flex-col gap-2">
+                <div class="grid grid-cols-3">
+                  <span class="col-span-2">
+                    <strong>{publication.title}</strong>, {publication.publisher}
+                  </span>
+                  <span class="justify-self-end">
+                    {publication.date}
+                  </span>
+                </div>
+                <p class="whitespace-pre-line">{publication.description}</p>
+              </div>
+            {/each}
+          </div>
+        </div>
+      {/if}
+      {#if resume.references?.length}
+        <div class="flex flex-col gap-3">
+          <h3 class="w-fit border-b-2 border-black">References</h3>
+          <div class="flex flex-col gap-5">
+            {#each resume.references as references (references.id)}
+              <div class="flex flex-col gap-2">
+                <div class="grid grid-cols-2">
+                  <span>
+                    <strong>{references.name}</strong>, {references.job_title}, {references.organization}
+                  </span>
+                  <span class="justify-self-end">
+                    {references.phone} - {references.email}
+                  </span>
+                </div>
               </div>
             {/each}
           </div>

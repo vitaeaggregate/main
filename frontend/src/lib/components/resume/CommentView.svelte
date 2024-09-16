@@ -24,11 +24,13 @@
   {#if value.length}
     <div class="flex flex-col">
       {#each value as comment (comment.id)}
-        <div class="my-3 flex flex-col gap-3 border-l-8 p-4">
-          <CommentComponent bind:value={comment} {config}></CommentComponent>
+        <div class="my-3 flex gap-5 border-l-8 p-4">
+          <div class="grow">
+            <CommentComponent bind:value={comment} {config}></CommentComponent>
+          </div>
           {#if comment.can_delete}
-            <div class="flex w-full justify-center">
-              <Button on:click={() => comment.id && handleDelete(comment.id)} style="delete-md">
+            <div>
+              <Button on:click={() => comment.id && handleDelete(comment.id)} style="delete">
                 <DeleteIconSmall />
               </Button>
             </div>

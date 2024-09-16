@@ -9,7 +9,7 @@
   import { dismissNotification } from "$lib/api/commentNotification";
   import { account } from "$lib/store";
   import { goto } from "$app/navigation";
-    import CloseIcon from "$lib/icons/CloseIcon.svelte";
+  import CloseIcon from "$lib/icons/CloseIcon.svelte";
 
   export let value: CommentNotification[] = [];
   export let type: CommentNotificationViewType = "full";
@@ -27,11 +27,15 @@
       {#if type === "full"}
         <div class="mb-2 rounded-xl border-2 bg-white p-2">
           <div class="flex flex-col">
-            <span class="p-1 self-end"><Button on:click={() => handleDismissClick(commentNotification.id)} style="default"><CloseIcon /></Button></span>
-            <p>
-              <strong>Resume Id: </strong>{commentNotification.header.id}
+            <p class="flex justify-between">
+              <span><strong>Resume Id: </strong>{commentNotification.header.id}</span>
+              <span class="mx-4">
+                <Button on:click={() => handleDismissClick(commentNotification.id)} style="default"
+                  ><CloseIcon /></Button
+                >
+              </span>
             </p>
-            <p>
+            <p class="underline underline-offset-4">
               <a href={"/community/" + commentNotification.header.id}
                 ><strong>Resume Title: </strong>{commentNotification.header.title}</a
               >
@@ -44,7 +48,6 @@
             </p>
           </div>
         </div>
-        
       {:else if type === "dropdown"}
         <div
           class="rounded-lg border-2 p-4"
