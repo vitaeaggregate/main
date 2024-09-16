@@ -66,8 +66,7 @@
           ></svelte:component>
           <div class="flex gap-5">
             <Button on:click={() => handleEdit(item)}><EditIcon/></Button>
-            <Button
-              on:click={() => {
+            <Button on:click={() => {
                 if (item.id) handleRemove(item.id);
               }}><DeleteIcon/></Button
             >

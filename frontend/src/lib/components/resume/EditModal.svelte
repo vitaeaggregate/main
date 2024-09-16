@@ -23,5 +23,5 @@
   <h2>{title}</h2>
   <svelte:component this={component} bind:value></svelte:component>
   <Button on:click={closeModalClick}>Save</Button>
-  <Button on:click={handleCancelClick}>Cancel</Button>
+  <!-- <Button on:click={handleCancelClick}>Cancel</Button> -->
 </div>
