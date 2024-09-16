@@ -69,7 +69,7 @@
 <main>
   <h1>Community</h1>
   <br />
-  <Button on:click={handleGoBack}>Back</Button><br /><br />
+  <Button on:click={handleGoBack} style="cancel">Back</Button><br /><br />
   {#if resume}
   <div class="rounded-lg bg-slate-100 p-5 shadow-lg">
     <div bind:this={previewContainer} bind:clientWidth={previewContainerWidth}>
@@ -310,5 +310,5 @@
   <h2 class="mb-2">New Comment</h2>
   <CommentView bind:value={newComment} config={{ isReadyOnly: false, isResumeTitleHidden: true }}
   ></CommentView>
-  <Button on:click={handleNewComment}>Send</Button>
+  <Button on:click={handleNewComment} style="submit">Send</Button>
 </main>
