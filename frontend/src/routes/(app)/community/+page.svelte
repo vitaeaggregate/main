@@ -64,17 +64,17 @@
 
 <section class="flex flex-col gap-3 text-center">
   <h1>Community Resumes</h1>
-  <div class="flex justify-center gap-10">
+  <div class="flex justify-center gap-3">
     <Button on:click={() => goto("/my/resumes/new")} style="labeled-icon">
-      <ResumeIcon />
-      Create Resume
+      <span class="flex flex-col gap-6"><ResumeIcon />
+      Create Resume</span>
     </Button>
     <Button
       on:click={() => goto(`/community/${resumes[Math.floor(Math.random() * resumes.length)].id}`)}
       style="labeled-icon"
     >
-      <RandomIcon />
-      Random
+    <span class="flex flex-col gap-6"><RandomIcon />
+      Random</span>
     </Button>
   </div>
   <div class="flex flex-col gap-2">
