@@ -51,7 +51,7 @@
       break;
     }
     case "labeled-icon": {
-      classes = "flex gap-3 h-max rounded-xl bg-amber-600 p-3 shadow-lg justify-center";
+      classes = "flex gap-3 h-max rounded-xl bg-white p-3 shadow-lg justify-center";
     }
   }
 </script>
