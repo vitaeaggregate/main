@@ -8,7 +8,7 @@
   import { goto } from "$app/navigation";
   import { account } from "$lib/store";
   import { logout } from "$lib/utils";
-  import Logo from "$lib/Logo.png"
+  import Logo from "$lib/Logo.png";
 
   let commentNotifications: CommentNotification[] = [];
 
@@ -55,7 +55,7 @@
 </script>
 
 <header class="flex justify-center bg-green p-4 px-10">
-  <div class="container ">
+  <div class="container">
     <div class="flex justify-between">
       {#if $account}
         <nav class="flex items-center gap-3">
@@ -97,7 +97,7 @@
               {/if}
             </button>
             <ul
-              class="dropdown-content menu rounded-box absolute top-20 w-52 bg-white p-2 leading-9 shadow-xl -ml-3"
+              class="dropdown-content menu rounded-box absolute top-20 -ml-3 w-52 bg-white p-2 leading-9 shadow-xl"
               style:visibility={isDropdownOpen ? "visible" : "hidden"}
             >
               <li><button class="btn ml-2 text-black"><a href="/my/page">My Page </a></button></li>
@@ -106,10 +106,9 @@
               </li>
             </ul>
           </div>
-          <div class="dropdown flex items-center justify-center rounded-full p-2 place-content-center shadow-lg bg-orange hover:bg-lime"
-          on:focusout={handleNotificationFocusLoss}>
+          <div class="flex" on:focusout={handleNotificationFocusLoss}>
             <Button on:click={handleNotificationsView}>
-              <div class="relative size-6">
+              <div class="relative size-9 rounded-full bg-orange p-2 shadow-lg hover:bg-lime">
                 <BellIcon></BellIcon>
                 {#if commentNotifications.length}
                   <span
@@ -121,11 +120,11 @@
               </div>
             </Button>
             {#if !isNotificationsViewHidden}
-              <div class="item absolute top-20 left-5 rounded-lg border-2 bg-white p-5 shadow-lg">
-                <h3 class="">
-                  Notifications
-                </h3>
-                <a on:click={handleNotificationsView} href="/my/notifications" class="italic">See all</a>
+              <div class="item absolute left-5 top-20 rounded-lg border-2 bg-white p-5 shadow-lg">
+                <h3 class="">Notifications</h3>
+                <a on:click={handleNotificationsView} href="/my/notifications" class="italic"
+                  >See all</a
+                >
                 <br /><br />
                 <div role="button" aria-hidden="true" on:click={handleNotificationsView}>
                   <CommentNotificationView bind:value={commentNotifications} type="dropdown"

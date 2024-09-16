@@ -8,7 +8,7 @@ export interface Comment {
   header_info?: CommentHeader;
   member?: number;
   description?: string;
-  created_at?: string | Date;
-  updated_at?: string | Date;
+  created_at?: string;
+  updated_at?: string;
   can_delete?: boolean;
 }

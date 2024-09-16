@@ -30,16 +30,16 @@
 
 {#if config.isReadyOnly}
   {#if !config.isResumeTitleHidden}
-    <div>
+    <p class="underline underline-offset-4">
       <a href={`/community/${value.header_info && value.header_info.id}`}>
         <strong>Resume Title:</strong>
         {value.header_info && value.header_info.title}
       </a>
-    </div>
+    </p>
   {/if}
   <div class="flex flex-col gap-3">
     <p>{value.description}</p>
-    <p class="italic self-end">
+    <p class="self-end italic">
       {value.created_at && new TimeAgo("en-US").format(new Date(value.created_at))}
     </p>
   </div>
