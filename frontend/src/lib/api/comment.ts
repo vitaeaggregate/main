@@ -13,7 +13,7 @@ export const getCommentsByMemberId = async (memberId: number): Promise<Comment[]
   return comments;
 };
 
-export const getCommentsByResumeId = async (resumeId: number): Promise<Comment[]> => {
+export const getCommentsByResumeId = async (resumeId: number | string): Promise<Comment[]> => {
   const response = await fetchData(PUBLIC_SERVER + "/resumes/" + resumeId + "/comments/");
 
   if (!response.ok) throw error(response.status, response.statusText);
