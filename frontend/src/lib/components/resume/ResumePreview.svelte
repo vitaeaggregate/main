@@ -4,6 +4,7 @@
   export let resumeElement: HTMLElement | null;
 
   export let a4Container: HTMLDivElement | null = null;
+  // export let censored: boolean = false;
 </script>
 
 <section bind:this={resumeElement} class="origin-top-left">
