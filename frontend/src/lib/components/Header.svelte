@@ -53,7 +53,7 @@
   };
 </script>
 
-<header class="flex justify-center bg-green-800 p-4 px-10">
+<header class="flex justify-center bg-green p-4 px-10">
   <div class="container">
     <div class="flex justify-between">
       {#if $account}
