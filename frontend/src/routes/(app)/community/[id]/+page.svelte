@@ -66,25 +66,29 @@
         <Button on:click={handleGoBack} style="cancel">Back</Button>
         <h1>Community</h1>
       </div>
-      <div class="rounded-lg bg-slate-100 p-5 shadow-lg">
-        <div bind:this={previewContainer} bind:clientWidth={previewContainerWidth}>
-          <ResumePreview {resume} bind:resumeElement bind:resumeElementSize></ResumePreview>
+      <div class="grid gap-10 grid-cols-1 lg:grid-cols-3">
+        <div class="rounded-lg bg-slate-100 p-5 shadow-lg lg:col-span-2">
+          <div bind:this={previewContainer} bind:clientWidth={previewContainerWidth}>
+            <ResumePreview {resume} bind:resumeElement bind:resumeElementSize></ResumePreview>
+          </div>
         </div>
-      </div>
-      <div class="flex flex-col">
-        <h2>Comments</h2>
-        <CommentView
-          bind:value={resumeComments}
-          config={{ isReadyOnly: true, isResumeTitleHidden: true }}
-        ></CommentView>
-      </div>
-      <div class="flex flex-col gap-3">
-        <h2>New Comment</h2>
-        <CommentView
-          bind:value={newComment}
-          config={{ isReadyOnly: false, isResumeTitleHidden: true }}
-        ></CommentView>
-        <Button on:click={handleNewComment} style="submit">Send</Button>
+        <div>
+          <div class="flex flex-col">
+            <h2>Comments</h2>
+            <CommentView
+              bind:value={resumeComments}
+              config={{ isReadyOnly: true, isResumeTitleHidden: true }}
+            ></CommentView>
+          </div>
+          <div class="flex flex-col gap-3">
+            <h2>New Comment</h2>
+            <CommentView
+              bind:value={newComment}
+              config={{ isReadyOnly: false, isResumeTitleHidden: true }}
+            ></CommentView>
+            <Button on:click={handleNewComment} style="submit">Send</Button>
+          </div>
+        </div>
       </div>
     {:catch}
       <div class="flex grow flex-col items-center justify-center text-center">

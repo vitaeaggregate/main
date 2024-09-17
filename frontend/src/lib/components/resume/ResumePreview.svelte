@@ -74,8 +74,8 @@
               </a>
               <span>{resume.personal_info.address}</span>
             {/if}
-            {#each resume.links as link (link.id)}
-              <a href={link.url}>{link.title?.slice(0, 15)}</a>
+            {#each resume.links as { id, title = "", url = "" } (id)}
+              <a href={url}>{title}</a>
             {/each}
           </div>
         </div>
@@ -84,10 +84,10 @@
         <div class="flex flex-col gap-3">
           <h3 class="w-fit border-b-2 border-black">Skills</h3>
           <div class="grid grid-cols-4 gap-10">
-            {#each resume.skills as skill (skill.id)}
+            {#each resume.skills as { id, name = "", description = "", skill_level = "" } (id)}
               <div>
-                <p><strong>{skill.name}</strong></p>
-                <p>{skill.description}</p>
+                <p><strong>{name}</strong></p>
+                <p>{description}</p>
               </div>
             {/each}
           </div>
@@ -97,9 +97,12 @@
         <div class="flex flex-col gap-3">
           <h3 class="w-fit border-b-2 border-black">Languages</h3>
           <ul class="flex gap-10">
-            {#each resume.languages as language (language.id)}
+            {#each resume.languages as { id, description = "", language = "", skill_level = "" } (id)}
               <li>
-                <p>{language.language} - {language.skill_level}</p>
+                <p>
+                  {language}
+                  {skill_level && ` - ${skill_level}`}
+                </p>
               </li>
             {/each}
           </ul>
@@ -109,17 +112,21 @@
         <div class="flex flex-col gap-3">
           <h3 class="w-fit border-b-2 border-black">Projects</h3>
           <div class="flex flex-col gap-5">
-            {#each resume.projects as project (project.id)}
+            {#each resume.projects as { id, description = "", end_date = "", start_date = "", sub_title = "", title = "" } (id)}
               <div class="flex flex-col gap-2">
                 <div class="grid grid-cols-3">
                   <span class="col-span-2">
-                    <strong>{project.title} - {project.sub_title}</strong>
+                    <strong>
+                      {title}
+                      {sub_title && ` - ${sub_title}`}
+                    </strong>
                   </span>
                   <span class="justify-self-end">
-                    {project.start_date && new Date(project.start_date).toLocaleDateString()} - {project.end_date && new Date(project.end_date).toLocaleDateString()}
+                    {start_date && new Date(start_date).toLocaleDateString()}
+                    {end_date && ` - ${new Date(end_date).toLocaleDateString()}`}
                   </span>
                 </div>
-                <p class="whitespace-pre-line">{project.description}</p>
+                <p class="whitespace-pre-line">{description}</p>
               </div>
             {/each}
           </div>
@@ -129,17 +136,23 @@
         <div class="flex flex-col gap-3">
           <h3 class="w-fit border-b-2 border-black">Professional Experiences</h3>
           <div class="flex flex-col gap-5">
-            {#each resume.professional_exps as professional_exp (professional_exp.id)}
+            {#each resume.professional_exps as { id, city = "", country = "", description = "", employer = "", end_date = "", job_title = "", start_date = "" } (id)}
               <div class="flex flex-col gap-2">
                 <div class="grid grid-cols-3">
                   <span class="col-span-2">
-                    <strong>{professional_exp.job_title}</strong>, {professional_exp.employer}, {professional_exp.country}
+                    <strong>
+                      {job_title}
+                    </strong>
+                    {employer && `, ${employer}`}
+                    {city && `, ${city}`}
+                    {country && `, ${country}`}
                   </span>
                   <span class="justify-self-end">
-                    {professional_exp.start_date} - {professional_exp.end_date}
+                    {start_date && new Date(start_date).toLocaleDateString()}
+                    {end_date && `- ${new Date(end_date).toLocaleDateString()}`}
                   </span>
                 </div>
-                <p class="whitespace-pre-line">{professional_exp.description}</p>
+                <p class="whitespace-pre-line">{description}</p>
               </div>
             {/each}
           </div>
@@ -149,17 +162,23 @@
         <div class="flex flex-col gap-3">
           <h3 class="w-fit border-b-2 border-black">Education and Courses</h3>
           <div class="flex flex-col gap-5">
-            {#each resume.educations as education (education.id)}
+            {#each resume.educations as { id, city = "", country = "", degree = "", description = "", end_date = "", institution = "", start_date = "" } (id)}
               <div class="flex flex-col gap-2">
                 <div class="grid grid-cols-3">
                   <span class="col-span-2">
-                    <strong>{education.degree}</strong>, {education.institution}, {education.country}
+                    <strong>{degree}</strong>
+                    {institution && `, ${institution}`}
+                    {city && `, ${city}`}
+                    {country && `, ${country}`}
                   </span>
                   <span class="justify-self-end">
-                    {education.start_date} - {education.end_date}
+                    {start_date && new Date(start_date).toLocaleDateString()}
+                    {end_date && ` - ${new Date(end_date).toLocaleDateString()}`}
                   </span>
                 </div>
-                <p class="whitespace-pre-line">{education.description}</p>
+                <p class="whitespace-pre-line">
+                  {description}
+                </p>
               </div>
             {/each}
           </div>
@@ -169,15 +188,17 @@
         <div class="flex flex-col gap-3">
           <h3 class="w-fit border-b-2 border-black">Awards</h3>
           <div class="flex flex-col gap-5">
-            {#each resume.awards as award (award.id)}
+            {#each resume.awards as { id, date = "", description = "", issuer = "", title = "" } (id)}
               <div class="flex flex-col gap-2">
                 <div class="grid grid-cols-3">
                   <span class="col-span-2">
-                    <strong>{award.title}</strong>, {award.issuer}
+                    <strong>{title}</strong>
+                    {issuer && `, ${issuer}`}
                   </span>
-                  <span class="justify-self-end">{award.date}</span>
+                  <span class="justify-self-end">{date && new Date(date).toLocaleDateString()}</span
+                  >
                 </div>
-                <p class="whitespace-pre-line">{award.description}</p>
+                <p class="whitespace-pre-line">{description}</p>
               </div>
             {/each}
           </div>
@@ -187,10 +208,10 @@
         <div class="flex flex-col gap-3">
           <h3 class="w-fit border-b-2 border-black">Certificates</h3>
           <div class="flex flex-col gap-5">
-            {#each resume.certificates as certificate (certificate.id)}
+            {#each resume.certificates as { id, description = "", name = "" } (id)}
               <div class="flex flex-col gap-2">
-                <p><strong>{certificate.name}</strong></p>
-                <p class="whitespace-pre-line">{certificate.description}</p>
+                <p><strong>{name}</strong></p>
+                <p class="whitespace-pre-line">{description}</p>
               </div>
             {/each}
           </div>
@@ -200,15 +221,21 @@
         <div class="flex flex-col gap-3">
           <h3 class="w-fit border-b-2 border-black">Courses</h3>
           <div class="flex flex-col gap-5">
-            {#each resume.courses as course (course.id)}
+            {#each resume.courses as { id, city = "", country = "", degree = "", description = "", end_date = "", institution = "", start_date = "" } (id)}
               <div class="flex flex-col gap-2">
                 <div class="grid grid-cols-3">
                   <span class="col-span-2">
-                    <strong>{course.degree}</strong>, {course.institution}, {course.country}
+                    <strong>{degree}</strong>
+                    {institution && `, ${institution}`}
+                    {city && `, ${city}`}
+                    {country && `, ${country}`}
                   </span>
-                  <span class="justify-self-end">{course.start_date} - {course.end_date}</span>
+                  <span class="justify-self-end">
+                    {start_date && new Date(start_date).toLocaleDateString()}
+                    {end_date && ` - ${new Date(end_date).toLocaleDateString()}`}
+                  </span>
                 </div>
-                <p class="whitespace-pre-line">{course.description}</p>
+                <p class="whitespace-pre-line">{description}</p>
               </div>
             {/each}
           </div>
@@ -218,12 +245,12 @@
         <div class="flex flex-col gap-3">
           <h3 class="w-fit border-b-2 border-black">Interests</h3>
           <div class="flex flex-col gap-5">
-            {#each resume.interests as interest (interest.id)}
+            {#each resume.interests as { id, description = "", name = "" } (id)}
               <div class="flex flex-col gap-2">
                 <div class="grid grid-cols-3">
-                  <strong>{interest.name}</strong>
+                  <strong>{name}</strong>
                 </div>
-                <p class="whitespace-pre-line">{interest.description}</p>
+                <p class="whitespace-pre-line">{description}</p>
               </div>
             {/each}
           </div>
@@ -233,17 +260,20 @@
         <div class="flex flex-col gap-3">
           <h3 class="w-fit border-b-2 border-black">Publications</h3>
           <div class="flex flex-col gap-5">
-            {#each resume.publications as publication (publication.id)}
+            {#each resume.publications as { id, date = "", description = "", publisher = "", title = "" } (id)}
               <div class="flex flex-col gap-2">
                 <div class="grid grid-cols-3">
                   <span class="col-span-2">
-                    <strong>{publication.title}</strong>, {publication.publisher}
+                    <strong>{title}</strong>
+                    {publisher && `, ${publisher}`}
                   </span>
                   <span class="justify-self-end">
-                    {publication.date}
+                    {date && new Date(date).toLocaleDateString()}
                   </span>
                 </div>
-                <p class="whitespace-pre-line">{publication.description}</p>
+                <p class="whitespace-pre-line">
+                  {description}
+                </p>
               </div>
             {/each}
           </div>
@@ -253,14 +283,17 @@
         <div class="flex flex-col gap-3">
           <h3 class="w-fit border-b-2 border-black">References</h3>
           <div class="flex flex-col gap-5">
-            {#each resume.references as references (references.id)}
+            {#each resume.references as { id, email = "", job_title = "", name = "", organization = "", phone = "" } (id)}
               <div class="flex flex-col gap-2">
                 <div class="grid grid-cols-2">
                   <span>
-                    <strong>{references.name}</strong>, {references.job_title}, {references.organization}
+                    <strong>{name}</strong>
+                    {job_title && `, ${job_title}`}
+                    {organization && `, ${organization}`}
                   </span>
                   <span class="justify-self-end">
-                    {references.phone} - {references.email}
+                    {phone}
+                    {email && ` - ${email}`}
                   </span>
                 </div>
               </div>
