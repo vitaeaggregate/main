@@ -65,7 +65,6 @@ class HeaderSerializer(serializers.ModelSerializer):
                 "member",
                 "personal_info",
                 "links",
-                "projects",
                 "publications",
                 "references",
             ]
