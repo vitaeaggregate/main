@@ -26,8 +26,6 @@ class FirebaseMiddleware:
         if not firebase_token:
             return JsonResponse({"error": "Token is required"}, status=status.HTTP_400_BAD_REQUEST)
 
-        print(firebase_token)
-
         try:
             decode_token = auth.verify_id_token(id_token=firebase_token, clock_skew_seconds=60)
 
