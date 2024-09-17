@@ -29,7 +29,9 @@
         <strong>{value.title ? value.title : ""}</strong> - {value.sub_title ? value.sub_title : ""}
       </p>
       <p>
-        {value.start_date ? value.start_date : ""} - {value.end_date ? value.end_date : ""}
+        {value.start_date && new Date(value.start_date).toLocaleDateString()}
+        -
+        {value.end_date && new Date(value.end_date).toLocaleDateString()}
       </p>
     </div>
   {:else}

@@ -81,9 +81,13 @@
               {resume.updated_at && new Date(resume.updated_at).toLocaleDateString()}
             </p>
             <div bind:this={container}>
-              <button class="cursor-pointer" on:click={() => toggleComments(resumeId)}
-                ><h3>Comments ({comments.length})</h3></button
-              >
+              <button class="cursor-pointer" on:click={() => toggleComments(resumeId)}>
+                <h3>
+                  <span class="underline underline-offset-4 text-blue-700">
+                    Comments ({comments.length})
+                  </span>
+                </h3>
+              </button>
               {#if resumeId === selectedResumeId}
                 <div transition:fadeSlide={{ duration: 300 }} class="grid-row-4 grid gap-10">
                   <CommentView
