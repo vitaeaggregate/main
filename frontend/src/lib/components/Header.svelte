@@ -37,7 +37,6 @@
         );
       }
       commentNotifications = [];
-      console.log("hello")
     }
   };
 
