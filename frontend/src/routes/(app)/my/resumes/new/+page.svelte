@@ -32,29 +32,22 @@
     skills: []
   };
 
-  const loadPage = () => {};
-
   const handleCreateClick = async () => {
-    try {
-      if (!$account || !resume) return;
-      resume.member = $account.id;
-      resume = await createResume(resume);
-      if (resume) goto("/my/page");
-    } catch {
-      addToast({
-        message,
-        type,
-        dismissible,
-        timeout
-      });
-    }
+    if (!$account || !resume) return;
+    resume.member = $account.id;
+    const resumeResponse = await createResume(resume);
+    if (resumeResponse.id) goto("/my/page");
+    addToast({
+      message,
+      type,
+      dismissible,
+      timeout
+    });
   };
 
   const handleCancelClick = () => {
     goto("/my/page");
   };
-
-  $: if ($account) loadPage();
 </script>
 
 {#if $account}

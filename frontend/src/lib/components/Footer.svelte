@@ -1,3 +1,3 @@
-<footer class="h-12 -z-20">
+<footer class="h-14 -z-20">
 
 </footer>

@@ -140,21 +140,21 @@
         </span>
       </Button>
     </div>
-    <div class="grid grid-cols-1 gap-10 overflow-hidden">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
       <ResumeComponent bind:value={resume}></ResumeComponent>
-      {#if isModified}
-        <div
-          class="fixed bottom-0 right-0 z-10 flex w-full justify-between gap-5 border-2 bg-slate-100 p-2"
-        >
-          <Button on:click={handleSaveClick} style="add">Save</Button>
-          <Button on:click={handleCancelClick} style="cancel">Cancel</Button>
-        </div>
-      {/if}
       <div class="rounded-lg bg-slate-100 p-5 shadow-lg">
         <div bind:this={previewContainer} bind:clientWidth={previewContainerWidth}>
           <ResumePreview bind:resume bind:resumeElement bind:resumeElementSize></ResumePreview>
         </div>
       </div>
     </div>
+    {#if isModified}
+      <div
+        class="fixed bottom-0 right-0 z-10 flex w-full justify-between gap-5 border-2 bg-slate-100 p-2"
+      >
+        <Button on:click={handleSaveClick} style="add">Save</Button>
+        <Button on:click={handleCancelClick} style="cancel">Cancel</Button>
+      </div>
+    {/if}
   </section>
 {/if}
