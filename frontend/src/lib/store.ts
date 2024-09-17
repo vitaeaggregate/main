@@ -19,7 +19,6 @@ export const toasts = writable([]);
 
 export const addToast = (toast) => {
   const id = Math.floor(Math.random() * 10000);
-  console.log(toast);
 
   const defaults = {
     id,

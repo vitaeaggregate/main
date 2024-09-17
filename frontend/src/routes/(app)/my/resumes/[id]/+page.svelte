@@ -72,7 +72,7 @@
   };
 
   const downloadPdf = async () => {
-    if (!resume || !resumeElement) throw console.log("Resume not loaded.");
+    if (!resume || !resumeElement) throw console.error("Resume not loaded.");
 
     isDownloadStarted = true;
 
@@ -86,7 +86,7 @@
       body: JSON.stringify({ body })
     });
 
-    if (!response.ok) throw console.log("Fetch error");
+    if (!response.ok) throw console.error("Fetch error");
 
     const blob = await response.blob();
     const url = URL.createObjectURL(blob);

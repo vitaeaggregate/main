@@ -29,8 +29,10 @@
   };
 
   const loadPage = async () => {
-    resumePromise = getResumeById($page.params.id);
-    resumeComments = await getCommentsByResumeId($page.params.id);
+    resumePromise = getResumeById($page.params.id).then(async (resume) => {
+      resumeComments = await getCommentsByResumeId($page.params.id);
+      return resume;
+    });
   };
 
   const handleGoBack = () => goto("/community");
@@ -86,7 +88,7 @@
       </div>
     {:catch}
       <div class="flex grow flex-col items-center justify-center text-center">
-        <div class="absolute size-60 -z-10 opacity-10">
+        <div class="absolute -z-10 size-60 opacity-10">
           <OnigiriIcon></OnigiriIcon>
         </div>
         <h1>404</h1>
