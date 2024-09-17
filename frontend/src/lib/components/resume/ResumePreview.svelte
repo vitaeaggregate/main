@@ -116,7 +116,7 @@
                     <strong>{project.title} - {project.sub_title}</strong>
                   </span>
                   <span class="justify-self-end">
-                    {project.start_date} - {project.end_date}
+                    {project.start_date && new Date(project.start_date).toLocaleDateString()} - {project.end_date && new Date(project.end_date).toLocaleDateString()}
                   </span>
                 </div>
                 <p class="whitespace-pre-line">{project.description}</p>

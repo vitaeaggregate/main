@@ -32,34 +32,33 @@
 
   $: if ($account) loadPage();
 
-let showComments = false;
-let container;
-let selectedResumeId: number | null = null;
+  let showComments = false;
+  let container;
+  let selectedResumeId: number | string | null = null;
 
-  function toggleComments(resumeId: number) {
+  function toggleComments(resumeId: number | string) {
     selectedResumeId = resumeId === selectedResumeId ? null : resumeId;
     showComments = selectedResumeId !== null;
   }
 
-function fadeSlide(node, options) {
-  const slideTrans = slide(node, options);
-  return {
-    duration: options.duration,
-    css: (t) => `
+  function fadeSlide(node, options) {
+    const slideTrans = slide(node, options);
+    return {
+      duration: options.duration,
+      css: (t) => `
       ${slideTrans.css(t)}
       opacity: ${t};
     `
-  };
-}
+    };
+  }
 </script>
 
 {#if $account}
-  <section>
-  
-    <h1>My Resumes</h1>
-    <div class="my-3">
-    <Button on:click={handleGoBack} style="cancel">Back</Button>
-  </div>
+  <section class="flex flex-col gap-5">
+    <div class="flex gap-5">
+      <Button on:click={handleGoBack} style="cancel">Back</Button>
+      <h1>My Resumes</h1>
+    </div>
     <div>
       {#if Object.keys(resumes).length}
         {#each Object.entries(resumes) as [resumeId, { resume, comments }]}
@@ -82,15 +81,22 @@ function fadeSlide(node, options) {
               {resume.updated_at && new Date(resume.updated_at).toLocaleDateString()}
             </p>
             <div bind:this={container}>
-              <button class="cursor-pointer"
-              on:click={() => toggleComments(resumeId)}><h3
-            >Comments ({comments.length})</h3></button>
-          {#if resumeId === selectedResumeId}
-          <div transition:fadeSlide={{ duration: 300 }} class="grid-row-4 grid gap-10">
-            <CommentView value={comments} config={{ isReadyOnly: true, isResumeTitleHidden: true }}
-            ></CommentView>
-          </div>{/if}
-          </div></div>
+              <button class="cursor-pointer" on:click={() => toggleComments(resumeId)}>
+                <h3>
+                  <span class="underline underline-offset-4 text-blue-700">
+                    Comments ({comments.length})
+                  </span>
+                </h3>
+              </button>
+              {#if resumeId === selectedResumeId}
+                <div transition:fadeSlide={{ duration: 300 }} class="grid-row-4 grid gap-10">
+                  <CommentView
+                    value={comments}
+                    config={{ isReadyOnly: true, isResumeTitleHidden: true }}
+                  ></CommentView>
+                </div>{/if}
+            </div>
+          </div>
         {/each}
       {:else}
         <p>
