@@ -14,6 +14,8 @@
   let resume: Resume | null = null;
   let originalResume: string | null = null;
   let isModified = false;
+  let isDownloaded: Promise<Boolean>;
+  let isDownloadStarted = false;
 
   let previewContainer: HTMLDivElement | null = null;
   let previewContainerWidth: number;
@@ -25,7 +27,6 @@
     height: 0,
     width: 0
   };
-  let resizeObserver: ResizeObserver | null = null;
 
   // Toasts config
   let message = "One or more fields are incorrect!";
@@ -66,8 +67,14 @@
     goto("/my/page");
   };
 
-  const handleDownloadPdf = async () => {
+  const handleDownloadClick = () => {
+    isDownloaded = downloadPdf();
+  };
+
+  const downloadPdf = async () => {
     if (!resume || !resumeElement) throw console.log("Resume not loaded.");
+
+    isDownloadStarted = true;
 
     const body = resumeElement.innerHTML;
 
@@ -88,6 +95,10 @@
     invisibleLink.download = "resume.pdf";
     invisibleLink.click();
     URL.revokeObjectURL(url);
+
+    isDownloadStarted = false;
+
+    return true;
   };
 
   $: if ($account && $page.params.id) loadResume();
@@ -109,14 +120,25 @@
   <section>
     <div class="mb-4 flex gap-3">
       <Button on:click={handleResumeDelete} style="labeled-icon">
-        <span class="flex flex-col gap-6"
-          ><DeleteIcon />
-          Delete</span
-        ></Button
-      >
-      <Button on:click={handleDownloadPdf} style="labeled-icon"
-        ><span class="flex flex-col gap-6"><DownloadIcon />Download</span></Button
-      >
+        <span class="flex flex-col gap-6">
+          <DeleteIcon />
+          Delete
+        </span>
+      </Button>
+      <Button on:click={handleDownloadClick} style="labeled-icon" disabled={isDownloadStarted}>
+        <span class="flex flex-col gap-6">
+          <DownloadIcon />
+          {#if !isDownloadStarted}
+            Download
+          {:else}
+            {#await isDownloaded}
+              Downloading...
+            {:catch}
+              Error downloading the file.
+            {/await}
+          {/if}
+        </span>
+      </Button>
     </div>
     <div class="grid grid-cols-1 gap-10 overflow-hidden">
       <ResumeComponent bind:value={resume}></ResumeComponent>
@@ -130,11 +152,7 @@
       {/if}
       <div class="rounded-lg bg-slate-100 p-5 shadow-lg">
         <div bind:this={previewContainer} bind:clientWidth={previewContainerWidth}>
-          <ResumePreview
-            bind:resume
-            bind:resumeElement
-            bind:resumeElementSize
-          ></ResumePreview>
+          <ResumePreview bind:resume bind:resumeElement bind:resumeElementSize></ResumePreview>
         </div>
       </div>
     </div>

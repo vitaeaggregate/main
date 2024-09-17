@@ -13,6 +13,7 @@
 
 <script lang="ts">
   export let style: Style = "default";
+  export let disabled = false;
   let classes: string;
 
   switch (style) {
@@ -35,27 +36,32 @@
       break;
     }
     case "cancel": {
-      classes = "size-fit h-max w-max rounded-xl bg-grayish p-3 shadow-lg text-center hover:bg-red hover:ease-in duration-200";
+      classes =
+        "size-fit h-max w-max rounded-xl bg-grayish p-3 shadow-lg text-center hover:bg-red hover:ease-in duration-200";
       break;
     }
     case "sections": {
-      classes = "size-fit bg-white border-2 rounded-lg p-3 hover:bg-green hover:ease-in duration-200";
+      classes =
+        "size-fit bg-white border-2 rounded-lg p-3 hover:bg-green hover:ease-in duration-200";
       break;
     }
     case "delete": {
-      classes = "size-fit flex h-max w-max rounded-xl bg-grayish p-3 shadow-lg hover:bg-red hover:ease-in duration-200";
+      classes =
+        "size-fit flex h-max w-max rounded-xl bg-grayish p-3 shadow-lg hover:bg-red hover:ease-in duration-200";
       break;
     }
     case "delete-md": {
-      classes = "flex h-max rounded-xl bg-grayish p-3 shadow-lg justify-center w-20 hover:bg-red hover:ease-in duration-200";
+      classes =
+        "flex h-max rounded-xl bg-grayish p-3 shadow-lg justify-center w-20 hover:bg-red hover:ease-in duration-200";
       break;
     }
     case "labeled-icon": {
-      classes = "flex gap-3 h-max w-44 h-20 rounded-xl bg-white p-3 shadow-lg justify-left items-center hover:bg-green hover:ease-in duration-200";
+      classes =
+        "flex gap-3 h-max w-44 h-20 rounded-xl bg-white p-3 shadow-lg justify-left items-center hover:bg-green hover:ease-in duration-200";
     }
   }
 </script>
 
-<button type="button" on:click class={classes}>
+<button type="button" on:click class={classes} {disabled}>
   <slot></slot>
 </button>

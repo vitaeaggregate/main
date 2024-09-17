@@ -9,8 +9,9 @@
   import Button from "$lib/components/Button.svelte";
   import CommentView from "$lib/components/resume/CommentView.svelte";
   import ResumePreview from "$lib/components/resume/ResumePreview.svelte";
+  import OnigiriIcon from "$lib/icons/OnigiriIcon.svelte";
 
-  let resume: Resume | null = null;
+  let resumePromise: Promise<Resume>;
   let resumeComments: Comment[] = [];
   let newComment: Comment = {
     description: ""
@@ -28,7 +29,7 @@
   };
 
   const loadPage = async () => {
-    resume = await getResumeById($page.params.id);
+    resumePromise = getResumeById($page.params.id);
     resumeComments = await getCommentsByResumeId($page.params.id);
   };
 
@@ -56,31 +57,41 @@
   $: if ($page.params.id && $account) loadPage();
 </script>
 
-{#if $account && resume}
-  <section class="flex flex-col gap-5">
-    <div class="flex gap-5">
-      <Button on:click={handleGoBack} style="cancel">Back</Button>
-      <h1>Community</h1>
-    </div>
-    <div class="rounded-lg bg-slate-100 p-5 shadow-lg">
-      <div bind:this={previewContainer} bind:clientWidth={previewContainerWidth}>
-        <ResumePreview bind:resume bind:resumeElement bind:resumeElementSize></ResumePreview>
+{#if $account}
+  <section class="flex h-full flex-col gap-5">
+    {#await resumePromise then resume}
+      <div class="flex gap-5">
+        <Button on:click={handleGoBack} style="cancel">Back</Button>
+        <h1>Community</h1>
       </div>
-    </div>
-    <div class="flex flex-col">
-      <h2>Comments</h2>
-      <CommentView
-        bind:value={resumeComments}
-        config={{ isReadyOnly: true, isResumeTitleHidden: true }}
-      ></CommentView>
-    </div>
-    <div class="flex flex-col gap-3">
-      <h2>New Comment</h2>
-      <CommentView
-        bind:value={newComment}
-        config={{ isReadyOnly: false, isResumeTitleHidden: true }}
-      ></CommentView>
-      <Button on:click={handleNewComment} style="submit">Send</Button>
-    </div>
+      <div class="rounded-lg bg-slate-100 p-5 shadow-lg">
+        <div bind:this={previewContainer} bind:clientWidth={previewContainerWidth}>
+          <ResumePreview {resume} bind:resumeElement bind:resumeElementSize></ResumePreview>
+        </div>
+      </div>
+      <div class="flex flex-col">
+        <h2>Comments</h2>
+        <CommentView
+          bind:value={resumeComments}
+          config={{ isReadyOnly: true, isResumeTitleHidden: true }}
+        ></CommentView>
+      </div>
+      <div class="flex flex-col gap-3">
+        <h2>New Comment</h2>
+        <CommentView
+          bind:value={newComment}
+          config={{ isReadyOnly: false, isResumeTitleHidden: true }}
+        ></CommentView>
+        <Button on:click={handleNewComment} style="submit">Send</Button>
+      </div>
+    {:catch}
+      <div class="flex grow flex-col items-center justify-center text-center">
+        <div class="absolute size-60 -z-10 opacity-10">
+          <OnigiriIcon></OnigiriIcon>
+        </div>
+        <h1>404</h1>
+        <h2>Onigiri not found or is not shared.</h2>
+      </div>
+    {/await}
   </section>
 {/if}

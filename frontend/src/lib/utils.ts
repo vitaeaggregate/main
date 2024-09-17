@@ -26,18 +26,13 @@ export const fetchData = async (url: string, requestInit?: RequestInit) => {
 
   const response = await fetch(url, requestInit);
 
-  await handleError(response);
+  if (!response.ok) handleError(response);
 
   return response;
 };
 
 const handleError = async (response: Response) => {
-  if (!response.ok) {
-    const errorBody = await response.text();
-    console.error("Error :" + errorBody);
-    if (response.status === 401) logout();
-    throw error(response.status, response.statusText);
-  }
+  if (response.status === 401) logout();
 };
 
 export const logout = async () => {
