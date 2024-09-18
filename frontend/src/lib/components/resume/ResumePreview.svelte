@@ -23,6 +23,12 @@
     }
   };
 
+  const sortDate = (dateA: string | undefined, dateB: string | undefined) => {
+    if (!dateA) return 1;
+    if (!dateB) return -1;
+    return -new Date(dateA).getTime() + new Date(dateB).getTime();
+  };
+
   $: if (a4Container) {
     resizeObserver = new ResizeObserver(handleResize);
     resizeObserver.observe(a4Container);
@@ -100,8 +106,7 @@
             {#each resume.languages as { id, description = "", language = "", skill_level = "" } (id)}
               <li>
                 <p>
-                  {language}
-                  {skill_level && ` - ${skill_level}`}
+                  {language}{skill_level && ` - ${skill_level}`}
                 </p>
               </li>
             {/each}
@@ -112,18 +117,17 @@
         <div class="flex flex-col gap-3">
           <h3 class="w-fit border-b-2 border-black">Projects</h3>
           <div class="flex flex-col gap-5">
-            {#each resume.projects as { id, description = "", end_date = "", start_date = "", sub_title = "", title = "" } (id)}
+            {#each resume.projects.sort( (professional_expA, professional_expB) => sortDate(professional_expA.end_date, professional_expB.end_date) ) as { id, description = "", end_date = "", start_date = "", sub_title = "", title = "" } (id)}
               <div class="flex flex-col gap-2">
                 <div class="grid grid-cols-3">
                   <span class="col-span-2">
                     <strong>
-                      {title}
-                      {sub_title && ` - ${sub_title}`}
+                      {title}{sub_title && ` - ${sub_title}`}
                     </strong>
                   </span>
                   <span class="justify-self-end">
-                    {start_date && new Date(start_date).toLocaleDateString()}
-                    {end_date && ` - ${new Date(end_date).toLocaleDateString()}`}
+                    {start_date && new Date(start_date).toLocaleDateString()}{end_date &&
+                      ` - ${new Date(end_date).toLocaleDateString()}`}
                   </span>
                 </div>
                 <p class="whitespace-pre-line">{description}</p>
@@ -136,20 +140,16 @@
         <div class="flex flex-col gap-3">
           <h3 class="w-fit border-b-2 border-black">Professional Experiences</h3>
           <div class="flex flex-col gap-5">
-            {#each resume.professional_exps as { id, city = "", country = "", description = "", employer = "", end_date = "", job_title = "", start_date = "" } (id)}
+            {#each resume.professional_exps.sort( (projectA, projectB) => sortDate(projectA.end_date, projectB.end_date) ) as { id, city = "", country = "", description = "", employer = "", end_date = "", job_title = "", start_date = "" } (id)}
               <div class="flex flex-col gap-2">
                 <div class="grid grid-cols-3">
                   <span class="col-span-2">
-                    <strong>
-                      {job_title}
-                    </strong>
-                    {employer && `, ${employer}`}
-                    {city && `, ${city}`}
-                    {country && `, ${country}`}
+                    <strong>{job_title}</strong>{employer && `, ${employer}`}{city &&
+                      `, ${city}`}{country && `, ${country}`}
                   </span>
                   <span class="justify-self-end">
-                    {start_date && new Date(start_date).toLocaleDateString()}
-                    {end_date && `- ${new Date(end_date).toLocaleDateString()}`}
+                    {start_date && new Date(start_date).toLocaleDateString()}{end_date &&
+                      `- ${new Date(end_date).toLocaleDateString()}`}
                   </span>
                 </div>
                 <p class="whitespace-pre-line">{description}</p>
@@ -160,20 +160,18 @@
       {/if}
       {#if resume.educations?.length}
         <div class="flex flex-col gap-3">
-          <h3 class="w-fit border-b-2 border-black">Education and Courses</h3>
+          <h3 class="w-fit border-b-2 border-black">Education</h3>
           <div class="flex flex-col gap-5">
-            {#each resume.educations as { id, city = "", country = "", degree = "", description = "", end_date = "", institution = "", start_date = "" } (id)}
+            {#each resume.educations.sort( (educationA, educationB) => sortDate(educationA.end_date, educationB.end_date) ) as { id, city = "", country = "", degree = "", description = "", end_date = "", institution = "", start_date = "" } (id)}
               <div class="flex flex-col gap-2">
                 <div class="grid grid-cols-3">
                   <span class="col-span-2">
-                    <strong>{degree}</strong>
-                    {institution && `, ${institution}`}
-                    {city && `, ${city}`}
-                    {country && `, ${country}`}
+                    <strong>{degree}</strong>{institution && `, ${institution}`}{city &&
+                      `, ${city}`}{country && `, ${country}`}
                   </span>
                   <span class="justify-self-end">
-                    {start_date && new Date(start_date).toLocaleDateString()}
-                    {end_date && ` - ${new Date(end_date).toLocaleDateString()}`}
+                    {start_date && new Date(start_date).toLocaleDateString()}{end_date &&
+                      ` - ${new Date(end_date).toLocaleDateString()}`}
                   </span>
                 </div>
                 <p class="whitespace-pre-line">
@@ -221,18 +219,16 @@
         <div class="flex flex-col gap-3">
           <h3 class="w-fit border-b-2 border-black">Courses</h3>
           <div class="flex flex-col gap-5">
-            {#each resume.courses as { id, city = "", country = "", degree = "", description = "", end_date = "", institution = "", start_date = "" } (id)}
+            {#each resume.courses.sort( (courseA, courseB) => sortDate(courseA.end_date, courseB.end_date) ) as { id, city = "", country = "", degree = "", description = "", end_date = "", institution = "", start_date = "" } (id)}
               <div class="flex flex-col gap-2">
                 <div class="grid grid-cols-3">
                   <span class="col-span-2">
-                    <strong>{degree}</strong>
-                    {institution && `, ${institution}`}
-                    {city && `, ${city}`}
-                    {country && `, ${country}`}
+                    <strong>{degree}</strong>{institution && `, ${institution}`}{city &&
+                      `, ${city}`}{country && `, ${country}`}
                   </span>
                   <span class="justify-self-end">
-                    {start_date && new Date(start_date).toLocaleDateString()}
-                    {end_date && ` - ${new Date(end_date).toLocaleDateString()}`}
+                    {start_date && new Date(start_date).toLocaleDateString()}{end_date &&
+                      ` - ${new Date(end_date).toLocaleDateString()}`}
                   </span>
                 </div>
                 <p class="whitespace-pre-line">{description}</p>
@@ -264,8 +260,7 @@
               <div class="flex flex-col gap-2">
                 <div class="grid grid-cols-3">
                   <span class="col-span-2">
-                    <strong>{title}</strong>
-                    {publisher && `, ${publisher}`}
+                    <strong>{title}</strong>{publisher && `, ${publisher}`}
                   </span>
                   <span class="justify-self-end">
                     {date && new Date(date).toLocaleDateString()}
@@ -287,9 +282,8 @@
               <div class="flex flex-col gap-2">
                 <div class="grid grid-cols-2">
                   <span>
-                    <strong>{name}</strong>
-                    {job_title && `, ${job_title}`}
-                    {organization && `, ${organization}`}
+                    <strong>{name}</strong>{job_title && `, ${job_title}`}{organization &&
+                      `, ${organization}`}
                   </span>
                   <span class="justify-self-end">
                     {phone}
