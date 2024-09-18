@@ -19,15 +19,15 @@ A web-based **resume management system** built using **Svelte**, **TypeScript**,
 
 ## Technologies Used
 
-- **Svelte**: For building reactive user interfaces.
-- ![Svelte](https://img.shields.io/badge/svelte-%23f1413d.svg?style=for-the-badge&logo=svelte&logoColor=white)
-- **TypeScript**: For type safety and enhanced development experience.
+![Svelte](https://img.shields.io/badge/svelte-%23f1413d.svg?style=for-the-badge&logo=svelte&logoColor=white)
+- For building reactive user interfaces.
 - ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
-- **Tailwind CSS**: For utility-first CSS styling.
+- For type safety and enhanced development experience.
 - ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
-- **Puppeteer**: For generating PDFs from Svelte components.
-- **Django**: Backend REST API to handle resume data, comments, and user information.
+- For utility-first CSS styling.
 - ![DjangoREST](https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray)
+- Backend REST API to handle resume data, comments, and user information.
+- **Puppeteer**: For generating PDFs from Svelte components.
 
 ## Project Setup
 
