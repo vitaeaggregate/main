@@ -20,6 +20,7 @@ A web-based **resume management system** built using **Svelte**, **TypeScript**,
 ## Technologies Used
 
 - **Svelte**: For building reactive user interfaces.
+- ![Svelte](https://img.shields.io/badge/svelte-%23f1413d.svg?style=for-the-badge&logo=svelte&logoColor=white)
 - **TypeScript**: For type safety and enhanced development experience.
 - **Tailwind CSS**: For utility-first CSS styling.
 - **Puppeteer**: For generating PDFs from Svelte components.
