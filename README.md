@@ -48,26 +48,6 @@ Ensure you have the following installed:
 
     The application will be accessible at `http://localhost:5173`.
 
-### PDF Generation
-
-To generate PDFs, Puppeteer is used to capture components and save them as PDFs.
-
-**Steps to generate a PDF**:
-
-1. Ensure your page components are styled properly for print rendering.
-2. Use Puppeteer to capture the page and save it as a PDF.
-3. Example command for running Puppeteer:
-    ```bash
-    node puppeteer-script.js
-    ```
-
-    Customize the `puppeteer-script.js` file for specific settings and optimizations.
-
-## Routes
-
-- **`/resume/new`**: Create a new resume.
-- **`/resume/:id`**: View an existing resume by its ID.
-
 ## Deployment
 
 For production, build the application:
