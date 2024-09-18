@@ -1,3 +1,9 @@
+# Vitae Aggrigate
+
+The resume is one of the most important aspects of the job search. It's the first impression companies get and often decides whether you get an interview or not. If you've been in the job market recently, you might have noticed that while there are a lot of resources available to create attractive resumes, there aren't a lot of ways to get actual feedback on your resume. 
+
+Enter Vitae Aggrigate! We offer users a chance to get real feedback from other people. 
+
 # Resume Builder Application
 
 A web-based **resume management system** built using **Svelte**, **TypeScript**, and **Tailwind CSS**. This application allows users to create, view, modify, and download resumes in **ATS-compliant PDF** format. PDF generation is handled entirely client-side using **Puppeteer**.
