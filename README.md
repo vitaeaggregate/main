@@ -1,4 +1,4 @@
-# Vitae Aggrigate
+# Vitae Aggregate
 
 The resume is one of the most important aspects of the job search. It's the first impression companies get and often decides whether you get an interview or not. If you've been in the job market recently, you might have noticed that while there are a lot of resources available to create attractive resumes, there aren't a lot of ways to get actual feedback on your resume. 
 
